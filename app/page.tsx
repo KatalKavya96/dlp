@@ -5,17 +5,36 @@ import { BusinessStory } from "@/components/sections/BusinessStory";
 import { CraftAndPassport } from "@/components/sections/CraftAndPassport";
 import { FeaturedCollection } from "@/components/sections/FeaturedCollection";
 import { Hero } from "@/components/sections/Hero";
+import { HeroProductRail } from "@/components/sections/HeroProductRail";
 import { PersonalisationOwnership } from "@/components/sections/PersonalisationOwnership";
 import { ProductEcosystem } from "@/components/sections/ProductEcosystem";
 
 export default function Home() {
   const structuredData = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Dharohar",
-    description: "Handcrafted Indian heritage cookware with personalisation, provenance and lifetime restoration.",
-    areaServed: "IN",
-    knowsAbout: ["Copper cookware", "Brass cookware", "Bronze cookware", "Indian metal craft", "Cookware restoration"],
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "#organization",
+        name: "Dharohar",
+        description: "Handcrafted Indian heritage cookware with personalisation, provenance and lifetime restoration.",
+        areaServed: "IN",
+        knowsAbout: ["Copper cookware", "Brass cookware", "Bronze cookware", "Indian metal craft", "Cookware restoration"],
+      },
+      {
+        "@type": "ItemList",
+        name: "Dharohar heritage cookware preview",
+        itemListElement: [
+          ["Kansa Dining Set", "Bronze", 1],
+          ["Hammered Handi Pair", "Copper", 2],
+          ["Celebration Thali", "Brass", 3],
+        ].map(([name, material, position]) => ({
+          "@type": "ListItem",
+          position,
+          item: { "@type": "Product", name, material, brand: { "@id": "#organization" } },
+        })),
+      },
+    ],
   };
 
   return (
@@ -24,6 +43,7 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
+        <HeroProductRail />
         <BrandStory />
         <ProductEcosystem />
         <FeaturedCollection />

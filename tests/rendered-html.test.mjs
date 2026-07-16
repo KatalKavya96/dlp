@@ -33,6 +33,10 @@ test("server-renders the finished Dharohar landing page", async () => {
   assert.match(html, /India’s heritage kitchen,/);
   assert.match(html, /reimagined\./);
   assert.match(html, /Handcrafted copper, brass and bronze cookware/);
+  assert.match(html, /Begin with an/);
+  assert.match(html, /object of meaning\./);
+  assert.match(html, /Kansa Dining Set/);
+  assert.match(html, /Buy Kansa Dining Set/);
   assert.match(html, /Owned for generations\. Restored, not replaced\./);
   assert.match(html, /Carry the legacy forward\./);
   assert.match(html, /<meta property="og:image" content="http:\/\/localhost:3000\/og\.png"/i);
@@ -41,8 +45,9 @@ test("server-renders the finished Dharohar landing page", async () => {
 });
 
 test("keeps the production shell, SEO, and accessibility safeguards in source", async () => {
-  const [page, layout, css, packageJson, readme] = await Promise.all([
+  const [page, productRail, layout, css, packageJson, readme] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../components/sections/HeroProductRail.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
@@ -52,6 +57,9 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.match(page, /"@type": "Organization"/);
   assert.match(page, /<Navbar \/>/);
   assert.match(page, /<FeaturedCollection \/>/);
+  assert.match(page, /<HeroProductRail \/>/);
+  assert.match(productRail, /NEXT_PUBLIC_STORE_URL/);
+  assert.match(productRail, /aria-label={`Buy \$\{product\.name\}`}/);
   assert.match(layout, /generateMetadata/);
   assert.match(layout, /x-forwarded-host/);
   assert.match(layout, /openGraph/);
@@ -61,7 +69,9 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.match(packageJson, /"lucide-react"/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.match(readme, /Photography handoff/);
+  assert.match(readme, /NEXT_PUBLIC_STORE_URL/);
 
   await access(new URL("../public/og.png", import.meta.url));
   await access(new URL("../public/images/hero-kitchen.jpg", import.meta.url));
+  await access(new URL("../public/images/heritage-product-rail.webp", import.meta.url));
 });

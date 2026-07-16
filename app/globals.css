@@ -6,7 +6,6 @@
   --muted: #675f56;
   --gold: #b88a3b;
   --copper: #a85d35;
-  --font-serif: "Iowan Old Style", "Baskerville", "Times New Roman", serif;
 }
 
 * {
@@ -62,7 +61,8 @@ button {
 }
 
 .font-serif {
-  font-family: var(--font-serif);
+  font-family: var(--font-cormorant), "Iowan Old Style", "Baskerville", "Times New Roman", serif !important;
+  font-variation-settings: "opsz" 56;
 }
 
 .site-container {
@@ -139,6 +139,53 @@ button {
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+.product-portrait::after {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: inherit;
+  pointer-events: none;
+  content: "";
+}
+
+.product-portrait:hover .product-glint {
+  animation: product-glint 900ms cubic-bezier(.22, 1, .36, 1) both;
+}
+
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.heritage-marquee {
+  animation: heritage-marquee 28s linear infinite;
+}
+
+.metal-orbit {
+  animation: metal-orbit 20s linear infinite;
+}
+
+.metal-orbit-reverse {
+  animation: metal-orbit-reverse 26s linear infinite;
+}
+
+@keyframes heritage-marquee {
+  to { transform: translateX(-50%); }
+}
+
+@keyframes product-glint {
+  from { transform: translateX(-20%) rotate(12deg); opacity: 0; }
+  35% { opacity: 1; }
+  to { transform: translateX(520%) rotate(12deg); opacity: 0; }
+}
+
+@keyframes metal-orbit {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes metal-orbit-reverse {
+  to { transform: rotate(-360deg); }
 }
 
 @media (min-width: 768px) {

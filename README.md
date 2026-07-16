@@ -16,6 +16,14 @@ npm run build
 npm run lint
 ```
 
+To send the new hero product “Buy” actions to the commerce site, set:
+
+```bash
+NEXT_PUBLIC_STORE_URL=https://shop.dharohar.com
+```
+
+Until that destination is supplied, the buttons intentionally fall back to the private consultation section instead of opening a broken store.
+
 ## Structure
 
 - `app/` — App Router page, metadata and global design tokens
@@ -35,6 +43,8 @@ The current images are editorial placeholders sourced under the Unsplash license
 | `brass-collection.jpg` | [Dileesh Kumar / Unsplash](https://unsplash.com/photos/zo3nvUCaSUA) | Editorial studio collection of Dharohar brass and bronze pieces |
 | `heritage-kitchen.jpg` | [Annie Spratt / Unsplash](https://unsplash.com/photos/3dmD-6PN-hM) | Old-meets-new kitchen detail for the heirloom collection |
 | `indian-table.jpg` | [Jon Handley / Unsplash](https://unsplash.com/photos/zr1R6gEQ0_M) | Warm family dining moment featuring Dharohar serveware |
+
+`heritage-product-rail.webp` is an optimized original AI-generated Dharohar visual created for the compact product rail, with the high-resolution PNG retained as its editable campaign master. It contains no copied branding, packaging, reviews or discount claims from the supplied references.
 
 Also replace `.example` email addresses with production destinations and supply verified market statistics for the clearly labelled “Why now” placeholders.
 
