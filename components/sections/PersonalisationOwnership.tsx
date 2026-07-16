@@ -17,7 +17,7 @@ export function PersonalisationOwnership() {
       <section className="section-pad bg-[#f7f2e8]" aria-labelledby="personalisation-title">
         <div className="site-container grid gap-12 lg:grid-cols-[.88fr_1.12fr] lg:items-center">
           <Reveal>
-            <SectionHeading eyebrow="Personalisation" title="Make every piece part of your family story.">
+            <SectionHeading id="personalisation-title" eyebrow="Personalisation" title="Make every piece part of your family story.">
               <p>A name, wedding date or private message is engraved with the same care as the object itself, then recorded in its certificate of authenticity.</p>
             </SectionHeading>
             <ul className="mt-8 grid gap-3 text-sm sm:grid-cols-2">

@@ -1,13 +1,16 @@
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
-import { BrandStory } from "@/components/sections/BrandStory";
-import { BusinessStory } from "@/components/sections/BusinessStory";
-import { CraftAndPassport } from "@/components/sections/CraftAndPassport";
 import { FeaturedCollection } from "@/components/sections/FeaturedCollection";
-import { Hero } from "@/components/sections/Hero";
-import { HeroProductRail } from "@/components/sections/HeroProductRail";
-import { PersonalisationOwnership } from "@/components/sections/PersonalisationOwnership";
-import { ProductEcosystem } from "@/components/sections/ProductEcosystem";
+import {
+  ArtisanSpotlight,
+  HeritageHero,
+  HeritagePassport,
+  HeritageTestimonials,
+  MaterialExplorer,
+  OwnershipJourney,
+  PersonalisationStudio,
+  WellnessBenefits,
+} from "@/components/sections/HeritageExperience";
 
 export default function Home() {
   const structuredData = {
@@ -42,14 +45,15 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       <Navbar />
       <main>
-        <Hero />
-        <HeroProductRail />
-        <BrandStory />
-        <ProductEcosystem />
+        <HeritageHero />
+        <MaterialExplorer />
         <FeaturedCollection />
-        <CraftAndPassport />
-        <PersonalisationOwnership />
-        <BusinessStory />
+        <HeritagePassport />
+        <ArtisanSpotlight />
+        <PersonalisationStudio />
+        <OwnershipJourney />
+        <WellnessBenefits />
+        <HeritageTestimonials />
       </main>
       <Footer />
     </>

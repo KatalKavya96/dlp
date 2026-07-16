@@ -1,47 +1,123 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Building2, Check, Gift } from "lucide-react";
-import { journal, journey } from "@/data/dharohar";
+import { AmbientScene } from "@/components/ui/AmbientScene";
 import { Reveal } from "@/components/ui/Reveal";
 import { SafeImage } from "@/components/ui/SafeImage";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { journal, journey } from "@/data/dharohar";
 
 const pillars = [
   {
     number: "I",
     title: "Heritage experience",
     copy: "Consultation, artisan story, premium unboxing and personalisation turn selection into a meaningful ritual.",
+    image: "/images/artisan.jpg",
+    position: "62% 48%",
   },
   {
     number: "II",
     title: "Lifetime ownership",
     copy: "Restoration, certification, legacy transfer and expert support keep the relationship alive for decades.",
+    image: "/images/brass-collection.jpg",
+    position: "58% 50%",
   },
   {
     number: "III",
     title: "Community & knowledge",
     copy: "Recipes, material guides, masterclasses and member access make heritage cookware easier to live with.",
+    image: "/images/indian-table.jpg",
+    position: "50% 52%",
   },
-];
+] as const;
+
+const shifts = [
+  {
+    number: "01",
+    title: "Premium Indian homes",
+    copy: "A growing appetite for spaces and objects that feel expressive, considered and distinctly personal.",
+    image: "/images/indian-table.jpg",
+    position: "42% 55%",
+  },
+  {
+    number: "02",
+    title: "Material consciousness",
+    copy: "Durability, repairability and greater curiosity about what everyday objects are made from.",
+    image: "/images/brass-collection.jpg",
+    position: "60% 48%",
+  },
+  {
+    number: "03",
+    title: "Cultural authenticity",
+    copy: "A renewed desire for Indian craftsmanship presented with context, utility and contemporary design.",
+    image: "/images/artisan.jpg",
+    position: "66% 46%",
+  },
+] as const;
+
+const partnerships = [
+  {
+    icon: Gift,
+    eyebrow: "Wedding & corporate gifting",
+    title: "An heirloom is a gift with somewhere to go.",
+    items: ["Personalised heirlooms", "Premium packaging", "Family engraving", "Bulk consultation", "Custom collections"],
+    cta: "Plan a gift",
+    image: "/images/indian-table.jpg",
+    position: "40% 52%",
+  },
+  {
+    icon: Building2,
+    eyebrow: "Designers & hospitality",
+    title: "Bring material history into rooms people remember.",
+    items: ["Curated cookware and serveware", "Custom material combinations", "Boutique hospitality supply", "Heritage interior styling"],
+    cta: "Partner with Dharohar",
+    image: "/images/hero-kitchen.jpg",
+    position: "66% 52%",
+  },
+] as const;
 
 const moat = ["Artisan network", "Product provenance", "Personalisation", "Lifetime restoration", "Heritage passport", "Premium design", "Cultural storytelling", "Consultation-led selling"];
 
 export function BusinessStory() {
+  const reducedMotion = useReducedMotion();
+
   return (
     <>
       <section className="section-pad overflow-hidden bg-[#fcfaf6]" aria-labelledby="pillars-title">
         <div className="site-container">
           <Reveal>
-            <SectionHeading eyebrow="Three brand pillars" title="An experience designed around the whole life of an object." />
+            <SectionHeading id="pillars-title" eyebrow="Three brand pillars" title="An experience designed around the whole life of an object." />
           </Reveal>
           <div className="no-scrollbar -mx-5 mt-14 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-3 lg:overflow-visible">
             {pillars.map((pillar, index) => (
-              <Reveal key={pillar.title} delay={index * 0.08} className="min-w-[82vw] snap-center rounded-[2rem] border border-black/8 bg-[#f7f2e8] p-7 sm:min-w-[420px] lg:min-w-0 lg:p-9">
-                <div className="flex items-center justify-between">
-                  <span className="font-serif text-4xl text-[#a85d35]">{pillar.number}</span>
-                  <span className="size-2 rounded-full bg-[#b88a3b]" />
-                </div>
-                <h3 className="mt-16 max-w-sm font-serif text-4xl leading-[1.05]">{pillar.title}</h3>
-                <p className="mt-5 max-w-md text-sm leading-7 text-[#655d54]">{pillar.copy}</p>
-              </Reveal>
+              <motion.article
+                key={pillar.title}
+                className="min-w-[84vw] snap-center sm:min-w-[440px] lg:min-w-0"
+                initial={reducedMotion ? false : { opacity: 0, y: 28 }}
+                whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.72, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <AmbientScene
+                  src={pillar.image}
+                  alt={`${pillar.title} within the Dharohar world`}
+                  className="cinematic-portal min-h-[580px] rounded-[2rem]"
+                  imagePosition={pillar.position}
+                  overlayClassName="bg-gradient-to-t from-[#17100c]/96 via-[#21160f]/42 to-black/8"
+                >
+                  <div className="flex min-h-[580px] flex-col justify-between p-7 text-white sm:p-9">
+                    <div className="flex items-center justify-between">
+                      <span className="portal-number font-serif text-6xl text-[#e2c580]">{pillar.number}</span>
+                      <span className="size-2 rounded-full bg-[#e2c580] shadow-[0_0_18px_rgba(226,197,128,.8)]" />
+                    </div>
+                    <div>
+                      <h3 className="max-w-sm font-serif text-4xl leading-[1.02] sm:text-5xl">{pillar.title}</h3>
+                      <p className="mt-5 max-w-md border-t border-white/18 pt-5 text-sm leading-7 text-white/66">{pillar.copy}</p>
+                    </div>
+                  </div>
+                </AmbientScene>
+              </motion.article>
             ))}
           </div>
         </div>
@@ -66,87 +142,120 @@ export function BusinessStory() {
         </div>
       </section>
 
-      <section className="section-pad bg-[#fcfaf6]" aria-labelledby="why-now-title">
+      <section className="section-pad overflow-hidden bg-[#fcfaf6]" aria-labelledby="why-now-title">
         <div className="site-container">
-          <div className="grid gap-10 lg:grid-cols-[.65fr_1.35fr]">
-            <Reveal>
-              <p className="eyebrow">Why now</p>
-              <h2 id="why-now-title" className="mt-5 font-serif text-[clamp(2.8rem,6vw,5.5rem)] leading-[0.95] tracking-[-0.05em]">Three shifts are bringing meaning back home.</h2>
-            </Reveal>
-            <div className="grid gap-px overflow-hidden rounded-[2rem] border border-black/8 bg-black/8 md:grid-cols-3">
-              {[
-                ["01", "Premium Indian homes", "A growing appetite for spaces and objects that feel expressive, considered and distinctly personal."],
-                ["02", "Material consciousness", "Durability, repairability and greater curiosity about what everyday objects are made from."],
-                ["03", "Cultural authenticity", "A renewed desire for Indian craftsmanship presented with context, utility and contemporary design."],
-              ].map(([number, title, copy], index) => (
-                <Reveal key={number} delay={index * 0.08} className="bg-[#f7f2e8] p-6 sm:p-8">
-                  <span className="text-[10px] font-semibold tracking-[0.2em] text-[#a85d35]">{number}</span>
-                  <h3 className="mt-10 font-serif text-3xl leading-tight">{title}</h3>
-                  <p className="mt-4 text-sm leading-6 text-[#685f56]">{copy}</p>
-                  <p className="mt-8 border-t border-black/10 pt-4 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#a85d35]">Market data placeholder</p>
-                </Reveal>
-              ))}
-            </div>
+          <Reveal>
+            <p className="eyebrow">Why now</p>
+            <h2 id="why-now-title" className="mt-5 max-w-5xl font-serif text-[clamp(2.8rem,6vw,5.5rem)] leading-[0.95] tracking-[-0.05em]">Three shifts are bringing meaning back home.</h2>
+          </Reveal>
+          <div className="no-scrollbar -mx-5 mt-14 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-3 lg:overflow-visible">
+            {shifts.map((shift, index) => (
+              <motion.article
+                key={shift.number}
+                className="min-w-[84vw] snap-center sm:min-w-[420px] lg:min-w-0"
+                initial={reducedMotion ? false : { opacity: 0, y: 26 }}
+                whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.7, delay: index * 0.08 }}
+              >
+                <AmbientScene
+                  src={shift.image}
+                  alt={`${shift.title} visual story`}
+                  className="cinematic-portal min-h-[560px] rounded-[2rem]"
+                  imagePosition={shift.position}
+                  overlayClassName="bg-gradient-to-t from-[#1c130e]/98 via-[#281a12]/66 to-black/28"
+                  intensity="quiet"
+                >
+                  <div className="flex min-h-[560px] flex-col justify-between p-7 text-white sm:p-8">
+                    <span className="text-[10px] font-semibold tracking-[0.22em] text-[#e2c580]">{shift.number}</span>
+                    <div>
+                      <h3 className="font-serif text-4xl leading-[1.02] sm:text-5xl">{shift.title}</h3>
+                      <p className="mt-5 text-sm leading-7 text-white/68">{shift.copy}</p>
+                      <p className="mt-7 border-t border-white/16 pt-4 text-[9px] font-semibold uppercase tracking-[0.16em] text-[#e2c580]">Market data placeholder</p>
+                    </div>
+                  </div>
+                </AmbientScene>
+              </motion.article>
+            ))}
           </div>
           <p className="mt-5 text-right text-[10px] font-semibold uppercase tracking-[0.16em] text-[#877b6f]">Replace with verified market data before production.</p>
         </div>
       </section>
 
-      <section className="section-pad overflow-hidden bg-[#211e1a] text-[#f7f2e8]" aria-labelledby="journey-title">
+      <section className="relative isolate min-h-[820px] overflow-hidden bg-[#211e1a] py-[clamp(5rem,10vw,9rem)] text-[#f7f2e8]" aria-labelledby="journey-title">
+        <div className="absolute inset-0 -z-20">
+          <AmbientScene
+            src="/images/heritage-kitchen.jpg"
+            alt="A dark heritage kitchen memory behind the Dharohar journey"
+            className="h-full w-full"
+            imagePosition="52% 55%"
+            overlayClassName="bg-[#16110e]/86"
+            intensity="quiet"
+          />
+        </div>
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_52%,rgba(168,93,53,.2),transparent_38%)]" />
         <div className="site-container">
           <Reveal>
-            <SectionHeading eyebrow="The customer journey" title="From first discovery to the next generation.">
+            <SectionHeading id="journey-title" eyebrow="The customer journey" title="From first discovery to the next generation.">
               <p className="!text-white/55">Each stage earns a different kind of value—trust, delight, retention, referral and lifetime connection.</p>
             </SectionHeading>
           </Reveal>
-          <ol className="no-scrollbar -mx-5 mt-14 flex snap-x snap-mandatory overflow-x-auto px-5 pb-4 sm:mx-0 sm:px-0">
-            {journey.map(([stage, value], index) => (
-              <li key={stage} className="relative min-w-40 snap-start border-l border-white/14 px-5 py-2 first:border-l-0 sm:min-w-48">
-                <span className="text-[9px] font-semibold tracking-[0.18em] text-[#d8b86b]">0{index + 1}</span>
-                <p className="mt-8 font-serif text-2xl">{stage}</p>
-                <p className="mt-2 text-xs uppercase tracking-[0.13em] text-white/38">{value}</p>
-                {index < journey.length - 1 ? <ArrowRight className="absolute right-3 top-2 text-white/18" size={14} /> : null}
-              </li>
-            ))}
-          </ol>
+          <div className="relative mt-14">
+            <span className="engraved-thread hidden lg:block" aria-hidden="true" />
+            <ol className="no-scrollbar -mx-5 flex snap-x snap-mandatory overflow-x-auto px-5 pb-4 lg:mx-0 lg:grid lg:grid-cols-9 lg:overflow-visible lg:px-0">
+              {journey.map(([stage, value], index) => (
+                <li key={stage} className={`group relative min-h-72 min-w-[205px] snap-center px-3 lg:min-w-0 ${index % 2 === 0 ? "flex flex-col justify-start pt-5" : "flex flex-col justify-end pb-5"}`}>
+                  <span className="absolute left-3 top-1/2 z-10 size-3 -translate-y-1/2 rounded-full border border-[#e2c580]/60 bg-[#211e1a] transition duration-700 group-hover:scale-150 group-hover:bg-[#e2c580] group-hover:shadow-[0_0_24px_rgba(226,197,128,.8)] lg:left-1/2 lg:-translate-x-1/2" />
+                  <div className="border-l border-white/14 pl-4 lg:border-l-0 lg:pl-0">
+                    <span className="text-[9px] font-semibold tracking-[0.18em] text-[#d8b86b]">0{index + 1}</span>
+                    <p className="mt-5 font-serif text-2xl transition-colors duration-500 group-hover:text-[#e2c580]">{stage}</p>
+                    <p className="mt-2 text-[10px] uppercase tracking-[0.15em] text-white/38">{value}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
       </section>
 
-      <section className="section-pad bg-[#f7f2e8]" aria-labelledby="partnerships-title">
+      <section className="section-pad overflow-hidden bg-[#f7f2e8]" aria-labelledby="partnerships-title">
         <div className="site-container">
           <Reveal>
-            <SectionHeading eyebrow="Gifting & partnerships" title="Made personal. Scaled with care." />
+            <SectionHeading id="partnerships-title" eyebrow="Gifting & partnerships" title="Made personal. Scaled with care." />
           </Reveal>
           <div className="mt-14 grid gap-5 lg:grid-cols-2">
-            {[
-              {
-                icon: Gift,
-                eyebrow: "Wedding & corporate gifting",
-                title: "An heirloom is a gift with somewhere to go.",
-                items: ["Personalised heirlooms", "Premium packaging", "Family engraving", "Bulk consultation", "Custom collections"],
-                cta: "Plan a gift",
-              },
-              {
-                icon: Building2,
-                eyebrow: "Designers & hospitality",
-                title: "Bring material history into rooms people remember.",
-                items: ["Curated cookware and serveware", "Custom material combinations", "Boutique hospitality supply", "Heritage interior styling"],
-                cta: "Partner with Dharohar",
-              },
-            ].map((panel, index) => {
+            {partnerships.map((panel, index) => {
               const Icon = panel.icon;
               return (
-                <Reveal key={panel.title} delay={index * 0.08} className={`rounded-[2rem] p-7 sm:p-10 ${index === 0 ? "bg-[#a85d35] text-white" : "bg-[#3a261b] text-white"}`}>
-                  <div className="flex items-center justify-between">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/65">{panel.eyebrow}</p>
-                    <Icon size={24} strokeWidth={1.2} className="text-[#f0d28d]" />
-                  </div>
-                  <h3 className="mt-14 max-w-xl font-serif text-4xl leading-[1.03] sm:text-5xl">{panel.title}</h3>
-                  <ul className="mt-8 grid gap-3 text-sm sm:grid-cols-2">
-                    {panel.items.map((item) => <li key={item} className="flex items-center gap-2 text-white/68"><Check size={14} className="text-[#f0d28d]" /> {item}</li>)}
-                  </ul>
-                  <a className="mt-10 inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.16em] underline decoration-white/30 underline-offset-8 hover:decoration-white" href="#consultation">{panel.cta} <ArrowRight size={15} /></a>
-                </Reveal>
+                <motion.article
+                  key={panel.title}
+                  initial={reducedMotion ? false : { opacity: 0, y: 28 }}
+                  whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.18 }}
+                  transition={{ duration: 0.75, delay: index * 0.08 }}
+                >
+                  <AmbientScene
+                    src={panel.image}
+                    alt={`${panel.eyebrow} in the Dharohar world`}
+                    className="cinematic-portal min-h-[650px] rounded-[2.25rem]"
+                    imagePosition={panel.position}
+                    overlayClassName="bg-gradient-to-t from-[#1c120d]/98 via-[#2c1c14]/68 to-black/30"
+                  >
+                    <div className="flex min-h-[650px] flex-col justify-between p-7 text-white sm:p-10">
+                      <div className="flex items-center justify-between">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#f0d28d]">{panel.eyebrow}</p>
+                        <span className="grid size-12 place-items-center rounded-full border border-[#f0d28d]/35 bg-black/15 backdrop-blur-sm"><Icon size={22} strokeWidth={1.2} className="text-[#f0d28d]" /></span>
+                      </div>
+                      <div>
+                        <h3 className="max-w-xl font-serif text-4xl leading-[1.01] sm:text-6xl">{panel.title}</h3>
+                        <ul className="mt-8 grid gap-3 border-t border-white/18 pt-6 text-sm sm:grid-cols-2">
+                          {panel.items.map((item) => <li key={item} className="flex items-center gap-2 text-white/68"><Check size={14} className="text-[#f0d28d]" /> {item}</li>)}
+                        </ul>
+                        <a className="mt-10 inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.16em] underline decoration-white/30 underline-offset-8 hover:decoration-white" href="#consultation">{panel.cta} <ArrowRight size={15} /></a>
+                      </div>
+                    </div>
+                  </AmbientScene>
+                </motion.article>
               );
             })}
           </div>
@@ -157,7 +266,7 @@ export function BusinessStory() {
         <div className="site-container">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <Reveal>
-              <SectionHeading eyebrow="Community & journal" title="Knowledge for the modern Indian kitchen." />
+              <SectionHeading id="journal-title" eyebrow="Community & journal" title="Knowledge for the modern Indian kitchen." />
             </Reveal>
             <a className="secondary-button" href="#journal">Visit the journal <ArrowRight size={16} /></a>
           </div>
@@ -191,7 +300,7 @@ export function BusinessStory() {
               <a className="border-button justify-center" href="#collection">Explore the collection</a>
             </div>
             <div className="mt-14 flex flex-wrap gap-x-7 gap-y-3 text-[10px] font-semibold uppercase tracking-[0.17em] text-white/55">
-              {['For homeowners', 'For designers', 'For gifting', 'For hospitality'].map((audience) => <a key={audience} className="transition hover:text-white" href="mailto:consult@dharohar.example">{audience}</a>)}
+              {["For homeowners", "For designers", "For gifting", "For hospitality"].map((audience) => <a key={audience} className="transition hover:text-white" href="mailto:consult@dharohar.example">{audience}</a>)}
             </div>
           </Reveal>
         </div>

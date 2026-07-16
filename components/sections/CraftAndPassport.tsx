@@ -49,7 +49,7 @@ export function CraftAndPassport() {
       <section id="craft" className="section-pad bg-[#fcfaf6]" aria-labelledby="craft-title">
         <div className="site-container">
           <Reveal>
-            <SectionHeading eyebrow="The making" title="Made by hands. Preserved through generations.">
+            <SectionHeading id="craft-title" eyebrow="The making" title="Made by hands. Preserved through generations.">
               <p>Traditional metalwork is not a texture applied at the end. It is a sequence of decisions made by practiced hands.</p>
             </SectionHeading>
           </Reveal>
