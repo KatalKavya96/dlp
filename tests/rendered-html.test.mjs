@@ -66,9 +66,12 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.match(page, /<PersonalisationStudio \/>/);
   assert.match(experience, /aria-labelledby="hero-title"/);
   assert.match(experience, /aria-pressed={active === index}/);
-  assert.match(collection, /aria-label={`View details for \$\{product\.name\}`}/);
-  assert.match(collection, /role="dialog"/);
-  assert.match(collection, /createPortal/);
+  assert.match(collection, /ProductCarouselRow/);
+  assert.match(collection, /dragConstraints/);
+  assert.match(collection, /Show next products in row/);
+  assert.match(collection, /alternate view of \$\{product\.name\}/);
+  assert.match(collection, /NEXT_PUBLIC_STORE_URL/);
+  assert.doesNotMatch(collection, /role="dialog"|createPortal/);
   assert.match(layout, /generateMetadata/);
   assert.match(layout, /x-forwarded-host/);
   assert.match(layout, /openGraph/);

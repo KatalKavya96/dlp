@@ -1,9 +1,12 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, type PanInfo, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import {
+  ArrowLeft,
   ArrowRight,
   Check,
+  CookingPot,
+  Eye,
   Feather,
   Flame,
   Gem,
@@ -19,58 +22,151 @@ import {
   Star,
   UtensilsCrossed,
   Users,
+  Wrench,
+  type LucideIcon,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Reveal } from "@/components/ui/Reveal";
 import { SafeImage } from "@/components/ui/SafeImage";
 
-const materials = [
+type MaterialId = "copper" | "brass" | "bronze";
+
+type MaterialSpecification = {
+  label: string;
+  value: string;
+  icon: LucideIcon;
+};
+
+type MaterialBenefit = {
+  label: string;
+  description: string;
+  rating: number;
+  icon: LucideIcon;
+};
+
+type MaterialProduct = {
+  id: MaterialId;
+  materialName: string;
+  descriptor: string;
+  useCase: string;
+  productName: string;
+  productSubtitle: string;
+  mainImage: string;
+  mainPosition: string;
+  specificationImage: string;
+  specificationPosition: string;
+  alt: string;
+  theme: {
+    accent: string;
+    background: string;
+    shadow: string;
+    swatch: string;
+  };
+  specifications: MaterialSpecification[];
+  benefits: MaterialBenefit[];
+};
+
+const materials: MaterialProduct[] = [
   {
-    name: "Copper",
-    subtitle: "Timeless & traditional",
-    tone: "#bc7047",
-    title: "Tamra Handi",
-    detail: "Hammered. Heritage. Handcrafted.",
-    image: "/images/dharohar-hero-copper.png",
-    position: "70% 54%",
+    id: "copper",
+    materialName: "Copper",
+    descriptor: "Timeless & Traditional",
+    useCase: "Ideal for slow-cooking traditions",
+    productName: "Tamra Handi",
+    productSubtitle: "Pure Copper Cookware",
+    mainImage: "/images/product-wellness-handi-v2.png",
+    mainPosition: "50% 48%",
+    specificationImage: "/images/dharohar-hero-copper.png",
+    specificationPosition: "70% 54%",
+    alt: "Hand-hammered copper Tamra Handi with lid and brass handles",
+    theme: {
+      accent: "#b8663a",
+      background: "linear-gradient(145deg, #f8eddb, #fffaf0 48%, #edcfad)",
+      shadow: "rgba(153, 79, 39, .24)",
+      swatch: "radial-gradient(circle at 32% 24%, #ffd3a8, #bd6c43 48%, #7c3c22 100%)",
+    },
+    specifications: [
+      { label: "Purity", value: "99.7% pure copper", icon: Gem },
+      { label: "Craft", value: "Hand-hammered finish", icon: Hammer },
+      { label: "Ideal use", value: "Slow cooking, curries and stews", icon: CookingPot },
+      { label: "Care level", value: "Moderate · periodic polishing", icon: ShieldCheck },
+      { label: "Material context", value: "Natural metal for traditional cooking", icon: Leaf },
+    ],
     benefits: [
-      ["Heat retention", "Excellent", 5],
-      ["Ritual value", "High", 5],
-      ["Wellness", "Natural & beneficial", 4],
-      ["Care level", "Moderate", 3],
+      { label: "Heat retention", description: "Excellent", rating: 5, icon: Flame },
+      { label: "Ritual value", description: "High", rating: 5, icon: Leaf },
+      { label: "Material context", description: "Natural and traditional", rating: 4, icon: Heart },
+      { label: "Durability", description: "Built for long-term use", rating: 5, icon: ShieldCheck },
+      { label: "Care & maintenance", description: "Requires periodic care", rating: 3, icon: Wrench },
     ],
   },
   {
-    name: "Brass",
-    subtitle: "Balanced & auspicious",
-    tone: "#b5933d",
-    title: "Peetal Kadhai",
-    detail: "Balanced. Radiant. Ceremonial.",
-    image: "/images/heritage-product-rail.webp",
-    position: "82% 58%",
+    id: "brass",
+    materialName: "Brass",
+    descriptor: "Balanced & Auspicious",
+    useCase: "Perfect for rituals and daily use",
+    productName: "Peetal Serving Pot",
+    productSubtitle: "Hand-finished Brassware",
+    mainImage: "/images/materials/brass/peetal-serving-pot-main.png",
+    mainPosition: "50% 50%",
+    specificationImage: "/images/materials/brass/peetal-serving-pot-spec.png",
+    specificationPosition: "50% 50%",
+    alt: "Polished brass Peetal serving pot with engraved bands and lid",
+    theme: {
+      accent: "#ad8127",
+      background: "linear-gradient(145deg, #f8edcf, #fffaf0 52%, #e2c177)",
+      shadow: "rgba(151, 108, 24, .24)",
+      swatch: "radial-gradient(circle at 32% 24%, #fff0a8, #c89e3d 48%, #71531e 100%)",
+    },
+    specifications: [
+      { label: "Composition", value: "Traditional brass alloy", icon: Gem },
+      { label: "Craft", value: "Polished and hand-engraved", icon: Hammer },
+      { label: "Ideal use", value: "Serving, rituals and boiling", icon: CookingPot },
+      { label: "Care level", value: "Considered · keep dry", icon: ShieldCheck },
+      { label: "Material context", value: "Auspicious everyday serveware", icon: Leaf },
+    ],
     benefits: [
-      ["Heat retention", "Very good", 4],
-      ["Ritual value", "Excellent", 5],
-      ["Wellness", "Traditional choice", 4],
-      ["Care level", "Considered", 3],
+      { label: "Heat response", description: "Very good", rating: 4, icon: Flame },
+      { label: "Ritual value", description: "Excellent", rating: 5, icon: Leaf },
+      { label: "Material context", description: "Suitable for traditional use", rating: 4, icon: Heart },
+      { label: "Durability", description: "Strong for daily service", rating: 4, icon: ShieldCheck },
+      { label: "Care & maintenance", description: "Keep dry and polish", rating: 3, icon: Wrench },
     ],
   },
   {
-    name: "Bronze",
-    subtitle: "Strong & enduring",
-    tone: "#766248",
-    title: "Kansa Urli",
-    detail: "Enduring. Sculptural. Grounded.",
-    image: "/images/product-wellness-handi-v2.png",
-    position: "50% 48%",
+    id: "bronze",
+    materialName: "Bronze",
+    descriptor: "Strong & Enduring",
+    useCase: "Excellent for deep cooking",
+    productName: "Kansa Kadai",
+    productSubtitle: "Deep Bronze Cookware",
+    mainImage: "/images/materials/bronze/kansa-kadai-main.png",
+    mainPosition: "50% 50%",
+    specificationImage: "/images/materials/bronze/kansa-kadai-spec.png",
+    specificationPosition: "50% 50%",
+    alt: "Deep hand-hammered bronze Kansa kadai with two side handles",
+    theme: {
+      accent: "#735238",
+      background: "linear-gradient(145deg, #eee1ce, #fffaf0 50%, #cdb58e)",
+      shadow: "rgba(83, 57, 38, .28)",
+      swatch: "radial-gradient(circle at 32% 24%, #c9a66c, #72563a 52%, #33251b 100%)",
+    },
+    specifications: [
+      { label: "Composition", value: "Traditional kansa bronze", icon: Gem },
+      { label: "Craft", value: "Deep hand-hammered bowl", icon: Hammer },
+      { label: "Ideal use", value: "Roasting, sautéing and deep cooking", icon: CookingPot },
+      { label: "Care level", value: "Easy · wash and dry promptly", icon: ShieldCheck },
+      { label: "Material context", value: "Enduring everyday cookware", icon: Leaf },
+    ],
     benefits: [
-      ["Heat retention", "Excellent", 5],
-      ["Ritual value", "High", 4],
-      ["Wellness", "Material conscious", 4],
-      ["Care level", "Easy", 4],
+      { label: "Heat retention", description: "Excellent", rating: 5, icon: Flame },
+      { label: "Ritual value", description: "High", rating: 4, icon: Leaf },
+      { label: "Material context", description: "Natural material", rating: 4, icon: Heart },
+      { label: "Durability", description: "Strong and enduring", rating: 5, icon: ShieldCheck },
+      { label: "Care & maintenance", description: "Straightforward daily care", rating: 4, icon: Wrench },
     ],
   },
-] as const;
+];
 
 const journey = [
   [Search, "Discover", "Find pieces shaped for the rituals of your home."],
@@ -148,54 +244,219 @@ export function HeritageHero() {
 
 export function MaterialExplorer() {
   const [active, setActive] = useState(0);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const reducedMotion = useReducedMotion();
   const material = materials[active];
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const springX = useSpring(pointerX, { stiffness: 120, damping: 24 });
+  const springY = useSpring(pointerY, { stiffness: 120, damping: 24 });
+  const rotateY = useTransform(springX, [-1, 1], [-1.6, 1.6]);
+  const rotateX = useTransform(springY, [-1, 1], [1.2, -1.2]);
+  const showSpecificationImage = hovered || previewOpen;
+
+  useEffect(() => {
+    const nextMaterial = materials[(active + 1) % materials.length];
+    [nextMaterial.mainImage, nextMaterial.specificationImage].forEach((src) => {
+      const image = new window.Image();
+      image.src = src;
+    });
+  }, [active]);
+
+  const selectMaterial = (index: number) => {
+    setActive(index);
+    setPreviewOpen(false);
+    setHovered(false);
+  };
+
+  const move = (direction: 1 | -1) => {
+    selectMaterial((active + direction + materials.length) % materials.length);
+  };
+
+  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    if (Math.abs(info.offset.x) < 55) return;
+    move(info.offset.x < 0 ? 1 : -1);
+  };
 
   return (
     <div className="heritage-page-pad">
-      <HeritageFrame id="materials" labelledBy="materials-title" className="px-6 py-14 sm:px-10 lg:px-16 lg:py-20">
-        <div className="grid gap-12 lg:grid-cols-[.8fr_1.05fr_.9fr] lg:items-center">
+      <HeritageFrame id="materials" labelledBy="materials-title" className="px-5 py-12 sm:px-9 lg:px-12 lg:py-16 xl:px-14">
+        <motion.div
+          className="pointer-events-none absolute inset-0 opacity-70"
+          animate={{ background: material.theme.background }}
+          transition={{ duration: reducedMotion ? 0 : 0.8 }}
+          aria-hidden="true"
+        />
+
+        <div className="relative grid gap-10 xl:grid-cols-[.68fr_1.55fr_.77fr] xl:items-center">
           <Reveal>
             <HeritageLabel>Material selector</HeritageLabel>
-            <h2 id="materials-title" className="heritage-display mt-8 text-5xl leading-[.95] sm:text-6xl">Explore the essence of each metal.</h2>
+            <h2 id="materials-title" className="heritage-display mt-8 text-5xl leading-[.95] sm:text-6xl">Explore the Essence of Each Metal.</h2>
             <div className="heritage-divider my-8" />
-            <p className="max-w-md text-base leading-8 text-[#746756]">Select a material to understand its cooking character, ritual meaning and care needs.</p>
-            <div className="mt-9 flex items-center gap-4 rounded-2xl border border-[#b78b3c]/25 bg-white/35 p-5 text-sm leading-6 text-[#745e42]"><Leaf className="shrink-0 text-[#b78b3c]" /> Each metal is chosen with purpose. Every piece is made to last.</div>
+            <p className="max-w-md text-base leading-8 text-[#746756]">Each metal holds a story. Discover its unique characteristics, rooted in tradition and crafted for modern well-being.</p>
+            <div className="mt-9 flex items-start gap-4 rounded-2xl border border-[#b78b3c]/25 bg-white/45 p-5 text-sm leading-7 text-[#745e42] shadow-[0_18px_50px_rgba(91,62,27,.06)]">
+              <Leaf className="mt-1 shrink-0 text-[#b78b3c]" aria-hidden="true" />
+              <span>Rooted in tradition.<br />Crafted for generations.<br />Made to last.</span>
+            </div>
           </Reveal>
 
-          <motion.div key={material.name} className="text-center" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .5 }}>
-            <div className="heritage-product-arch relative mx-auto aspect-[4/5] max-w-[470px] overflow-hidden">
-              <SafeImage src={material.image} alt={`${material.name} cookware selection`} fill sizes="(max-width: 1024px) 90vw, 34vw" className="object-cover" style={{ objectPosition: material.position }} />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#fff9ed] via-transparent to-transparent" />
+          <div className="min-w-0">
+            <motion.div
+              data-material-stage
+              data-active-material={material.id}
+              role="region"
+              aria-roledescription="material carousel"
+              aria-label={`${material.materialName} material showcase. Use left and right arrow keys to change material.`}
+              tabIndex={0}
+              onKeyDown={(event) => {
+                if (event.key === "ArrowRight") { event.preventDefault(); move(1); }
+                if (event.key === "ArrowLeft") { event.preventDefault(); move(-1); }
+              }}
+              onPointerMove={(event) => {
+                if (reducedMotion) return;
+                const bounds = event.currentTarget.getBoundingClientRect();
+                pointerX.set(((event.clientX - bounds.left) / bounds.width - 0.5) * 2);
+                pointerY.set(((event.clientY - bounds.top) / bounds.height - 0.5) * 2);
+              }}
+              onPointerLeave={() => { pointerX.set(0); pointerY.set(0); setHovered(false); }}
+              drag={reducedMotion ? false : "x"}
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.12}
+              onDragEnd={handleDragEnd}
+              className="relative isolate h-[500px] touch-pan-y overflow-hidden rounded-[2.4rem] border border-[#b78b3c]/20 bg-[rgba(255,250,239,.54)] shadow-[0_28px_80px_rgba(78,54,25,.13)] outline-none focus-visible:ring-2 focus-visible:ring-[#b78b3c] sm:h-[600px] lg:h-[650px]"
+            >
+              <div className="absolute inset-x-[15%] top-6 h-[74%] rounded-t-[48%] border border-[#b78b3c]/18 bg-[linear-gradient(180deg,rgba(255,255,255,.68),rgba(233,213,180,.22))] shadow-inner sm:inset-x-[18%]" aria-hidden="true" />
+              <div className="absolute inset-x-[8%] bottom-[7%] h-[20%] rounded-[50%] border border-[#b78b3c]/18 bg-[#f6ecda] shadow-[0_28px_42px_rgba(87,58,26,.16)]" aria-hidden="true" />
+
+              {materials.map((item, index) => {
+                let distance = index - active;
+                if (distance > 1) distance -= materials.length;
+                if (distance < -1) distance += materials.length;
+                const isActive = distance === 0;
+
+                return (
+                  <motion.div
+                    key={item.id}
+                    data-material-item={item.id}
+                    aria-hidden={!isActive}
+                    initial={false}
+                    animate={{
+                      x: `${distance * 80}%`,
+                      scale: isActive ? 1 : 0.72,
+                      opacity: isActive ? 1 : 0.42,
+                      filter: isActive ? "blur(0px)" : "blur(1.5px)",
+                    }}
+                    transition={{ duration: reducedMotion ? 0 : 0.82, ease: [0.22, 1, 0.36, 1] }}
+                    className="absolute inset-0 flex items-end justify-center px-[11%] pb-[13%] pt-10 sm:px-[13%]"
+                    style={{ zIndex: isActive ? 20 : 5 }}
+                  >
+                    <motion.div
+                      className="relative h-full w-full"
+                      style={isActive && !reducedMotion ? { rotateX, rotateY, transformPerspective: 1100 } : undefined}
+                      onMouseEnter={() => isActive && setHovered(true)}
+                      onMouseLeave={() => isActive && setHovered(false)}
+                    >
+                      <SafeImage
+                        src={item.mainImage}
+                        alt={isActive ? item.alt : ""}
+                        fill
+                        priority={index === 0}
+                        sizes="(max-width: 640px) 78vw, (max-width: 1280px) 64vw, 39vw"
+                        className="select-none object-contain drop-shadow-[0_28px_24px_rgba(67,42,20,.22)]"
+                        style={{ objectPosition: item.mainPosition }}
+                      />
+                      {isActive && (
+                        <motion.div
+                          data-specification-image
+                          className="absolute inset-0"
+                          initial={false}
+                          animate={{ clipPath: showSpecificationImage ? "inset(0 0 0 42%)" : "inset(0 0 0 100%)" }}
+                          transition={{ duration: reducedMotion ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] }}
+                        >
+                          <SafeImage
+                            src={item.specificationImage}
+                            alt={`${item.productName} close specification view`}
+                            fill
+                            sizes="(max-width: 640px) 78vw, (max-width: 1280px) 64vw, 39vw"
+                            className="select-none object-contain drop-shadow-[0_28px_24px_rgba(67,42,20,.22)]"
+                            style={{ objectPosition: item.specificationPosition }}
+                          />
+                        </motion.div>
+                      )}
+                    </motion.div>
+                  </motion.div>
+                );
+              })}
+
+              <button type="button" onClick={() => move(-1)} aria-label="Show previous material" className="absolute left-3 top-1/2 z-40 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-[#b78b3c]/45 bg-[#fffaf0]/90 text-[#815c2d] shadow-lg transition hover:bg-white sm:left-5"><ArrowLeft size={18} /></button>
+              <button type="button" onClick={() => move(1)} aria-label="Show next material" className="absolute right-3 top-1/2 z-40 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-[#b78b3c]/45 bg-[#fffaf0]/90 text-[#815c2d] shadow-lg transition hover:bg-white sm:right-5"><ArrowRight size={18} /></button>
+
+              <aside className="absolute right-5 top-7 z-30 hidden w-[230px] rounded-[1.55rem] border border-[#b78b3c]/32 bg-[#fffaf0]/92 p-5 text-left shadow-[0_24px_60px_rgba(74,46,20,.17)] backdrop-blur-md xl:block" aria-label={`${material.productName} specifications`}>
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div key={material.id} initial={reducedMotion ? false : { opacity: 0, x: 14 }} animate={{ opacity: 1, x: 0 }} exit={reducedMotion ? undefined : { opacity: 0, x: -10 }} transition={{ duration: reducedMotion ? 0 : 0.34 }}>
+                    <p className="font-serif text-xl uppercase tracking-[.06em] text-[#503922]">{material.productName}</p>
+                    <p className="mt-1 text-[10px] uppercase tracking-[.14em] text-[#9a7440]">{material.productSubtitle}</p>
+                    <div className="my-4 h-px bg-[#b78b3c]/22" />
+                    <div className="space-y-4">
+                      {material.specifications.slice(0, 4).map(({ label, value, icon: Icon }) => <div key={label} className="flex gap-3"><Icon size={16} className="mt-0.5 shrink-0 text-[#a77a30]" aria-hidden="true" /><span><strong className="block text-[10px] uppercase tracking-[.1em] text-[#6e5437]">{label}</strong><span className="mt-0.5 block text-[11px] leading-4 text-[#81705b]">{value}</span></span></div>)}
+                    </div>
+                    <button type="button" onClick={() => setPreviewOpen((open) => !open)} className="mt-5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.12em] text-[#916725]"><Eye size={14} /> {previewOpen ? "Close detail view" : "View detail image"}</button>
+                  </motion.div>
+                </AnimatePresence>
+              </aside>
+
+              <div className="absolute inset-x-0 bottom-5 z-40 flex justify-center gap-3" aria-label="Choose material slide">
+                {materials.map((item, index) => <button key={item.id} type="button" onClick={() => selectMaterial(index)} aria-label={`Show ${item.materialName}`} aria-current={active === index ? "true" : undefined} className={`h-2 rounded-full transition-all ${active === index ? "w-8 bg-[#a8782e]" : "w-2 bg-[#bca98b] hover:bg-[#a8782e]"}`} />)}
+              </div>
+            </motion.div>
+
+            <div className="mt-5 flex items-center justify-between gap-4 px-2">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div key={material.id} initial={reducedMotion ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={reducedMotion ? undefined : { opacity: 0, y: -6 }} transition={{ duration: reducedMotion ? 0 : 0.34 }}>
+                  <h3 className="font-serif text-2xl uppercase tracking-[.07em] text-[#4a3420] sm:text-3xl">{material.productName}</h3>
+                  <p className="mt-1 text-sm text-[#776a59]">{material.descriptor} · {material.useCase}</p>
+                </motion.div>
+              </AnimatePresence>
+              <button type="button" onClick={() => setPreviewOpen((open) => !open)} aria-expanded={previewOpen} className="flex shrink-0 items-center gap-2 rounded-full border border-[#b78b3c]/40 bg-white/55 px-4 py-2 text-[10px] font-bold uppercase tracking-[.11em] text-[#895f25] xl:hidden"><Eye size={14} /> Specifications</button>
             </div>
-            <h3 className="mt-5 font-serif text-3xl uppercase tracking-[.08em] text-[#4a3420]">{material.title}</h3>
-            <p className="mt-2 text-sm text-[#776a59]">{material.detail}</p>
-          </motion.div>
+
+            <AnimatePresence initial={false}>
+              {previewOpen && <motion.div initial={reducedMotion ? false : { height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={reducedMotion ? undefined : { height: 0, opacity: 0 }} transition={{ duration: reducedMotion ? 0 : 0.35 }} className="overflow-hidden xl:hidden"><div className="mt-4 grid gap-3 rounded-2xl border border-[#b78b3c]/25 bg-white/50 p-4 sm:grid-cols-2">{material.specifications.map(({ label, value, icon: Icon }) => <div key={label} className="flex gap-3"><Icon size={16} className="mt-0.5 shrink-0 text-[#a77a30]" /><span><strong className="block text-[10px] uppercase tracking-[.1em] text-[#6e5437]">{label}</strong><span className="text-xs text-[#81705b]">{value}</span></span></div>)}</div></motion.div>}
+            </AnimatePresence>
+          </div>
 
           <Reveal delay={.1}>
             <p className="mb-6 text-center text-xs font-bold uppercase tracking-[.24em] text-[#a77a30] lg:text-left">Key benefits</p>
-            <div className="overflow-hidden rounded-[1.6rem] border border-[#b78b3c]/28 bg-white/30">
-              {material.benefits.map(([name, value, rating], index) => (
-                <div key={name} className="flex items-center gap-4 border-b border-[#b78b3c]/20 px-5 py-5 last:border-0">
-                  <span className="grid size-11 shrink-0 place-items-center rounded-full border border-[#b78b3c]/45 text-[#a77a30]">{index === 0 ? <Flame size={19} /> : index === 1 ? <Leaf size={19} /> : index === 2 ? <Heart size={19} /> : <ShieldCheck size={19} />}</span>
-                  <div className="min-w-0 flex-1"><p className="font-serif text-xl">{name}</p><p className="mt-1 text-xs text-[#7a6a55]">{value}</p></div>
-                  <div className="flex gap-1" aria-label={`${rating} out of 5`}>
-                    {[1, 2, 3, 4, 5].map((dot) => <span key={dot} className={`size-2 rounded-full ${dot <= rating ? "bg-[#b78b3c]" : "bg-[#d8cdbb]"}`} />)}
-                  </div>
-                </div>
-              ))}
+            <div className="overflow-hidden rounded-[1.6rem] border border-[#b78b3c]/28 bg-white/40 shadow-[0_20px_55px_rgba(79,51,22,.07)]">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div key={material.id} initial={reducedMotion ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={reducedMotion ? undefined : { opacity: 0, y: -8 }} transition={{ duration: reducedMotion ? 0 : 0.36 }}>
+                  {material.benefits.map(({ label, description, rating, icon: Icon }) => (
+                    <div key={label} className="flex items-center gap-3 border-b border-[#b78b3c]/20 px-4 py-4 last:border-0">
+                      <span className="grid size-10 shrink-0 place-items-center rounded-full border border-[#b78b3c]/45 text-[#a77a30]"><Icon size={18} aria-hidden="true" /></span>
+                      <div className="min-w-0 flex-1"><p className="font-serif text-lg leading-tight">{label}</p><p className="mt-1 text-[11px] leading-4 text-[#7a6a55]">{description}</p></div>
+                      <div className="flex gap-1" aria-label={`${rating} out of 5`}>{[1, 2, 3, 4, 5].map((dot) => <motion.span key={dot} initial={reducedMotion ? false : { scale: 0, rotate: 45 }} animate={{ scale: 1, rotate: 45 }} transition={{ delay: reducedMotion ? 0 : dot * .035 }} className={`size-1.5 ${dot <= rating ? "bg-[#b78b3c]" : "bg-[#d8cdbb]"}`} />)}</div>
+                    </div>
+                  ))}
+                </motion.div>
+              </AnimatePresence>
+              <p className="border-t border-[#b78b3c]/16 px-5 py-4 text-xs leading-5 text-[#7b6a53]">Discover how each material supports considered cooking and long-term use.</p>
             </div>
           </Reveal>
         </div>
 
-        <div className="mt-12 grid gap-3 md:grid-cols-3">
+        <div className="relative mt-10 flex snap-x gap-3 overflow-x-auto pb-3 md:grid md:grid-cols-3 md:overflow-visible md:pb-0">
           {materials.map((item, index) => (
-            <button key={item.name} type="button" aria-pressed={active === index} onClick={() => setActive(index)} className={`flex items-center gap-4 rounded-[1.3rem] border p-4 text-left transition duration-300 ${active === index ? "border-[#b78b3c] bg-white/75 shadow-[0_10px_28px_rgba(104,72,31,.1)]" : "border-[#b78b3c]/20 bg-white/25 hover:border-[#b78b3c]/55"}`}>
-              <span className="size-16 rounded-full border border-white/70 shadow-inner" style={{ background: `radial-gradient(circle at 32% 25%, #f7dfab, ${item.tone} 60%, #4b3522)` }} />
-              <span className="min-w-0 flex-1"><strong className="block font-serif text-2xl font-medium uppercase tracking-[.06em]">{item.name}</strong><span className="mt-1 block text-sm text-[#766957]">{item.subtitle}</span></span>
+            <button key={item.id} type="button" aria-pressed={active === index} aria-current={active === index ? "true" : undefined} onClick={() => selectMaterial(index)} className={`relative flex min-w-[82vw] snap-center items-center gap-4 rounded-[1.3rem] border p-4 text-left transition duration-300 sm:min-w-[360px] md:min-w-0 ${active === index ? "border-[#b78b3c] bg-white/80 shadow-[0_13px_34px_rgba(104,72,31,.13)]" : "border-[#b78b3c]/20 bg-white/30 hover:border-[#b78b3c]/55"}`}>
+              {active === index && <span className="absolute -top-3 right-4 rounded-full bg-[#ae7e32] px-3 py-1 text-[9px] font-bold uppercase tracking-[.15em] text-white">Active</span>}
+              <span className="size-16 shrink-0 rounded-full border border-white/70 shadow-[inset_0_0_14px_rgba(255,255,255,.45),0_8px_20px_rgba(73,49,24,.12)]" style={{ background: item.theme.swatch }} />
+              <span className="min-w-0 flex-1"><strong className="block font-serif text-2xl font-medium uppercase tracking-[.06em]">{item.materialName}</strong><span className="mt-1 block text-sm text-[#766957]">{item.descriptor}</span><span className="mt-1 block text-[11px] text-[#8e7a61]">{item.useCase}</span></span>
               <span className={`grid size-8 place-items-center rounded-full border ${active === index ? "border-[#b78b3c] bg-[#b78b3c] text-white" : "border-[#b78b3c]/45 text-[#9c702b]"}`}>{active === index ? <Check size={15} /> : <ArrowRight size={14} />}</span>
             </button>
           ))}
         </div>
+
+        <p className="sr-only" aria-live="polite">Showing {material.materialName}: {material.productName}. {material.descriptor}.</p>
       </HeritageFrame>
     </div>
   );
