@@ -32,7 +32,10 @@ test("server-renders the finished Dharohar brand gateway", async () => {
   assert.match(html, /<title>Dharohar — Crafted by Tradition\. Carried by You\.<\/title>/i);
   assert.match(html, /Crafted by tradition\./);
   assert.match(html, /Carried by you\./);
+  assert.match(html, /Gathering the collection/);
+  assert.match(html, /Enter collection/);
   assert.match(html, /Choose the character of your kitchen\./);
+  assert.match(html, /View all Copper pieces/);
   assert.match(html, /A vessel can hold more than a recipe\./);
   assert.match(html, /Objects chosen like chapters, not inventory\./);
   assert.match(html, /The Everyday Kadhai/);
@@ -42,7 +45,7 @@ test("server-renders the finished Dharohar brand gateway", async () => {
   assert.match(html, /The story stays with the object\./);
   assert.match(html, /See your story on the object\./);
   assert.match(html, /Four doorways into Dharohar\./);
-  assert.match(html, /Build a kitchen your family will remember\./);
+  assert.match(html, /A quieter way to begin\./);
   assert.match(html, /<meta property="og:image" content="http:\/\/localhost:3000\/og\.png"/i);
   assert.match(html, /<link rel="icon" href="http:\/\/localhost:3000\/favicon\.png"/i);
   assert.match(html, /application\/ld\+json/);
@@ -50,9 +53,10 @@ test("server-renders the finished Dharohar brand gateway", async () => {
 });
 
 test("keeps the production shell, SEO, and accessibility safeguards in source", async () => {
-  const [page, gateway, layout, css, packageJson, readme] = await Promise.all([
+  const [page, gateway, loading, layout, css, packageJson, readme] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../components/BrandGateway.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../components/DharoharLoading.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
@@ -68,6 +72,12 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.match(gateway, /NEXT_PUBLIC_CONSULTATION_EMAIL/);
   assert.match(gateway, /Prepare consultation request/);
   assert.match(gateway, /Pause cinematic motion/);
+  assert.match(gateway, /hero-hover-portal/);
+  assert.match(gateway, /ptal-styled-copper-pair\.webp/);
+  assert.match(gateway, /<DharoharLoader \/>/);
+  assert.match(loading, /Promise\.race/);
+  assert.match(loading, /document\.fonts/);
+  assert.match(loading, /DharoharImage/);
   assert.match(gateway, /NEXT_PUBLIC_WHATSAPP_NUMBER/);
   assert.match(gateway, /NEXT_PUBLIC_BOOKING_URL/);
   assert.match(gateway, /dharohar:store-intent/);
@@ -78,6 +88,7 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.match(layout, /openGraph/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.match(css, /:focus-visible/);
+  assert.match(css, /dharohar-image-skeleton/);
   assert.match(packageJson, /"framer-motion"/);
   assert.match(packageJson, /"lucide-react"/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
@@ -92,4 +103,6 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   await access(new URL("../public/images/heritage-product-rail.webp", import.meta.url));
   await access(new URL("../public/images/curated/ptal-brass-kadhai-set.webp", import.meta.url));
   await access(new URL("../public/images/curated/ptal-copper-madurai-handi.webp", import.meta.url));
+  await access(new URL("../public/images/curated/ptal-styled-copper-pair.webp", import.meta.url));
+  await access(new URL("../public/images/curated/ptal-styled-copper-detail.webp", import.meta.url));
 });

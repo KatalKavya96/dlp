@@ -45,6 +45,7 @@ The form prepares a complete email in the visitor's mail app and never shows a f
 
 - `app/` — App Router page, metadata and global design tokens
 - `components/BrandGateway.tsx` — cinematic hero, material explorer, generational story, editorial collection, guided finder, heritage passport, live engraving, store handoff and consultation journey
+- `components/DharoharLoading.tsx` — branded full-site asset preloader and reusable in-page image skeletons
 - `components/sections/` — retained experimental product-story sections
 - `components/ui/` — reusable reveal, image and heading components
 - `data/dharohar.ts` — typed product and editorial content
@@ -64,8 +65,10 @@ The current images are editorial placeholders sourced under the Unsplash license
 
 `heritage-product-rail.webp` is an optimized original AI-generated Dharohar visual created for the compact product rail, with the high-resolution PNG retained as its editable campaign master. It contains no copied branding, packaging, reviews or discount claims from the supplied references.
 
-The high-resolution P-TAL files requested for design review are stored under `public/images/reference/ptal/`, with optimized derivatives under `public/images/curated/`. They are temporary reference assets and require usage permission or replacement with Dharohar-owned photography before commercial launch.
+The high-resolution P-TAL files requested for design review are stored under `public/images/reference/ptal/`, with optimized derivatives under `public/images/curated/`. The four styled Copper Lagaan review images are retained at their source resolution alongside 2000 × 2000 WebP derivatives named `ptal-styled-copper-*`. They are temporary reference assets and require usage permission or replacement with Dharohar-owned photography before commercial launch.
 
 ## Accessibility and performance
 
 Controls are keyboard accessible, cinematic scenes include a pause control, animated sections respect `prefers-reduced-motion`, local imagery uses `next/image`, the mobile navigation is modal, and semantic section landmarks support screen readers and search engines.
+
+The opening Dharohar sequence waits for the page, local campaign imagery and fonts to settle before revealing the experience. A 15-second safety release prevents a stalled request from trapping visitors, while image-level skeletons cover any later dynamic loading or cache miss.
