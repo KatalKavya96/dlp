@@ -1,6 +1,6 @@
 # Dharohar landing page
 
-A responsive, editorial brand gateway for Dharohar — built to establish desire and trust, preview a concise collection and send qualified visitors to the main commerce site or consultation channel.
+A responsive, cinematic brand gateway for Dharohar — built to establish desire and trust, guide visitors through materials and family stories, preview a concise collection and send qualified visitors to the main commerce site or consultation channel.
 
 ## Run locally
 
@@ -30,12 +30,21 @@ Set the consultation email used by the enquiry form:
 NEXT_PUBLIC_CONSULTATION_EMAIL=hello@dharohar.in
 ```
 
+Optional experience handoffs:
+
+```bash
+NEXT_PUBLIC_BOOKING_URL=https://your-booking-page.example
+NEXT_PUBLIC_WHATSAPP_NUMBER=919999999999
+```
+
+When no booking URL is configured, the 20-minute consultation action prepares an email request. When no WhatsApp number is configured, the shortlist opens WhatsApp's generic share flow without inventing a recipient.
+
 The form prepares a complete email in the visitor's mail app and never shows a false "received" state. Replace this with a CRM or transactional form endpoint when the production destination is available.
 
 ## Structure
 
 - `app/` — App Router page, metadata and global design tokens
-- `components/BrandGateway.tsx` — active brand gateway, curated product preview, routing and consultation journey
+- `components/BrandGateway.tsx` — cinematic hero, material explorer, generational story, editorial collection, guided finder, heritage passport, live engraving, store handoff and consultation journey
 - `components/sections/` — retained experimental product-story sections
 - `components/ui/` — reusable reveal, image and heading components
 - `data/dharohar.ts` — typed product and editorial content
@@ -59,4 +68,4 @@ The high-resolution P-TAL files requested for design review are stored under `pu
 
 ## Accessibility and performance
 
-Controls are keyboard accessible, animated sections respect `prefers-reduced-motion`, local imagery uses `next/image`, the mobile navigation is modal, and semantic section landmarks support screen readers and search engines.
+Controls are keyboard accessible, cinematic scenes include a pause control, animated sections respect `prefers-reduced-motion`, local imagery uses `next/image`, the mobile navigation is modal, and semantic section landmarks support screen readers and search engines.

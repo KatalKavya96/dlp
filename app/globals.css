@@ -418,6 +418,49 @@ button {
   will-change: transform, opacity;
 }
 
+.cinematic-hero {
+  --pointer-x: 72%;
+  --pointer-y: 38%;
+}
+
+.cinematic-pointer-light {
+  background: radial-gradient(440px circle at var(--pointer-x) var(--pointer-y), rgb(255 222 161 / 12%), transparent 65%);
+  mix-blend-mode: screen;
+  transition: background-position 180ms ease;
+}
+
+.consult-label {
+  margin-bottom: .5rem;
+  display: block;
+  color: #e0bd76;
+  font-size: .56rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.consult-input {
+  width: 100%;
+  min-height: 3.25rem;
+  border: 1px solid rgb(255 255 255 / 15%);
+  border-radius: .75rem;
+  background-color: rgb(255 255 255 / 8%);
+  padding-inline: 1rem;
+  color: white;
+  font-size: .875rem;
+  outline: none;
+  transition: border-color 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
+}
+
+.consult-input::placeholder {
+  color: rgb(255 255 255 / 30%);
+}
+
+.consult-input:focus {
+  border-color: #e0bd76;
+  box-shadow: 0 0 0 4px rgb(224 189 118 / 9%);
+}
+
 .ambient-scene .ambient-scene-image,
 .ambient-scene .ambient-window-light,
 .ambient-scene .ambient-leaf-shadow,
