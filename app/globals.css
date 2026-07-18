@@ -765,6 +765,116 @@ button {
   content: "";
 }
 
+.restoration-stage::before {
+  position: absolute;
+  inset: 0;
+  z-index: -8;
+  background-image:
+    radial-gradient(circle at 15% 22%, rgb(184 99 53 / 18%), transparent 28%),
+    radial-gradient(circle at 82% 72%, rgb(211 170 85 / 11%), transparent 24%);
+  content: "";
+}
+
+.restoration-ambient {
+  background:
+    linear-gradient(112deg, transparent 36%, rgb(233 199 128 / 5%) 48%, transparent 60%),
+    radial-gradient(circle at 50% 38%, rgb(177 93 49 / 10%), transparent 36%);
+  animation: restoration-breathe 10s ease-in-out infinite alternate;
+}
+
+.restoration-range {
+  height: 1px;
+  appearance: none;
+  background: linear-gradient(90deg, #d8b86b, rgb(255 255 255 / 20%));
+  cursor: ew-resize;
+}
+
+.restoration-range::-webkit-slider-thumb {
+  width: 18px;
+  height: 18px;
+  appearance: none;
+  border: 1px solid #f0d18d;
+  border-radius: 999px;
+  background: #24150e;
+  box-shadow: 0 0 0 5px rgb(216 184 107 / 16%), 0 0 18px rgb(216 184 107 / 38%);
+}
+
+.restoration-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 1px solid #f0d18d;
+  border-radius: 999px;
+  background: #24150e;
+  box-shadow: 0 0 0 5px rgb(216 184 107 / 16%), 0 0 18px rgb(216 184 107 / 38%);
+}
+
+.ritual-doorway .doorway-light {
+  background: linear-gradient(108deg, transparent 35%, rgb(255 238 194 / 17%) 48%, transparent 61%);
+  opacity: 0;
+  transform: translateX(-55%);
+  transition: opacity 500ms ease, transform 1100ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.ritual-doorway:hover .doorway-light,
+.ritual-doorway:focus-within .doorway-light {
+  opacity: 1;
+  transform: translateX(45%);
+}
+
+.material-wisdom::before {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 14%, rgb(255 255 255 / 75%), transparent 25%),
+    radial-gradient(circle at 9% 78%, rgb(183 139 60 / 8%), transparent 22%);
+  content: "";
+  pointer-events: none;
+}
+
+.wisdom-border::before,
+.wisdom-border::after {
+  position: absolute;
+  inset-inline: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(183 139 60 / 45%), transparent);
+  content: "";
+  animation: wisdom-line 7s ease-in-out infinite alternate;
+}
+
+.wisdom-border::before { top: 18px; }
+.wisdom-border::after { bottom: 18px; animation-direction: alternate-reverse; }
+
+.wisdom-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.wisdom-card::after {
+  position: absolute;
+  inset: -35%;
+  background: linear-gradient(112deg, transparent 44%, rgb(255 255 255 / 40%) 50%, transparent 56%);
+  content: "";
+  opacity: 0;
+  transform: translateX(-45%);
+  transition: opacity 450ms ease, transform 900ms cubic-bezier(.16, 1, .3, 1);
+  pointer-events: none;
+}
+
+.wisdom-card:hover::after {
+  opacity: .8;
+  transform: translateX(45%);
+}
+
+.care-dock {
+  transition: transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease;
+}
+
+.care-dock:hover {
+  border-color: rgb(216 184 107 / 70%);
+  box-shadow: 0 18px 60px rgb(0 0 0 / 36%), 0 0 30px rgb(216 184 107 / 10%);
+  transform: translateY(-3px);
+}
+
 .ambient-scene .ambient-scene-image,
 .ambient-scene .ambient-window-light,
 .ambient-scene .ambient-leaf-shadow,
@@ -845,6 +955,16 @@ button {
 @keyframes ambient-camera {
   from { transform: scale(1.005) translate3d(-.25%, -.2%, 0); filter: saturate(.96); }
   to { transform: scale(1.035) translate3d(.35%, .25%, 0); filter: saturate(1.05); }
+}
+
+@keyframes restoration-breathe {
+  from { opacity: .42; transform: scale(1); }
+  to { opacity: .9; transform: scale(1.04); }
+}
+
+@keyframes wisdom-line {
+  from { transform: scaleX(.3); opacity: .25; }
+  to { transform: scaleX(1); opacity: .9; }
 }
 
 @keyframes dharohar-loader-orbit {

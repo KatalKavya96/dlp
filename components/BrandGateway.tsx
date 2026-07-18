@@ -16,17 +16,21 @@ import {
   Gift,
   Hammer,
   HeartHandshake,
+  History,
   Mail,
   Menu,
   MessageCircle,
   PackageCheck,
+  PenLine,
   QrCode,
   RotateCcw,
   Send,
   ShieldCheck,
   Sparkles,
+  Droplets,
   Users,
   WandSparkles,
+  Wrench,
   X,
 } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
@@ -128,15 +132,61 @@ const curatedProducts = [
 const passportDetails = [
   { id: "maker", icon: Hammer, label: "Maker & origin", title: "A person, not a production line.", copy: "The passport records the artisan or workshop responsible for the piece and the craft region it belongs to." },
   { id: "material", icon: ShieldCheck, label: "Material clarity", title: "Know what touches your food.", copy: "Composition, lining, intended use and care boundaries stay attached to the object throughout its life." },
-  { id: "care", icon: HeartHandshake, label: "Care history", title: "Restoration becomes part of the story.", copy: "Guidance, repair and future restoration visits can be recorded rather than forgotten between generations." },
-  { id: "family", icon: BookOpenText, label: "Family record", title: "Ownership carries meaning.", copy: "Names, dates and the reason the piece entered the family create a provenance that can travel with it." },
+  { id: "guidance", icon: HeartHandshake, label: "Care guidance", title: "Guidance shaped around the object.", copy: "Cleaning, storage, food compatibility and everyday care remain easy to revisit whenever the piece is used." },
+  { id: "restoration", icon: History, label: "Restoration history", title: "Every return becomes a chapter.", copy: "Re-tinning, polishing, dent repair and engraving updates form a dated service record instead of disappearing with time." },
+  { id: "family", icon: PenLine, label: "Engraving & family record", title: "Ownership carries meaning.", copy: "Names, dates and the reason the piece entered the family create a provenance that can travel with it." },
+  { id: "transfer", icon: BookOpenText, label: "Next keeper", title: "The record travels forward.", copy: "A future owner receives the maker story, care history and family context together with the physical object." },
 ] as const;
 
 const intentions = [
-  { eyebrow: "For daily rituals", title: "Everyday cookware", copy: "Begin with one useful piece, chosen for the food you cook most often.", image: "/images/curated/ptal-brass-flat-kadhai.webp", path: "/collections/everyday-cookware", cta: "Shop everyday", icon: HeartHandshake },
-  { eyebrow: "For milestones", title: "Wedding & festive gifting", copy: "Personalised pieces and presentation-ready sets for beginnings worth remembering.", image: "/images/curated/ptal-copper-madurai-handi.webp", path: "/collections/wedding-gifts", cta: "Explore gifting", icon: Gift },
-  { eyebrow: "For the whole home", title: "The complete rasoi", copy: "A consultation-led collection shaped around your cooking, family and rituals.", image: "/images/curated/ptal-brass-kadhai-set.webp", path: "/collections/complete-rasoi", cta: "Build your rasoi", icon: PackageCheck },
-  { eyebrow: "For projects", title: "Design & hospitality", copy: "A dedicated path for designers, restaurants, boutique stays and thoughtful spaces.", image: "/images/indian-table.jpg", path: "/pages/trade-and-hospitality", cta: "Start a project", icon: Building2 },
+  { eyebrow: "Cook", title: "At the flame", copy: "Kadhais, handis, patilas, lagans and tawas for the meals your home returns to.", image: "/images/curated/ptal-brass-flat-kadhai.webp", path: "/collections/everyday-cookware", cta: "Enter cookware", icon: HeartHandshake },
+  { eyebrow: "Serve", title: "Around the table", copy: "Thalis, bowls, platters, cutlery and serving forms that turn food into gathering.", image: "/images/indian-table.jpg", path: "/collections/tableware", cta: "Set the table", icon: PackageCheck },
+  { eyebrow: "Hydrate", title: "The water ritual", copy: "Copper bottles, tumblers, glasses, carafes, jugs and dispensers for considered daily use.", image: "/images/curated/ptal-copper-dispenser-lifestyle.jpg", path: "/collections/drinkware", cta: "Explore hydration", icon: Droplets },
+  { eyebrow: "Gift", title: "For a milestone", copy: "Personalised pieces and presentation-ready sets for beginnings worth remembering.", image: "/images/curated/ptal-copper-tumbler.jpg", path: "/collections/wedding-gifts", cta: "Choose a gift", icon: Gift },
+  { eyebrow: "Restore", title: "Return it to care", copy: "A clear route to re-tinning, polishing, dent repair, engraving updates and expert guidance.", image: "/images/artisan.jpg", path: "/pages/restoration-care", cta: "Begin restoration", icon: Wrench },
+] as const;
+
+const ritualWorlds = [
+  {
+    id: "hydrate",
+    eyebrow: "Hydration ritual",
+    title: "Water, carried beautifully.",
+    copy: "From a hand-hammered bottle at your desk to tumblers, carafes, jugs and dispensers at the family table.",
+    image: "/images/curated/ptal-copper-dispenser-lifestyle.jpg",
+    path: "/collections/drinkware",
+    objects: ["Bottles", "Tumblers", "Glasses", "Carafes & jugs", "Dispensers"],
+    gallery: [["/images/curated/ptal-copper-bottle.jpg", "Copper bottle"], ["/images/curated/ptal-copper-tumbler.jpg", "Copper tumbler"], ["/images/curated/ptal-copper-dispenser.png", "Water dispenser"]],
+  },
+  {
+    id: "morning",
+    eyebrow: "Morning ritual",
+    title: "The first pour of the day.",
+    copy: "Davara coffee sets and small serving forms made for familiar gestures that deserve better objects.",
+    image: "/images/curated/ptal-brass-davara-lifestyle.jpg",
+    path: "/collections/drinkware",
+    objects: ["Davara sets", "Coffee tumblers", "Tea service", "Small trays"],
+    gallery: [["/images/curated/ptal-brass-davara.jpg", "Brass davara set"], ["/images/curated/ptal-brass-davara-lifestyle.jpg", "Davara gift ritual"], ["/images/curated/ptal-copper-tumbler.jpg", "Lidded tumbler"]],
+  },
+  {
+    id: "table",
+    eyebrow: "Table ritual",
+    title: "A table with material memory.",
+    copy: "Thalis, bowls, platters and cutlery composed as a warm, generous landscape rather than separate products.",
+    image: "/images/indian-table.jpg",
+    path: "/collections/tableware",
+    objects: ["Thalis", "Bowls", "Platters", "Cutlery", "Serveware"],
+    gallery: [["/images/indian-table.jpg", "Complete table"], ["/images/brass-collection.jpg", "Serving pieces"], ["/images/curated/ptal-styled-copper-pair.webp", "Copper serveware"]],
+  },
+  {
+    id: "prepare",
+    eyebrow: "Kitchen ritual",
+    title: "Before the flame is lit.",
+    copy: "Paraats, masala boxes, ghee pots and ladles bring craft into the quieter moments of preparation.",
+    image: "/images/heritage-kitchen.jpg",
+    path: "/collections/kitchen-utensils",
+    objects: ["Paraats", "Masala boxes", "Ghee pots", "Ladles", "Preparation bowls"],
+    gallery: [["/images/heritage-kitchen.jpg", "Heritage kitchen"], ["/images/curated/ptal-brass-patila.webp", "Brass patila"], ["/images/curated/ptal-brass-kadhai-set.webp", "Cookware set"]],
+  },
 ] as const;
 
 function storeHref(path: string, content: string) {
@@ -181,7 +231,7 @@ function GatewayHeader() {
   const [open, setOpen] = useState(false);
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 110, damping: 26, mass: .25 });
-  const links = [["Materials", "#materials"], ["Our story", "#journey"], ["Collection", "#collection"], ["Personalise", "#legacy"]] as const;
+  const links = [["Materials", "#materials"], ["Our story", "#journey"], ["Objects", "#rituals"], ["Lifetime care", "#restoration"], ["Personalise", "#legacy"]] as const;
 
   return (
     <>
@@ -344,6 +394,61 @@ function EditorialCollection() {
   );
 }
 
+function RitualUniverse() {
+  const [activeId, setActiveId] = useState<(typeof ritualWorlds)[number]["id"]>("hydrate");
+  const active = ritualWorlds.find((item) => item.id === activeId) ?? ritualWorlds[0];
+
+  return (
+    <section id="rituals" className="overflow-hidden bg-[#17100c] px-5 py-[clamp(6rem,10vw,9rem)] text-[#fff4dc]" aria-labelledby="rituals-title">
+      <div className="site-container">
+        <Reveal className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[.24em] text-[#d8b86b]">Beyond the stove</p>
+            <h2 id="rituals-title" className="mt-6 max-w-5xl font-serif text-[clamp(4rem,7vw,7.6rem)] leading-[.84]">The collection travels beyond the flame.</h2>
+          </div>
+          <p className="max-w-md text-sm leading-7 text-white/55">Explore the whole metal home through moments of use—not a catalogue wall of isolated objects.</p>
+        </Reveal>
+
+        <div className="mt-12 grid overflow-hidden rounded-[2rem] border border-white/12 bg-[#231711] shadow-[0_45px_120px_rgba(0,0,0,.32)] lg:grid-cols-[1.35fr_.65fr]">
+          <div className="relative min-h-[650px] overflow-hidden lg:min-h-[790px]">
+            <AnimatePresence mode="wait">
+              <motion.div key={active.image} className="absolute inset-0" initial={{ opacity: 0, scale: 1.06 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: .985 }} transition={{ duration: .9, ease: [.22, 1, .36, 1] }}>
+                <DharoharImage src={active.image} alt={`${active.eyebrow} with handcrafted metal objects`} fill unoptimized sizes="(max-width: 1024px) 100vw, 68vw" className="object-cover" />
+              </motion.div>
+            </AnimatePresence>
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(18,11,7,.05),rgba(18,11,7,.14)_42%,rgba(18,11,7,.94)_100%)]" />
+            <div className="ambient-reflection pointer-events-none absolute inset-y-0 left-0 w-36" />
+            <AnimatePresence mode="wait">
+              <motion.div key={active.id} className="absolute inset-x-0 bottom-0 p-7 sm:p-10 lg:p-12" initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -14 }} transition={{ duration: .55 }}>
+                <p className="text-[9px] font-bold uppercase tracking-[.22em] text-[#e2c27d]">{active.eyebrow}</p>
+                <h3 className="mt-3 max-w-3xl font-serif text-[clamp(3.4rem,6vw,6.5rem)] leading-[.88]">{active.title}</h3>
+                <p className="mt-5 max-w-2xl text-sm leading-7 text-white/62 sm:text-base">{active.copy}</p>
+                <div className="mt-6 flex flex-wrap gap-2">{active.objects.map((item) => <span key={item} className="rounded-full border border-white/18 bg-black/18 px-3 py-2 text-[8px] font-bold uppercase tracking-[.14em] text-white/68 backdrop-blur">{item}</span>)}</div>
+                <StoreLink path={active.path} eventLabel={`ritual_${active.id}`} className="heritage-button heritage-button-filled mt-7">Enter this ritual <ArrowRight size={14} /></StoreLink>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          <div className="border-t border-white/12 p-5 sm:p-7 lg:border-l lg:border-t-0 lg:p-8" role="tablist" aria-label="Explore the Dharohar product world by ritual">
+            <p className="mb-5 text-[8px] font-bold uppercase tracking-[.22em] text-white/35">Choose a ritual</p>
+            {ritualWorlds.map((item, index) => {
+              const selected = activeId === item.id;
+              return (
+                <button key={item.id} type="button" role="tab" aria-selected={selected} onClick={() => setActiveId(item.id)} className={`group flex w-full items-center gap-4 border-b border-white/10 py-6 text-left transition ${selected ? "text-white" : "text-white/42 hover:text-white/78"}`}>
+                  <span className={`grid size-10 shrink-0 place-items-center rounded-full border text-[9px] font-bold transition ${selected ? "border-[#d8b86b] bg-[#d8b86b] text-[#24160f]" : "border-white/16"}`}>0{index + 1}</span>
+                  <span className="flex-1"><span className="block text-[8px] font-bold uppercase tracking-[.18em] text-[#d8b86b]">{item.eyebrow}</span><span className="mt-2 block font-serif text-2xl leading-none">{item.title}</span></span>
+                  <ArrowRight size={15} className={`text-[#d8b86b] transition ${selected ? "translate-x-0 opacity-100" : "-translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"}`} />
+                </button>
+              );
+            })}
+            <AnimatePresence mode="wait"><motion.div key={`gallery-${active.id}`} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="mt-7 grid grid-cols-3 gap-2" aria-label={`${active.eyebrow} featured objects`}>{active.gallery.map(([src, label]) => <div key={label} className="group/thumb"><div className="relative aspect-square overflow-hidden rounded-xl border border-white/10 bg-white/5"><DharoharImage src={src} alt={label} fill unoptimized sizes="120px" className="object-cover transition duration-700 group-hover/thumb:scale-105" /></div><p className="mt-2 text-[7px] font-bold uppercase leading-4 tracking-[.12em] text-white/38">{label}</p></div>)}</motion.div></AnimatePresence>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function GuidedFinder() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({ moment: "", cooking: "", household: "" });
@@ -399,11 +504,88 @@ function PassportExperience() {
   const [activeId, setActiveId] = useState("maker");
   const active = passportDetails.find((item) => item.id === activeId) ?? passportDetails[0];
   const Icon = active.icon;
+  const serviceHistory = [["2027", "Kalai renewed"], ["2031", "Dent repaired"], ["2035", "Engraving updated"]] as const;
+  const visual = active.id === "restoration" ? "/images/curated/ptal-copper-tumbler-engraving.jpg" : "/images/artisan.jpg";
   return (
     <section id="passport" className="overflow-hidden bg-[#fffaf0] px-5 py-[clamp(5rem,9vw,8rem)]" aria-labelledby="passport-title">
       <div className="site-container grid gap-12 lg:grid-cols-[1.05fr_.95fr] lg:items-center">
-        <Reveal className="relative min-h-[680px] overflow-hidden rounded-[2rem]"><DharoharImage src="/images/artisan.jpg" alt="Metal artisan working in a traditional workshop" fill unoptimized sizes="(max-width: 1024px) 100vw, 52vw" className="object-cover" style={{ objectPosition: "50% 30%" }} /><div className="absolute inset-0 bg-gradient-to-t from-[#160e09]/92 via-transparent to-transparent" /><div className="absolute inset-x-5 bottom-5 rounded-2xl border border-white/25 bg-[#fffaf0]/92 p-6 text-[#4b3824] shadow-2xl backdrop-blur sm:inset-x-8 sm:bottom-8"><div className="flex items-center justify-between gap-4"><div><p className="text-[9px] font-bold uppercase tracking-[.2em] text-[#9d712a]">Demonstration passport</p><p className="mt-2 font-serif text-3xl">DH–2037 · Family Lagaan</p></div><QrCode size={34} className="text-[#8b632a]" /></div><AnimatePresence mode="wait"><motion.div key={active.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="mt-5 border-t border-[#b78b3c]/20 pt-5"><div className="flex items-start gap-4"><span className="grid size-11 shrink-0 place-items-center rounded-full bg-[#9d712a] text-white"><Icon size={18} /></span><div><h3 className="font-serif text-2xl">{active.title}</h3><p className="mt-2 text-sm leading-6 text-[#746756]">{active.copy}</p></div></div></motion.div></AnimatePresence></div></Reveal>
-        <Reveal delay={.12}><p className="heritage-label w-fit">Heritage passport</p><h2 id="passport-title" className="heritage-display mt-7 text-[clamp(3.6rem,6vw,6.5rem)] leading-[.88]">The story stays with the object.</h2><p className="mt-6 max-w-xl text-base leading-8 text-[#746756]">Open each chapter of the passport to see how provenance can remain legible long after the box is gone.</p><div className="mt-9 space-y-2">{passportDetails.map((item, index) => { const ItemIcon = item.icon; const selected = activeId === item.id; return <button key={item.id} type="button" onClick={() => setActiveId(item.id)} className={`flex w-full items-center gap-4 rounded-2xl border p-4 text-left transition ${selected ? "border-[#b78b3c] bg-[#f0e1c8]" : "border-[#b78b3c]/18 bg-transparent hover:border-[#b78b3c]/45"}`}><span className={`grid size-11 place-items-center rounded-full ${selected ? "bg-[#9d712a] text-white" : "bg-[#efe2ce] text-[#9d712a]"}`}><ItemIcon size={18} /></span><span><span className="block text-[9px] font-bold uppercase tracking-[.18em] text-[#9a8468]">Chapter 0{index + 1}</span><span className="mt-1 block font-serif text-2xl text-[#4d3823]">{item.label}</span></span><ArrowRight size={15} className="ml-auto text-[#9d712a]" /></button>; })}</div></Reveal>
+        <Reveal className="relative min-h-[720px] overflow-hidden rounded-[2rem]">
+          <AnimatePresence mode="wait"><motion.div key={visual} className="absolute inset-0" initial={{ opacity: 0, scale: 1.04 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: .75 }}><DharoharImage src={visual} alt={active.id === "restoration" ? "Close view of a copper object receiving engraving care" : "Metal artisan working in a traditional workshop"} fill unoptimized sizes="(max-width: 1024px) 100vw, 52vw" className="object-cover" style={{ objectPosition: active.id === "restoration" ? "50% 50%" : "50% 30%" }} /></motion.div></AnimatePresence>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#160e09]/92 via-transparent to-transparent" />
+          <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-white/25 bg-[#fffaf0]/94 p-6 text-[#4b3824] shadow-2xl backdrop-blur sm:inset-x-8 sm:bottom-8">
+            <div className="flex items-center justify-between gap-4"><div><p className="text-[9px] font-bold uppercase tracking-[.2em] text-[#9d712a]">Living ownership record</p><p className="mt-2 font-serif text-3xl">DH–2037 · Family Lagaan</p></div><QrCode size={34} className="text-[#8b632a]" /></div>
+            <AnimatePresence mode="wait"><motion.div key={active.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="mt-5 border-t border-[#b78b3c]/20 pt-5"><div className="flex items-start gap-4"><span className="grid size-11 shrink-0 place-items-center rounded-full bg-[#9d712a] text-white"><Icon size={18} /></span><div><h3 className="font-serif text-2xl">{active.title}</h3><p className="mt-2 text-sm leading-6 text-[#746756]">{active.copy}</p></div></div>{active.id === "restoration" ? <ol className="mt-5 grid gap-2 sm:grid-cols-3">{serviceHistory.map(([year, event]) => <li key={year} className="rounded-xl border border-[#b78b3c]/20 bg-white/65 p-3"><span className="text-[8px] font-bold uppercase tracking-[.16em] text-[#9d712a]">{year}</span><span className="mt-1 block font-serif text-lg">{event}</span></li>)}</ol> : null}</motion.div></AnimatePresence>
+          </div>
+        </Reveal>
+        <Reveal delay={.12}>
+          <p className="heritage-label w-fit">Heritage passport</p>
+          <h2 id="passport-title" className="heritage-display mt-7 text-[clamp(3.6rem,6vw,6.5rem)] leading-[.88]">The story stays with the object. <span className="italic text-[#9d712a]">So does its care.</span></h2>
+          <p className="mt-6 max-w-xl text-base leading-8 text-[#746756]">Open each chapter to see how provenance, material knowledge, restoration and family history remain legible long after the box is gone.</p>
+          <div className="mt-9 grid gap-2 sm:grid-cols-2">{passportDetails.map((item, index) => { const ItemIcon = item.icon; const selected = activeId === item.id; return <button key={item.id} type="button" onClick={() => setActiveId(item.id)} className={`flex min-h-24 w-full items-center gap-3 rounded-2xl border p-4 text-left transition ${selected ? "border-[#b78b3c] bg-[#f0e1c8] shadow-[0_12px_30px_rgba(102,67,25,.08)]" : "border-[#b78b3c]/18 bg-transparent hover:border-[#b78b3c]/45"}`}><span className={`grid size-10 shrink-0 place-items-center rounded-full ${selected ? "bg-[#9d712a] text-white" : "bg-[#efe2ce] text-[#9d712a]"}`}><ItemIcon size={17} /></span><span><span className="block text-[8px] font-bold uppercase tracking-[.17em] text-[#9a8468]">Chapter 0{index + 1}</span><span className="mt-1 block font-serif text-xl leading-none text-[#4d3823]">{item.label}</span></span></button>; })}</div>
+          <div className="mt-7 flex flex-wrap gap-3"><button type="button" onClick={() => setActiveId("restoration")} className="heritage-button heritage-button-filled">Open a sample care record <History size={14} /></button><a href="#consultation" className="heritage-button">Register my piece <ArrowRight size={14} /></a></div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function LifetimeRestoration() {
+  const [reveal, setReveal] = useState(56);
+  const services = [
+    [RotateCcw, "Re-tinning / Kalai", "Renew the food-contact lining when use and inspection show that it is time."],
+    [Sparkles, "Polishing & patina", "Refresh the exterior glow or learn how to preserve the character earned through use."],
+    [Hammer, "Dent & form repair", "Return softened edges and accidental dents towards the vessel’s intended form."],
+    [ShieldCheck, "Fittings inspection", "Review handles, lids and working points before they interrupt everyday use."],
+    [PenLine, "Engraving updates", "Refresh an existing mark or add the next name and date to the family record."],
+    [HeartHandshake, "Dedicated guidance", "Ask a care expert what can be done at home and when artisan intervention is wiser."],
+  ] as const;
+  const restorationSteps = ["Share photos", "Care diagnosis", "Clear scope", "Pickup or drop-off", "Artisan restoration", "Quality check", "Passport updated"];
+  const mail = process.env.NEXT_PUBLIC_CONSULTATION_EMAIL ?? "hello@dharohar.in";
+
+  return (
+    <section id="restoration" className="restoration-stage relative isolate overflow-hidden bg-[#100a07] px-5 py-[clamp(6rem,10vw,10rem)] text-[#fff4dc]" aria-labelledby="restoration-title">
+      <div className="restoration-ambient pointer-events-none absolute inset-0 -z-10" />
+      <div className="site-container">
+        <Reveal className="mx-auto max-w-5xl text-center">
+          <p className="inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[.26em] text-[#d8b86b]"><Wrench size={14} /> The lifetime restoration programme</p>
+          <h2 id="restoration-title" className="mt-7 font-serif text-[clamp(4.2rem,8vw,8.8rem)] leading-[.8] tracking-[-.045em]">Made to return.<br /><span className="italic text-[#e1bd76]">Never made to be replaced.</span></h2>
+          <p className="mx-auto mt-8 max-w-2xl text-base leading-8 text-white/58">A dedicated route back to skilled hands for re-tinning, polishing, repair, engraving updates and considered guidance throughout ownership.</p>
+        </Reveal>
+
+        <div className="mt-16 grid overflow-hidden rounded-[2.2rem] border border-[#d8b86b]/20 bg-[#21140e] shadow-[0_60px_160px_rgba(0,0,0,.46)] lg:grid-cols-[1.2fr_.8fr]">
+          <div className="relative min-h-[650px] overflow-hidden border-b border-white/10 lg:min-h-[780px] lg:border-b-0 lg:border-r">
+            <DharoharImage src="/images/curated/ptal-copper-dispenser-lifestyle.jpg" alt="Copper vessels shown before dedicated care" fill unoptimized sizes="(max-width: 1024px) 100vw, 62vw" className="object-cover grayscale-[.65] sepia-[.42] brightness-[.62] contrast-[1.08]" />
+            <div className="absolute inset-0 overflow-hidden" style={{ clipPath: `inset(0 ${100 - reveal}% 0 0)` }}>
+              <DharoharImage src="/images/curated/ptal-copper-dispenser-lifestyle.jpg" alt="Copper vessels shown after restoration" fill unoptimized sizes="(max-width: 1024px) 100vw, 62vw" className="object-cover saturate-[1.04] brightness-[1.03]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_46%,rgba(244,203,127,.16),transparent_40%)]" />
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#120b07]/92 via-transparent to-black/18" />
+            <div className="pointer-events-none absolute inset-y-0 w-px bg-[#f0d18d] shadow-[0_0_28px_rgba(240,209,141,.7)]" style={{ left: `${reveal}%` }}><span className="absolute left-1/2 top-1/2 grid size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-[#f0d18d] bg-[#21140e]/90 text-[#f0d18d] shadow-xl backdrop-blur"><ChevronLeft size={13} /><ChevronRight className="absolute translate-x-2" size={13} /></span></div>
+            <div className="absolute left-6 top-6 rounded-full border border-[#e1bd76]/35 bg-black/25 px-4 py-2 text-[8px] font-bold uppercase tracking-[.18em] text-[#e7ce98] backdrop-blur">Returned to light</div>
+            <div className="absolute right-6 top-6 rounded-full border border-white/20 bg-black/25 px-4 py-2 text-[8px] font-bold uppercase tracking-[.18em] text-white/58 backdrop-blur">Before care</div>
+            <label className="absolute inset-x-7 bottom-7 rounded-2xl border border-white/14 bg-black/35 p-5 backdrop-blur-md sm:inset-x-10 sm:bottom-10"><span className="flex items-center justify-between text-[9px] font-bold uppercase tracking-[.18em] text-white/60"><span>Move through the restoration</span><span>{reveal}%</span></span><input aria-label="Compare the vessel before and after restoration" type="range" min="8" max="92" value={reveal} onChange={(event) => setReveal(Number(event.target.value))} className="restoration-range mt-4 w-full" /></label>
+          </div>
+
+          <div className="p-6 sm:p-9 lg:p-10">
+            <p className="text-[9px] font-bold uppercase tracking-[.22em] text-[#d8b86b]">Six ways back to care</p>
+            <div className="mt-6 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+              {services.map(([Icon, title, copy], index) => <motion.article key={title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * .06 }} className="group bg-[#21140e] p-5 transition hover:bg-[#2b1a12]"><span className="grid size-10 place-items-center rounded-full border border-[#d8b86b]/30 text-[#d8b86b] transition group-hover:bg-[#d8b86b] group-hover:text-[#21140e]"><Icon size={17} /></span><h3 className="mt-4 font-serif text-2xl leading-none">{title}</h3><p className="mt-3 text-xs leading-5 text-white/48">{copy}</p></motion.article>)}
+            </div>
+            <div className="mt-7 rounded-2xl border border-[#d8b86b]/25 bg-[#d8b86b]/8 p-5">
+              <p className="text-[8px] font-bold uppercase tracking-[.2em] text-[#d8b86b]">Lifetime support, clearly defined</p>
+              <p className="mt-3 text-sm leading-6 text-white/58">Every Dharohar owner keeps access to care guidance and a restoration route. Scope, eligibility, timing and pricing are confirmed before work begins.</p>
+            </div>
+            <div className="mt-7 flex flex-wrap gap-3"><a href={`mailto:${mail}?subject=Dharohar%20care%20request`} className="heritage-button heritage-button-filled">Start a care request <ArrowRight size={14} /></a><a href="#care-guide" className="heritage-button !border-white/20 !text-white">Explore care guidance</a></div>
+          </div>
+        </div>
+
+        <Reveal className="mt-14">
+          <p className="text-center text-[9px] font-bold uppercase tracking-[.22em] text-[#d8b86b]">From first photograph to updated passport</p>
+          <ol className="no-scrollbar relative mt-7 flex snap-x overflow-x-auto pb-4 lg:grid lg:grid-cols-7 lg:overflow-visible">
+            <span className="absolute left-[7%] right-[7%] top-5 hidden h-px bg-[#d8b86b]/25 lg:block" aria-hidden="true" />
+            {restorationSteps.map((item, index) => <li key={item} className="relative min-w-[180px] snap-center px-3 text-center lg:min-w-0"><span className="relative z-10 mx-auto grid size-10 place-items-center rounded-full border border-[#d8b86b]/45 bg-[#100a07] font-serif text-lg text-[#e1bd76]">{index + 1}</span><p className="mt-4 text-[9px] font-bold uppercase leading-5 tracking-[.14em] text-white/52">{item}</p></li>)}
+          </ol>
+        </Reveal>
       </div>
     </section>
   );
@@ -424,17 +606,43 @@ function PersonalisationStudio() {
 }
 
 function OccasionRoutes() {
-  return <section id="occasions" className="bg-[#fffaf0] px-5 py-[clamp(5rem,9vw,8rem)]" aria-labelledby="occasions-title"><div className="site-container"><Reveal className="mx-auto max-w-4xl text-center"><p className="heritage-label">Shop by intention</p><h2 id="occasions-title" className="heritage-display mt-7 text-[clamp(3.5rem,6vw,6.4rem)] leading-[.88]">Four doorways into Dharohar.</h2><p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-[#746756]">Every route preserves your purpose before you enter the commerce catalogue.</p></Reveal><div className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 md:grid md:grid-cols-2 md:overflow-visible">{intentions.map((item, index) => { const Icon = item.icon; return <motion.article key={item.title} whileHover={{ y: -7 }} transition={{ duration: .35 }} className="group relative min-h-[460px] min-w-[85vw] snap-center overflow-hidden rounded-[1.8rem] text-white md:min-w-0"><DharoharImage src={item.image} alt="" fill unoptimized sizes="(max-width: 768px) 88vw, 50vw" className="object-cover transition duration-[1200ms] group-hover:scale-[1.045]" /><div className="absolute inset-0 bg-gradient-to-t from-[#160e09]/95 via-[#160e09]/28 to-black/5" /><div className="absolute inset-x-0 bottom-0 p-7 sm:p-9"><span className="grid size-12 place-items-center rounded-full border border-white/30 bg-black/15 backdrop-blur"><Icon size={21} /></span><p className="mt-5 text-[9px] font-bold uppercase tracking-[.2em] text-[#e2c27d]">{item.eyebrow}</p><h3 className="mt-2 font-serif text-4xl sm:text-5xl">{item.title}</h3><p className="mt-3 max-w-md text-sm leading-6 text-white/64">{item.copy}</p><StoreLink path={item.path} eventLabel={`intention_${index + 1}`} className="mt-6 inline-flex items-center gap-2 text-[9px] font-extrabold uppercase tracking-[.16em] text-[#f2d79c]">{item.cta} <ArrowRight size={14} /></StoreLink></div></motion.article>; })}</div></div></section>;
+  return (
+    <section id="occasions" className="bg-[#fffaf0] px-5 py-[clamp(5rem,9vw,8rem)]" aria-labelledby="occasions-title">
+      <div className="site-container">
+        <Reveal className="mx-auto max-w-5xl text-center"><p className="heritage-label">Objects for every ritual</p><h2 id="occasions-title" className="heritage-display mt-7 text-[clamp(3.7rem,7vw,7rem)] leading-[.86]">From flame to table.<br />From water to memory.</h2><p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-[#746756]">Cook, serve, hydrate, gift—and care for objects made to remain.</p></Reveal>
+        <div className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 lg:grid lg:grid-cols-12 lg:overflow-visible">
+          {intentions.map((item, index) => { const Icon = item.icon; return (
+            <motion.article key={item.title} whileHover={{ y: -8 }} transition={{ duration: .35 }} className={`ritual-doorway group relative min-h-[500px] min-w-[86vw] snap-center overflow-hidden rounded-[1.8rem] text-white lg:min-w-0 ${index === 0 ? "lg:col-span-7 lg:min-h-[620px]" : index === 1 ? "lg:col-span-5 lg:min-h-[620px]" : "lg:col-span-4"}`}>
+              <DharoharImage src={item.image} alt={`${item.title} in the Dharohar collection`} fill unoptimized sizes="(max-width: 1024px) 88vw, 48vw" className="object-cover transition duration-[1400ms] group-hover:scale-[1.055]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#160e09]/96 via-[#160e09]/26 to-black/5" />
+              <div className="doorway-light pointer-events-none absolute inset-0" />
+              <div className="absolute inset-x-0 bottom-0 p-7 sm:p-9"><span className="grid size-12 place-items-center rounded-full border border-white/30 bg-black/15 backdrop-blur transition duration-500 group-hover:border-[#e2c27d] group-hover:bg-[#e2c27d] group-hover:text-[#2a1a12]"><Icon size={21} /></span><p className="mt-5 text-[9px] font-bold uppercase tracking-[.2em] text-[#e2c27d]">{item.eyebrow}</p><h3 className="mt-2 font-serif text-4xl sm:text-5xl">{item.title}</h3><p className="mt-3 max-w-md text-sm leading-6 text-white/64">{item.copy}</p><StoreLink path={item.path} eventLabel={`intention_${index + 1}`} className="mt-6 inline-flex items-center gap-2 text-[9px] font-extrabold uppercase tracking-[.16em] text-[#f2d79c] transition group-hover:gap-4">{item.cta} <ArrowRight size={14} /></StoreLink></div>
+            </motion.article>
+          ); })}
+        </div>
+        <Reveal className="mt-6 flex flex-col gap-6 rounded-[1.6rem] border border-[#b78b3c]/24 bg-[#f3e6d2] p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8"><div className="flex items-start gap-4"><span className="grid size-12 shrink-0 place-items-center rounded-full border border-[#b78b3c]/35 text-[#9d712a]"><Building2 size={20} /></span><div><p className="text-[8px] font-bold uppercase tracking-[.19em] text-[#9d712a]">For designers and hospitality</p><h3 className="mt-2 font-serif text-3xl text-[#4d3823]">Objects composed for a larger space.</h3><p className="mt-2 max-w-2xl text-sm leading-6 text-[#746756]">A separate project route for restaurants, boutique stays, gifting programmes and considered interiors.</p></div></div><StoreLink path="/pages/trade-and-hospitality" eventLabel="trade_route" className="heritage-button shrink-0">Start a project <ArrowRight size={14} /></StoreLink></Reveal>
+      </div>
+    </section>
+  );
 }
 
 function TrustSequence() {
-  const steps = [
-    { icon: ShieldCheck, stage: "Before purchase", title: "Material clarity", copy: "Understand composition, use and care before choosing." },
-    { icon: Hammer, stage: "With the object", title: "Visible making", copy: "Keep the maker and craft process connected to the piece." },
-    { icon: BookOpenText, stage: "Through ownership", title: "Recorded provenance", copy: "Carry names, dates and guidance beyond the packaging." },
-    { icon: HeartHandshake, stage: "Years later", title: "A route back to care", copy: "Make polishing, repair and restoration easy to begin." },
+  const principles = [
+    { icon: ShieldCheck, title: "Material clarity", copy: "Know the metal, lining, intended use and the care boundaries that matter." },
+    { icon: Sparkles, title: "Heat character", copy: "Choose forms suited to slow cooking, serving, coffee or water storage." },
+    { icon: Droplets, title: "Food compatibility", copy: "Understand when lining matters and which ingredients or liquids need extra care." },
+    { icon: HeartHandshake, title: "Care & longevity", copy: "Recognise daily care, restoration cues and the route back to an artisan." },
   ];
-  return <section className="border-y border-[#b78b3c]/20 bg-[#f5ecdd] px-5 py-[clamp(4rem,7vw,6rem)]" aria-labelledby="trust-title"><div className="site-container"><Reveal><div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between"><div><p className="heritage-label w-fit">Proof before promise</p><h2 id="trust-title" className="heritage-display mt-6 text-[clamp(3rem,5vw,5rem)]">Confidence across the object’s lifetime.</h2></div><p className="max-w-md text-sm leading-7 text-[#746756]">Real client testimonials and press marks should be added only after approval; this review version uses verifiable experience commitments instead.</p></div></Reveal><div className="mt-10 grid gap-px overflow-hidden rounded-[1.5rem] border border-[#b78b3c]/20 bg-[#b78b3c]/20 sm:grid-cols-2 lg:grid-cols-4">{steps.map((item, index) => { const Icon = item.icon; return <motion.div key={item.title} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * .1 }} className="bg-[#fffaf0] p-6"><Icon size={21} className="text-[#a4772d]" /><p className="mt-5 text-[9px] font-bold uppercase tracking-[.18em] text-[#9a8468]">{item.stage}</p><h3 className="mt-2 font-serif text-3xl text-[#4d3823]">{item.title}</h3><p className="mt-3 text-sm leading-6 text-[#746756]">{item.copy}</p></motion.div>; })}</div></div></section>;
+  return (
+    <section id="care-guide" className="material-wisdom relative overflow-hidden border-y border-[#b78b3c]/20 bg-[#f8eedf] px-5 py-[clamp(5rem,9vw,8rem)]" aria-labelledby="trust-title">
+      <span className="wisdom-border pointer-events-none absolute inset-6 rounded-[2.5rem] border border-[#b78b3c]/28" aria-hidden="true" />
+      <div className="site-container relative">
+        <Reveal className="mx-auto max-w-5xl text-center"><p className="heritage-label">Heritage, explained with care</p><h2 id="trust-title" className="heritage-display mt-7 text-[clamp(3.8rem,7vw,7rem)] leading-[.88]">Material wisdom.<br />Modern clarity.</h2><p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-[#746756]">Useful knowledge without broad medical promises—so every object is chosen, used and maintained with confidence.</p></Reveal>
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{principles.map((item, index) => { const Icon = item.icon; return <motion.article key={item.title} initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * .1 }} className="wisdom-card group rounded-[1.7rem] border border-[#b78b3c]/25 bg-[#fffaf0]/76 p-6 text-center shadow-[0_20px_50px_rgba(94,61,25,.06)] backdrop-blur sm:p-7"><span className="mx-auto grid size-20 place-items-center rounded-full border border-[#b78b3c]/40 text-[#a4772d] transition duration-500 group-hover:-translate-y-1 group-hover:bg-[#a4772d] group-hover:text-white"><Icon size={29} strokeWidth={1.35} /></span><p className="mt-6 text-[8px] font-bold uppercase tracking-[.18em] text-[#a4772d]">Principle 0{index + 1}</p><h3 className="mt-2 font-serif text-3xl text-[#4d3823]">{item.title}</h3><p className="mt-4 text-sm leading-6 text-[#746756]">{item.copy}</p><div className="mt-6 border-t border-[#b78b3c]/20 pt-4 text-left"><p className="text-[8px] font-bold uppercase tracking-[.15em] text-[#9a8468]">Inside the guide</p><p className="mt-2 text-xs leading-5 text-[#6c5a43]">Tradition · Evidence · Safe everyday use</p></div></motion.article>; })}</div>
+        <Reveal className="mx-auto mt-9 max-w-4xl rounded-2xl border border-[#b78b3c]/24 bg-white/45 p-5 text-center"><p className="text-sm leading-7 text-[#695a47]"><strong className="font-semibold text-[#4d3823]">Our evidence standard:</strong> composition, lining, use guidance and care boundaries remain specific to the object. Any health-related statement should appear only with relevant product testing and an accessible source.</p></Reveal>
+      </div>
+    </section>
+  );
 }
 
 function ConsultationGateway() {
@@ -459,7 +667,7 @@ function ConsultationGateway() {
     window.location.href = `mailto:${destination}?subject=${subject}&body=${body}`;
   }
   const gifting = interest === "Wedding or festive gifting";
-  return <form onSubmit={submit} className="consultation-card rounded-[2rem] border border-[#d8b86b]/24 bg-[#f4eadb]/96 p-6 text-[#3c2a1e] shadow-[0_28px_90px_rgba(0,0,0,.28)] backdrop-blur sm:p-8"><div className="mb-6 flex items-center justify-between gap-4 border-b border-[#9a7040]/18 pb-5"><div><p className="text-[8px] font-bold uppercase tracking-[.2em] text-[#9a7040]">Private consultation</p><p className="mt-1 font-serif text-2xl">A thoughtful first conversation</p></div><span className="grid size-12 place-items-center rounded-full border border-[#9a7040]/30 text-[#9a7040]"><Feather size={18} /></span></div><div className="grid gap-4 sm:grid-cols-2"><label><span className="consult-label">Your name</span><input required name="name" className="consult-input" placeholder="Name" /></label><label><span className="consult-label">Email</span><input required name="email" type="email" className="consult-input" placeholder="you@example.com" /></label></div><div className="mt-4 grid gap-4 sm:grid-cols-2"><label><span className="consult-label">I am interested in</span><select name="interest" className="consult-input" value={interest} onChange={(event) => setInterest(event.target.value)}><option>Complete heritage kitchen</option><option>Wedding or festive gifting</option><option>Everyday cookware</option><option>Design or hospitality project</option><option>Engraving consultation</option></select></label><label><span className="consult-label">Preferred time</span><select name="timing" className="consult-input" defaultValue="Weekday morning"><option>Weekday morning</option><option>Weekday afternoon</option><option>Weekday evening</option><option>Weekend</option></select></label></div><AnimatePresence initial={false}>{gifting ? <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden"><div className="mt-4 grid gap-4 sm:grid-cols-3"><label><span className="consult-label">Occasion date</span><input name="occasionDate" type="date" className="consult-input" /></label><label><span className="consult-label">Quantity</span><input name="quantity" inputMode="numeric" className="consult-input" placeholder="e.g. 25" /></label><label><span className="consult-label">Budget range</span><input name="budget" className="consult-input" placeholder="₹ range" /></label></div></motion.div> : null}</AnimatePresence><label className="mt-4 block"><span className="consult-label">Tell us a little more</span><textarea name="message" rows={4} className="consult-input h-auto resize-none py-3" placeholder="The occasion, family size, preferred metals or engraving needs…" /></label><button type="submit" className="mt-4 inline-flex min-h-13 w-full items-center justify-center gap-3 rounded-xl bg-[#251711] px-6 text-[10px] font-bold uppercase tracking-[.15em] text-[#f6e7cb] transition hover:bg-[#3b2419]">Prepare consultation request <Send size={15} /></button><p aria-live="polite" className="mt-3 min-h-5 text-center text-xs text-[#7d5b36]">{status}</p></form>;
+  return <form onSubmit={submit} className="consultation-card rounded-[2rem] border border-[#d8b86b]/24 bg-[#f4eadb]/96 p-6 text-[#3c2a1e] shadow-[0_28px_90px_rgba(0,0,0,.28)] backdrop-blur sm:p-8"><div className="mb-6 flex items-center justify-between gap-4 border-b border-[#9a7040]/18 pb-5"><div><p className="text-[8px] font-bold uppercase tracking-[.2em] text-[#9a7040]">Private consultation</p><p className="mt-1 font-serif text-2xl">A thoughtful first conversation</p></div><span className="grid size-12 place-items-center rounded-full border border-[#9a7040]/30 text-[#9a7040]"><Feather size={18} /></span></div><div className="grid gap-4 sm:grid-cols-2"><label><span className="consult-label">Your name</span><input required name="name" className="consult-input" placeholder="Name" /></label><label><span className="consult-label">Email</span><input required name="email" type="email" className="consult-input" placeholder="you@example.com" /></label></div><div className="mt-4 grid gap-4 sm:grid-cols-2"><label><span className="consult-label">I am interested in</span><select name="interest" className="consult-input" value={interest} onChange={(event) => setInterest(event.target.value)}><option>Complete heritage kitchen</option><option>Wedding or festive gifting</option><option>Everyday cookware</option><option>Lifetime restoration and care</option><option>Design or hospitality project</option><option>Engraving consultation</option></select></label><label><span className="consult-label">Preferred time</span><select name="timing" className="consult-input" defaultValue="Weekday morning"><option>Weekday morning</option><option>Weekday afternoon</option><option>Weekday evening</option><option>Weekend</option></select></label></div><AnimatePresence initial={false}>{gifting ? <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden"><div className="mt-4 grid gap-4 sm:grid-cols-3"><label><span className="consult-label">Occasion date</span><input name="occasionDate" type="date" className="consult-input" /></label><label><span className="consult-label">Quantity</span><input name="quantity" inputMode="numeric" className="consult-input" placeholder="e.g. 25" /></label><label><span className="consult-label">Budget range</span><input name="budget" className="consult-input" placeholder="₹ range" /></label></div></motion.div> : null}</AnimatePresence><label className="mt-4 block"><span className="consult-label">Tell us a little more</span><textarea name="message" rows={4} className="consult-input h-auto resize-none py-3" placeholder="The occasion, family size, preferred metals, engraving or care needs…" /></label><button type="submit" className="mt-4 inline-flex min-h-13 w-full items-center justify-center gap-3 rounded-xl bg-[#251711] px-6 text-[10px] font-bold uppercase tracking-[.15em] text-[#f6e7cb] transition hover:bg-[#3b2419]">Prepare consultation request <Send size={15} /></button><p aria-live="polite" className="mt-3 min-h-5 text-center text-xs text-[#7d5b36]">{status}</p></form>;
 }
 
 function StoreHandoff({ intent, onClose }: { intent: StoreIntent; onClose: () => void }) {
@@ -492,15 +700,18 @@ export function BrandGateway() {
         <section className="marquee-mask overflow-hidden border-y border-[#b78b3c]/25 bg-[#fff8eb]" aria-label="Dharohar assurances"><div className="heritage-marquee flex w-max">{[0, 1].map((set) => <div key={set} aria-hidden={set === 1} className="flex">{[[Hammer, "Handcrafted in India"], [ShieldCheck, "Copper, brass & kansa"], [Feather, "Personal engraving"], [HeartHandshake, "Lifetime restoration"]].map(([Icon, label]) => <div key={`${set}-${label as string}`} className="flex min-w-[300px] items-center gap-4 border-r border-[#b78b3c]/20 px-8 py-5"><span className="grid size-11 place-items-center rounded-full border border-[#b78b3c]/40 text-[#a4772d]"><Icon size={19} /></span><span className="font-serif text-xl text-[#4f3b25]">{label as string}</span></div>)}</div>)}</div></section>
         <MaterialExplorer />
         <GenerationalStory />
+        <RitualUniverse />
         <EditorialCollection />
         <GuidedFinder />
         <PassportExperience />
+        <LifetimeRestoration />
         <PersonalisationStudio />
         <OccasionRoutes />
         <TrustSequence />
         <section id="consultation" className="consultation-salon relative isolate overflow-hidden bg-[#100b08] px-5 text-[#fff8e9]" aria-labelledby="consultation-title"><Image src="/images/curated/ptal-styled-copper-detail.webp" alt="" fill unoptimized sizes="100vw" className="-z-30 object-cover opacity-[.38]" style={{ objectPosition: "30% 50%" }} /><div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(16,11,8,.94),rgba(16,11,8,.82)_43%,rgba(16,11,8,.66)),radial-gradient(circle_at_20%_45%,rgba(171,90,49,.28),transparent_38%)]" /><div className="ambient-window-light pointer-events-none absolute -inset-[20%] -z-10" /><div className="site-container grid gap-14 py-[clamp(6rem,10vw,9rem)] lg:grid-cols-[.9fr_1.1fr] lg:items-center"><Reveal><div className="mb-9 inline-flex items-center gap-3 rounded-full border border-[#e0bd76]/25 bg-black/20 px-4 py-2 backdrop-blur"><span className="grid size-7 place-items-center rounded-full bg-[#e0bd76] text-[#2b1a12]"><Feather size={13} /></span><span className="text-[8px] font-bold uppercase tracking-[.2em] text-[#e8cc91]">The Dharohar private salon</span></div><p className="text-[10px] font-bold uppercase tracking-[.24em] text-[#e0bd76]">Gift concierge · Kitchen consultation</p><h2 id="consultation-title" className="mt-5 max-w-2xl font-serif text-[clamp(3.8rem,6vw,6.8rem)] leading-[.88]">A quieter way to begin.</h2><p className="mt-6 max-w-xl text-base leading-8 text-white/65">Tell us about the rituals, gifting moment or design project you are considering. We’ll prepare a thoughtful route into the collection.</p><div className="mt-8 flex flex-wrap gap-3">{booking ? <a href={booking} target="_blank" rel="noreferrer" onClick={() => track("booking_click", "consultation")} className="heritage-button !border-[#e0bd76] !bg-[#f2dfbd] !text-[#2c1c13]"><CalendarDays size={15} /> Reserve 20 minutes</a> : <a href={`mailto:${process.env.NEXT_PUBLIC_CONSULTATION_EMAIL ?? "hello@dharohar.in"}?subject=Dharohar%2020-minute%20consultation`} className="heritage-button !border-[#e0bd76] !bg-[#f2dfbd] !text-[#2c1c13]"><Clock3 size={15} /> Request 20 minutes</a>}<a href={`mailto:${process.env.NEXT_PUBLIC_CONSULTATION_EMAIL ?? "hello@dharohar.in"}`} className="heritage-button !border-white/25 !text-white"><Mail size={15} /> Email directly</a></div><div className="mt-10 flex flex-wrap gap-5 text-xs text-white/55"><span className="flex items-center gap-2"><Users size={15} className="text-[#e0bd76]" /> Personal recommendations</span><span className="flex items-center gap-2"><Gift size={15} className="text-[#e0bd76]" /> Gifting and engraving</span></div></Reveal><ConsultationGateway /></div></section>
       </main>
-      <footer className="border-t border-white/10 bg-[#18110d] px-5 text-[#fff5df]"><div className="site-container flex flex-col gap-8 py-10 md:flex-row md:items-center md:justify-between"><a href="#top" className="flex items-center gap-3"><span className="relative size-14 overflow-hidden rounded-full bg-[#fffaf0]"><Image src="/images/dharohar-mark.png" alt="" fill unoptimized sizes="56px" className="object-contain mix-blend-multiply" /></span><span><strong className="block font-serif text-2xl tracking-[.12em]">DHAROHAR</strong><span className="text-[7px] font-bold uppercase tracking-[.3em] text-[#d8b86b]">Heritage Kitchen</span></span></a><nav className="flex flex-wrap gap-x-6 gap-y-3 text-[9px] font-bold uppercase tracking-[.15em] text-white/48" aria-label="Footer navigation"><a href="#materials" className="hover:text-white">Materials</a><a href="#journey" className="hover:text-white">Our story</a><a href="#collection" className="hover:text-white">Collection</a><a href="#finder" className="hover:text-white">Finder</a><a href="#consultation" className="hover:text-white">Consultation</a><StoreLink path="/collections/all" eventLabel="footer_visit_store" className="inline-flex items-center gap-1 text-[#e2c27d]">Visit store <ArrowRight size={11} /></StoreLink></nav><p className="text-[9px] uppercase tracking-[.12em] text-white/32">© 2026 Dharohar</p></div></footer>
+      <a href="#restoration" className="care-dock fixed bottom-5 right-5 z-40 hidden items-center gap-3 rounded-full border border-[#d8b86b]/35 bg-[#18110d]/94 py-2 pl-2 pr-5 text-[#f3dfb5] shadow-[0_14px_50px_rgba(0,0,0,.28)] backdrop-blur-xl sm:flex"><span className="grid size-9 place-items-center rounded-full bg-[#d8b86b] text-[#24150e]"><Wrench size={15} /></span><span><span className="block text-[7px] font-bold uppercase tracking-[.18em] text-[#d8b86b]">Lifetime programme</span><span className="mt-0.5 block font-serif text-lg leading-none">Care for my piece</span></span></a>
+      <footer className="border-t border-white/10 bg-[#18110d] px-5 text-[#fff5df]"><div className="site-container flex flex-col gap-8 py-10 md:flex-row md:items-center md:justify-between"><a href="#top" className="flex items-center gap-3"><span className="relative size-14 overflow-hidden rounded-full bg-[#fffaf0]"><Image src="/images/dharohar-mark.png" alt="" fill unoptimized sizes="56px" className="object-contain mix-blend-multiply" /></span><span><strong className="block font-serif text-2xl tracking-[.12em]">DHAROHAR</strong><span className="text-[7px] font-bold uppercase tracking-[.3em] text-[#d8b86b]">Heritage Kitchen</span></span></a><nav className="flex flex-wrap gap-x-6 gap-y-3 text-[9px] font-bold uppercase tracking-[.15em] text-white/48" aria-label="Footer navigation"><a href="#materials" className="hover:text-white">Materials</a><a href="#journey" className="hover:text-white">Our story</a><a href="#rituals" className="hover:text-white">Objects</a><a href="#restoration" className="hover:text-white">Lifetime care</a><a href="#finder" className="hover:text-white">Finder</a><a href="#consultation" className="hover:text-white">Consultation</a><StoreLink path="/collections/all" eventLabel="footer_visit_store" className="inline-flex items-center gap-1 text-[#e2c27d]">Visit store <ArrowRight size={11} /></StoreLink></nav><p className="text-[9px] uppercase tracking-[.12em] text-white/32">© 2026 Dharohar</p></div></footer>
       <AnimatePresence>{storeIntent ? <StoreHandoff intent={storeIntent} onClose={() => setStoreIntent(null)} /> : null}</AnimatePresence>
     </>
   );
