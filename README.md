@@ -30,6 +30,14 @@ Set the consultation email used by the enquiry form:
 NEXT_PUBLIC_CONSULTATION_EMAIL=hello@dharohar.in
 ```
 
+For direct, in-page submission to a CRM or form service, configure an endpoint that accepts JSON:
+
+```bash
+NEXT_PUBLIC_CONSULTATION_ENDPOINT=https://forms.dharohar.com/consultation
+```
+
+When this endpoint is absent, the form transparently falls back to preparing an email in the visitor’s mail app.
+
 Optional experience handoffs:
 
 ```bash
@@ -39,17 +47,18 @@ NEXT_PUBLIC_WHATSAPP_NUMBER=919999999999
 
 When no booking URL is configured, the 20-minute consultation action prepares an email request. When no WhatsApp number is configured, the shortlist opens WhatsApp's generic share flow without inventing a recipient.
 
-The form prepares a complete email in the visitor's mail app and never shows a false "received" state. Replace this with a CRM or transactional form endpoint when the production destination is available.
+The form reports success only after a configured endpoint accepts the request. Its email fallback never shows a false “received” state.
 
 ## Structure
 
 - `app/` — App Router page, metadata and global design tokens
 - `components/BrandGateway.tsx` — cinematic hero, material explorer, generational story, editorial collection, guided finder, heritage passport, live engraving, store handoff and consultation journey
-- `components/DharoharLoading.tsx` — branded full-site asset preloader and reusable in-page image skeletons
+- `components/DharoharLoading.tsx` — first-visit cinematic loader, critical-scene preloader and reusable in-page image skeletons
 - `components/sections/` — retained experimental product-story sections
 - `components/ui/` — reusable reveal, image and heading components
 - `data/dharohar.ts` — typed product and editorial content
 - `public/images/` — optimized local reference photography
+- `public/videos/` — local, fast-start cinematic masters and reduced-motion poster frames
 
 ## Photography handoff
 
@@ -67,8 +76,10 @@ The current images are editorial placeholders sourced under the Unsplash license
 
 The high-resolution P-TAL files requested for design review are stored under `public/images/reference/ptal/`, with optimized derivatives under `public/images/curated/`. The four styled Copper Lagaan review images are retained at their source resolution alongside 2000 × 2000 WebP derivatives named `ptal-styled-copper-*`. They are temporary reference assets and require usage permission or replacement with Dharohar-owned photography before commercial launch.
 
+The restoration and water-ritual motion studies use unbranded, royalty-free Pexels footage: [traditional copper hammering by Kenan Turguç](https://www.pexels.com/video/artisan-crafting-traditional-copper-hammering-30614799/) and [a copper water ritual by Yan Krukau](https://www.pexels.com/video/person-pouring-water-on-a-copper-mug-8810908/). Both should eventually be replaced with Dharohar-owned campaign masters while preserving their portrait framing.
+
 ## Accessibility and performance
 
 Controls are keyboard accessible, cinematic scenes include a pause control, animated sections respect `prefers-reduced-motion`, local imagery uses `next/image`, the mobile navigation is modal, and semantic section landmarks support screen readers and search engines.
 
-The opening Dharohar sequence waits for the page, local campaign imagery and fonts to settle before revealing the experience. A 15-second safety release prevents a stalled request from trapping visitors, while image-level skeletons cover any later dynamic loading or cache miss.
+On the first visit, the opening Dharohar sequence waits for fonts and the hero scenes before revealing the experience. It has a short safety release, remembers completion for the browser session and warms later imagery quietly in the background. Image-level skeletons cover dynamic loading and cache misses without delaying entry.

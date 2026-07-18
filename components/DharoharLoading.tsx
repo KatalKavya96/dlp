@@ -4,12 +4,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image, { type ImageProps } from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
-const siteAssets = [
+const criticalAssets = [
   "/images/dharohar-mark.png",
-  "/images/heritage-product-rail.webp",
-  "/images/artisan.jpg",
-  "/images/indian-table.jpg",
   "/images/curated/ptal-styled-copper-pair.webp",
+  "/images/curated/ptal-copper-dispenser-lifestyle.jpg",
+  "/images/curated/brass-ladles-clean.png",
+  "/images/curated/ptal-brass-masala-box.jpg",
+  "/images/curated/ptal-brass-paraat.jpg",
+] as const;
+
+const secondaryAssets = [
+  "/images/artisan.jpg",
   "/images/curated/ptal-styled-copper-closed.webp",
   "/images/curated/ptal-styled-copper-detail.webp",
   "/images/curated/ptal-copper-madurai-handi.webp",
@@ -18,12 +23,19 @@ const siteAssets = [
   "/images/curated/ptal-brass-lagaan.webp",
   "/images/curated/ptal-brass-patila.webp",
   "/images/curated/ptal-brass-kadhai-set.webp",
+  "/images/curated/ptal-brass-roti-box.jpg",
+  "/images/curated/ptal-brass-cutlery.jpg",
+  "/images/curated/kansa-thaali-clean.jpg",
+  "/images/curated/ptal-copper-bottle.jpg",
+  "/images/curated/ptal-copper-dispenser.png",
+  "/images/curated/ptal-copper-dispenser-lifestyle.jpg",
+  "/images/curated/brass-davara-clean.jpg",
   "/images/materials/bronze/kansa-kadai-main.png",
 ] as const;
 
 const wait = (milliseconds: number) => new Promise<void>((resolve) => window.setTimeout(resolve, milliseconds));
 
-function preloadImage(source: string, onSettled: () => void) {
+function preloadImage(source: string, onSettled: () => void = () => undefined) {
   return new Promise<void>((resolve) => {
     const image = new window.Image();
     let finished = false;
@@ -62,6 +74,23 @@ export function DharoharLoader() {
     let completed = 0;
     const startedAt = performance.now();
     const previousOverflow = document.body.style.overflow;
+    let returningVisitor = false;
+    try {
+      returningVisitor = window.sessionStorage.getItem("dharohar-loader-seen") === "true";
+    } catch {
+      // Storage may be unavailable in a privacy-restricted browser.
+    }
+
+    if (returningVisitor) {
+      queueMicrotask(() => {
+        if (cancelled) return;
+        setProgress(100);
+        setVisible(false);
+      });
+      void Promise.all(secondaryAssets.map((source) => preloadImage(source)));
+      return () => { cancelled = true; };
+    }
+
     document.body.style.overflow = "hidden";
     document.documentElement.setAttribute("data-dharohar-loading", "true");
 
@@ -69,23 +98,29 @@ export function DharoharLoader() {
       ? Promise.resolve()
       : new Promise<void>((resolve) => window.addEventListener("load", () => resolve(), { once: true }));
     const fontsReady = document.fonts?.ready ?? Promise.resolve();
-    const assetsReady = Promise.all(siteAssets.map((source) => preloadImage(source, () => {
+    const assetsReady = Promise.all(criticalAssets.map((source) => preloadImage(source, () => {
       completed += 1;
-      if (!cancelled) setProgress(Math.max(4, Math.round((completed / siteAssets.length) * 94)));
+      if (!cancelled) setProgress(Math.max(4, Math.round((completed / criticalAssets.length) * 94)));
     })));
-    const safetyRelease = wait(15000);
+    const safetyRelease = wait(6500);
 
     void Promise.race([Promise.all([pageReady, fontsReady, assetsReady]), safetyRelease]).then(async () => {
-      const minimumDwell = 1250;
+      const minimumDwell = 950;
       const remaining = Math.max(0, minimumDwell - (performance.now() - startedAt));
       if (remaining) await wait(remaining);
       if (cancelled) return;
       setProgress(100);
-      await wait(430);
+      await wait(320);
       if (cancelled) return;
+      try {
+        window.sessionStorage.setItem("dharohar-loader-seen", "true");
+      } catch {
+        // The loader still exits normally when storage is unavailable.
+      }
       document.body.style.overflow = previousOverflow;
       document.documentElement.removeAttribute("data-dharohar-loading");
       setVisible(false);
+      void Promise.all(secondaryAssets.map((source) => preloadImage(source)));
     });
 
     return () => {

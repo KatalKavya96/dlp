@@ -19,6 +19,7 @@ html {
 
 body {
   margin: 0;
+  overflow-x: hidden;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), "Helvetica Neue", Arial, sans-serif;
@@ -239,8 +240,16 @@ button {
 }
 
 .site-container {
-  width: min(100% - 2.5rem, 1440px);
+  width: min(calc(100% - 2rem), 1440px);
   margin-inline: auto;
+}
+
+main {
+  overflow: clip;
+}
+
+main .site-container {
+  min-width: 0;
 }
 
 .heritage-page-pad {
@@ -366,15 +375,96 @@ button {
 }
 
 .heritage-button-filled {
-  border-color: #b78b3c;
-  background: linear-gradient(135deg, #cda34f, #a9792d);
-  color: #fffaf0;
-  box-shadow: 0 9px 24px rgb(145 98 31 / 20%);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-color: #d5ad57;
+  background: linear-gradient(180deg, #e7c976 0%, #c89a3b 56%, #a66f22 100%);
+  color: #2b1a0e;
+  text-shadow: 0 1px rgb(255 244 204 / 54%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 248 215 / 82%),
+    inset 0 -2px 0 rgb(111 65 12 / 22%),
+    0 4px 0 #704510,
+    0 8px 18px rgb(91 54 14 / 28%);
+  transition: transform 150ms cubic-bezier(.16, 1, .3, 1), box-shadow 150ms ease, filter 220ms ease;
 }
 
 .heritage-button-filled:hover {
-  border-color: #8d6123;
-  background: linear-gradient(135deg, #b88936, #8d6123);
+  transform: translateY(-2px);
+  border-color: #e2c77e;
+  background: linear-gradient(180deg, #f0d887 0%, #d2a746 56%, #ad7627 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 250 224 / 92%),
+    inset 0 -2px 0 rgb(111 65 12 / 18%),
+    0 6px 0 #704510,
+    0 14px 30px rgb(91 54 14 / 34%);
+}
+
+.heritage-button-filled:active {
+  transform: translateY(3px);
+  box-shadow:
+    inset 0 1px 0 rgb(255 248 215 / 72%),
+    inset 0 -1px 0 rgb(111 65 12 / 22%),
+    0 1px 0 #704510,
+    0 3px 8px rgb(91 54 14 / 24%);
+}
+
+.heritage-button-filled::before,
+.header-store-compact::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(115deg, transparent 24%, rgb(255 255 255 / 22%) 46%, transparent 67%);
+  transform: translateX(-120%);
+  transition: transform 700ms cubic-bezier(.16, 1, .3, 1);
+  content: "";
+}
+
+.heritage-button-filled:hover::before,
+.header-store-compact:hover::before {
+  transform: translateX(120%);
+}
+
+.header-store-compact {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  gap: .35rem;
+  border: 1px solid #d5ad57;
+  border-radius: .7rem;
+  background: linear-gradient(180deg, #e7c976, #c89a3b 58%, #a66f22);
+  padding: .7rem .75rem;
+  color: #2b1a0e;
+  font-size: .52rem;
+  font-weight: 750;
+  letter-spacing: .12em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 0 1px rgb(255 244 204 / 54%);
+  box-shadow: inset 0 1px 0 rgb(255 248 215 / 82%), 0 3px 0 #704510, 0 7px 16px rgb(91 54 14 / 24%);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.header-store-compact:hover {
+  transform: translateY(-2px);
+  box-shadow: inset 0 1px 0 rgb(255 248 215 / 88%), 0 5px 0 #704510, 0 12px 24px rgb(91 54 14 / 30%);
+}
+
+.header-store-compact:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 1px 0 rgb(255 248 215 / 75%), 0 1px 0 #704510, 0 3px 7px rgb(91 54 14 / 22%);
+}
+
+.header-store-full {
+  display: none;
+}
+
+main section[id] {
+  scroll-margin-top: 7rem;
 }
 
 .heritage-mini-button {
@@ -782,6 +872,54 @@ button {
   animation: restoration-breathe 10s ease-in-out infinite alternate;
 }
 
+.cinematic-film {
+  transform: scale(1.035);
+  filter: saturate(.86) contrast(1.04) brightness(.82);
+  animation: cinematic-drift 14s ease-in-out infinite alternate;
+}
+
+.cinema-grain {
+  opacity: .15;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgb(255 239 193 / 12%) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 78% 62%, rgb(255 255 255 / 8%) 0 1px, transparent 1.5px);
+  background-size: 13px 17px, 19px 23px;
+  mix-blend-mode: soft-light;
+  animation: grain-shift 8s steps(7) infinite;
+}
+
+.ritual-cinema::after,
+.restoration-stage::after {
+  position: absolute;
+  inset: 0;
+  z-index: -9;
+  background: radial-gradient(circle at 68% 34%, rgb(235 196 112 / 14%), transparent 30%);
+  pointer-events: none;
+  content: "";
+}
+
+.ritual-glass-panel,
+.restoration-ticket,
+.cinema-chapters,
+.restoration-menu {
+  -webkit-backdrop-filter: blur(22px) saturate(1.05);
+}
+
+.restoration-ticket {
+  background-image: linear-gradient(135deg, rgb(255 255 255 / 6%), transparent 48%);
+}
+
+@keyframes cinematic-drift {
+  0% { transform: scale(1.035) translate3d(0, 0, 0); }
+  100% { transform: scale(1.09) translate3d(-1.2%, -1%, 0); }
+}
+
+@keyframes grain-shift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  30% { transform: translate3d(-1.2%, .8%, 0); }
+  60% { transform: translate3d(.8%, -1%, 0); }
+}
+
 .restoration-range {
   height: 1px;
   appearance: none;
@@ -866,13 +1004,45 @@ button {
 }
 
 .care-dock {
-  transition: transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease;
+  transition: width 500ms cubic-bezier(.16, 1, .3, 1), transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease;
 }
 
 .care-dock:hover {
   border-color: rgb(216 184 107 / 70%);
   box-shadow: 0 18px 60px rgb(0 0 0 / 36%), 0 0 30px rgb(216 184 107 / 10%);
   transform: translateY(-3px);
+}
+
+.utensil-gallery {
+  position: relative;
+}
+
+.utensil-gallery::before {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 8% 15%, rgb(255 255 255 / 60%), transparent 24%),
+    radial-gradient(circle at 88% 82%, rgb(183 139 60 / 8%), transparent 25%);
+  content: "";
+  pointer-events: none;
+}
+
+.carousel-control {
+  display: grid;
+  width: 2.9rem;
+  height: 2.9rem;
+  place-items: center;
+  border: 1px solid rgb(157 113 42 / 38%);
+  border-radius: 999px;
+  color: #765323;
+  transition: color 220ms ease, background-color 220ms ease, border-color 220ms ease, transform 220ms ease;
+}
+
+.carousel-control:hover {
+  border-color: #9d712a;
+  background: #9d712a;
+  color: #fffaf0;
+  transform: translateY(-2px);
 }
 
 .ambient-scene .ambient-scene-image,
@@ -1044,7 +1214,33 @@ button {
 
 @media (min-width: 768px) {
   .site-container {
-    width: min(100% - 5rem, 1440px);
+    width: min(calc(100% - 5rem), 1440px);
+  }
+}
+
+@media (max-width: 639px) {
+  main .site-container {
+    width: 100%;
+  }
+
+  .heritage-button {
+    justify-content: center;
+    min-height: 3.1rem;
+    padding-inline: 1.05rem;
+  }
+
+  .compact-restoration article {
+    min-height: 8.25rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .header-store-compact {
+    display: none;
+  }
+
+  .header-store-full {
+    display: inline-flex;
   }
 }
 
