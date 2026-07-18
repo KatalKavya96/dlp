@@ -23,23 +23,22 @@ async function render() {
   );
 }
 
-test("server-renders the finished Dharohar landing page", async () => {
+test("server-renders the finished Dharohar brand gateway", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>Dharohar — India’s Heritage Kitchen, Reimagined<\/title>/i);
-  assert.match(html, /Rooted in heritage\./);
-  assert.match(html, /Crafted for generations\./);
-  assert.match(html, /Handcrafted copper, brass and bronze cookware/);
-  assert.match(html, /Explore the essence of each metal\./);
-  assert.match(html, /Two rows of objects, made for a lifetime\./);
-  assert.match(html, /The Everyday Kadai/);
-  assert.match(html, /Tamra Handi/);
-  assert.match(html, /Celebration Serveware/);
-  assert.match(html, /Personalise your heirloom\./);
-  assert.match(html, /Lifetime ownership\. Timeless bond\./);
+  assert.match(html, /<title>Dharohar — Crafted by Tradition\. Carried by You\.<\/title>/i);
+  assert.match(html, /Crafted by tradition\./);
+  assert.match(html, /Carried by you\./);
+  assert.match(html, /Six ways to begin a family kitchen\./);
+  assert.match(html, /The Everyday Kadhai/);
+  assert.match(html, /The Tamra Legacy Handi/);
+  assert.match(html, /The Heritage Kadhai Set/);
+  assert.match(html, /The object is only the beginning\./);
+  assert.match(html, /Find the right doorway into Dharohar\./);
+  assert.match(html, /Make the beginning unmistakably yours\./);
   assert.match(html, /Build a kitchen your family will remember\./);
   assert.match(html, /<meta property="og:image" content="http:\/\/localhost:3000\/og\.png"/i);
   assert.match(html, /<link rel="icon" href="http:\/\/localhost:3000\/favicon\.png"/i);
@@ -48,10 +47,9 @@ test("server-renders the finished Dharohar landing page", async () => {
 });
 
 test("keeps the production shell, SEO, and accessibility safeguards in source", async () => {
-  const [page, experience, collection, layout, css, packageJson, readme] = await Promise.all([
+  const [page, gateway, layout, css, packageJson, readme] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../components/sections/HeritageExperience.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../components/sections/FeaturedCollection.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../components/BrandGateway.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
@@ -59,19 +57,14 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   ]);
 
   assert.match(page, /"@type": "Organization"/);
-  assert.match(page, /<Navbar \/>/);
-  assert.match(page, /<FeaturedCollection \/>/);
-  assert.match(page, /<HeritageHero \/>/);
-  assert.match(page, /<MaterialExplorer \/>/);
-  assert.match(page, /<PersonalisationStudio \/>/);
-  assert.match(experience, /aria-labelledby="hero-title"/);
-  assert.match(experience, /aria-pressed={active === index}/);
-  assert.match(collection, /ProductCarouselRow/);
-  assert.match(collection, /dragConstraints/);
-  assert.match(collection, /Show next products in row/);
-  assert.match(collection, /alternate view of \$\{product\.name\}/);
-  assert.match(collection, /NEXT_PUBLIC_STORE_URL/);
-  assert.doesNotMatch(collection, /role="dialog"|createPortal/);
+  assert.match(page, /<BrandGateway \/>/);
+  assert.match(gateway, /aria-labelledby="hero-title"/);
+  assert.match(gateway, /NEXT_PUBLIC_STORE_URL/);
+  assert.match(gateway, /utm_campaign/);
+  assert.match(gateway, /dharohar:conversion/);
+  assert.match(gateway, /NEXT_PUBLIC_CONSULTATION_EMAIL/);
+  assert.match(gateway, /Prepare consultation email/);
+  assert.doesNotMatch(gateway, /\.example/);
   assert.match(layout, /generateMetadata/);
   assert.match(layout, /x-forwarded-host/);
   assert.match(layout, /openGraph/);
@@ -89,4 +82,6 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   await access(new URL("../public/images/dharohar-mark.png", import.meta.url));
   await access(new URL("../public/images/dharohar-hero-copper.png", import.meta.url));
   await access(new URL("../public/images/heritage-product-rail.webp", import.meta.url));
+  await access(new URL("../public/images/curated/ptal-brass-kadhai-set.webp", import.meta.url));
+  await access(new URL("../public/images/curated/ptal-copper-madurai-handi.webp", import.meta.url));
 });

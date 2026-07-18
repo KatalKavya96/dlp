@@ -1,6 +1,6 @@
 # Dharohar landing page
 
-A responsive, editorial landing page for Dharohar — a heritage kitchen brand built around Indian metal craft, personalisation, provenance and lifetime restoration.
+A responsive, editorial brand gateway for Dharohar — built to establish desire and trust, preview a concise collection and send qualified visitors to the main commerce site or consultation channel.
 
 ## Run locally
 
@@ -16,18 +16,27 @@ npm run build
 npm run lint
 ```
 
-To send the new hero product “Buy” actions to the commerce site, set:
+To route every store-facing action to the commerce site, set:
 
 ```bash
 NEXT_PUBLIC_STORE_URL=https://shop.dharohar.com
 ```
 
-Until that destination is supplied, the buttons intentionally fall back to the private consultation section instead of opening a broken store.
+Store links receive `utm_source`, `utm_medium`, `utm_campaign` and `utm_content` parameters. Until the commerce destination is supplied, they intentionally fall back to the private consultation section instead of opening a broken store.
+
+Set the consultation email used by the enquiry form:
+
+```bash
+NEXT_PUBLIC_CONSULTATION_EMAIL=hello@dharohar.in
+```
+
+The form prepares a complete email in the visitor's mail app and never shows a false "received" state. Replace this with a CRM or transactional form endpoint when the production destination is available.
 
 ## Structure
 
 - `app/` — App Router page, metadata and global design tokens
-- `components/sections/` — page sections and interactive product stories
+- `components/BrandGateway.tsx` — active brand gateway, curated product preview, routing and consultation journey
+- `components/sections/` — retained experimental product-story sections
 - `components/ui/` — reusable reveal, image and heading components
 - `data/dharohar.ts` — typed product and editorial content
 - `public/images/` — optimized local reference photography
@@ -46,7 +55,7 @@ The current images are editorial placeholders sourced under the Unsplash license
 
 `heritage-product-rail.webp` is an optimized original AI-generated Dharohar visual created for the compact product rail, with the high-resolution PNG retained as its editable campaign master. It contains no copied branding, packaging, reviews or discount claims from the supplied references.
 
-Also replace `.example` email addresses with production destinations and supply verified market statistics for the clearly labelled “Why now” placeholders.
+The high-resolution P-TAL files requested for design review are stored under `public/images/reference/ptal/`, with optimized derivatives under `public/images/curated/`. They are temporary reference assets and require usage permission or replacement with Dharohar-owned photography before commercial launch.
 
 ## Accessibility and performance
 
