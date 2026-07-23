@@ -2220,6 +2220,564 @@ main .heritage-display {
   to { transform: rotate(-360deg); }
 }
 
+.dharohar-loader-wordmark-image {
+  position: relative;
+  display: block;
+  width: min(92%, 360px);
+  aspect-ratio: 1.75;
+  margin: 1.1rem auto -.25rem;
+  filter: brightness(0) saturate(100%) invert(92%) sepia(31%) saturate(698%) hue-rotate(338deg) brightness(104%);
+}
+
+.dharohar-brand-wordmark {
+  filter: brightness(0) saturate(100%) invert(91%) sepia(26%) saturate(711%) hue-rotate(340deg) brightness(105%);
+}
+
+.dharohar-image-signature {
+  position: absolute;
+  z-index: 7;
+  display: block;
+  width: clamp(5.8rem, 8vw, 7.35rem);
+  height: clamp(2.15rem, 3.2vw, 2.7rem);
+  overflow: hidden;
+  border: 1px solid rgb(255 235 199 / 24%);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgb(35 17 14 / 62%), rgb(72 37 30 / 38%));
+  box-shadow:
+    inset 0 1px rgb(255 255 255 / 10%),
+    0 10px 32px rgb(18 8 7 / 18%);
+  pointer-events: none;
+  backdrop-filter: blur(12px) saturate(1.08);
+}
+
+.dharohar-image-signature img {
+  padding: .12rem .45rem;
+  filter: brightness(0) saturate(100%) invert(91%) sepia(27%) saturate(711%) hue-rotate(340deg) brightness(105%);
+  opacity: .94;
+}
+
+.group:hover .dharohar-image-signature {
+  border-color: rgb(255 235 199 / 40%);
+}
+
+.heritage-display,
+.font-serif,
+h1,
+h2,
+h3,
+h4 {
+  font-kerning: normal;
+  font-optical-sizing: auto;
+}
+
+.commissioning-hall-glow {
+  background:
+    radial-gradient(circle at 12% 10%, rgb(183 110 121 / 15%), transparent 26%),
+    radial-gradient(circle at 88% 74%, rgb(193 145 73 / 12%), transparent 28%);
+}
+
+.commission-audience-tabs {
+  color: rgb(255 248 238 / 52%);
+}
+
+.commission-audience-tab {
+  display: flex;
+  min-width: max-content;
+  align-items: center;
+  gap: .85rem;
+  border: 1px solid transparent;
+  border-radius: 1rem;
+  padding: .75rem .85rem;
+  text-align: left;
+  transition: color 240ms ease, border-color 240ms ease, background-color 240ms ease, transform 240ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.commission-audience-tab:hover,
+.commission-audience-tab.is-active {
+  border-color: rgb(224 183 115 / 24%);
+  background: rgb(255 255 255 / 5%);
+  color: #fff5e7;
+}
+
+.commission-audience-tab.is-active {
+  transform: translateX(.2rem);
+}
+
+.commission-audience-tab.is-active > span:nth-child(2) {
+  border-color: rgb(226 194 125 / 48%);
+  background: #d8b86b;
+  color: #2b181b;
+}
+
+.commission-brief-cta {
+  display: inline-flex;
+  min-height: 2.9rem;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+  border: 1px solid rgb(226 194 125 / 42%);
+  border-radius: 999px;
+  padding: .7rem 1.1rem;
+  color: #f1d79d;
+  font-size: .5rem;
+  font-weight: 850;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+  transition: gap 240ms ease, background-color 240ms ease, color 240ms ease;
+}
+
+.commission-brief-cta:hover {
+  gap: .95rem;
+  background: #d8b86b;
+  color: #2b181b;
+}
+
+.artisan-network-aura {
+  background:
+    radial-gradient(circle at 24% 32%, rgb(167 87 101 / 15%), transparent 34%),
+    radial-gradient(circle at 76% 68%, rgb(187 140 68 / 9%), transparent 30%),
+    linear-gradient(135deg, #170c0f, #281319 52%, #160b0f);
+}
+
+.artisan-map-grid {
+  background-image:
+    linear-gradient(rgb(255 255 255 / 3%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 3%) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at 50% 45%, black, transparent 78%);
+}
+
+.artisan-map-silhouette {
+  clip-path: polygon(35% 0%, 50% 6%, 58% 15%, 71% 19%, 79% 31%, 91% 39%, 96% 52%, 84% 60%, 72% 58%, 67% 67%, 58% 72%, 54% 89%, 47% 100%, 40% 88%, 36% 73%, 27% 63%, 14% 59%, 7% 47%, 13% 36%, 22% 29%, 24% 15%);
+  background:
+    linear-gradient(125deg, rgb(225 188 116 / 19%), transparent 38%),
+    linear-gradient(145deg, rgb(108 45 59 / 70%), rgb(76 31 42 / 88%));
+  box-shadow: inset 0 0 0 1px rgb(226 194 125 / 18%), 0 32px 90px rgb(0 0 0 / 22%);
+  opacity: .88;
+}
+
+.artisan-map-silhouette::before {
+  position: absolute;
+  inset: 2px;
+  clip-path: inherit;
+  background:
+    repeating-linear-gradient(112deg, transparent 0 9px, rgb(255 255 255 / 2%) 10px 11px),
+    radial-gradient(circle at 46% 28%, rgb(235 203 135 / 17%), transparent 26%);
+  content: "";
+}
+
+.artisan-map-pin {
+  position: absolute;
+  z-index: 10;
+  display: grid;
+  width: 1.35rem;
+  height: 1.35rem;
+  place-items: center;
+  border: 1px solid rgb(240 207 143 / 65%);
+  border-radius: 999px;
+  background: #2d171c;
+  color: #f1d49a;
+  box-shadow: 0 0 0 5px rgb(216 184 107 / 8%), 0 0 24px rgb(216 184 107 / 20%);
+  transform: translate(-50%, -50%);
+  transition: transform 220ms ease, background-color 220ms ease, box-shadow 220ms ease;
+}
+
+.artisan-map-pin > span {
+  width: .32rem;
+  height: .32rem;
+  border-radius: inherit;
+  background: currentColor;
+}
+
+.artisan-map-pin small {
+  position: absolute;
+  left: 1.7rem;
+  width: max-content;
+  max-width: 8rem;
+  color: rgb(255 246 232 / 56%);
+  font-size: .47rem;
+  font-weight: 750;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.artisan-map-pin:hover,
+.artisan-map-pin.is-active {
+  z-index: 15;
+  background: #d8b86b;
+  color: #2c161b;
+  box-shadow: 0 0 0 8px rgb(216 184 107 / 14%), 0 0 34px rgb(216 184 107 / 36%);
+  transform: translate(-50%, -50%) scale(1.18);
+}
+
+.artisan-map-pin.is-active small {
+  color: #f4dca9;
+}
+
+.artisan-ledger {
+  box-shadow: inset 0 1px rgb(255 255 255 / 4%);
+}
+
+.care-mode-tab {
+  min-height: 2.9rem;
+  flex: 1;
+  border-radius: 999px;
+  padding: .65rem .8rem;
+  color: rgb(255 244 229 / 42%);
+  font-size: .5rem;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  transition: background-color 240ms ease, color 240ms ease, box-shadow 240ms ease;
+}
+
+.care-mode-tab:hover {
+  color: #fff4e1;
+}
+
+.care-mode-tab.is-active {
+  background: linear-gradient(135deg, #d8b86b, #bb8752);
+  color: #2b161a;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 20%);
+}
+
+.restoration-reference .care-plan-card {
+  border-color: rgb(226 167 176 / 18%) !important;
+  background: rgb(38 17 24 / 72%) !important;
+  box-shadow: inset 0 1px rgb(255 255 255 / 3%);
+}
+
+.restoration-reference .care-plan-card:hover {
+  background: rgb(47 20 29 / 86%) !important;
+}
+
+.restoration-reference .care-plan-card.is-recommended {
+  border-color: rgb(216 184 107 / 48%) !important;
+  background: linear-gradient(155deg, rgb(63 29 39 / 92%), rgb(37 15 23 / 92%)) !important;
+  box-shadow: 0 22px 70px rgb(0 0 0 / 20%);
+}
+
+.restoration-reference .care-plan-card > span {
+  border: 0 !important;
+  background: #d8b86b !important;
+  color: #2b151a !important;
+}
+
+.restoration-reference .care-plan-card .restoration-request {
+  color: #e6c28a !important;
+}
+
+.hospitality-care-panel {
+  box-shadow: inset 0 1px rgb(255 255 255 / 4%), 0 24px 70px rgb(0 0 0 / 18%);
+}
+
+.commission-case {
+  box-shadow: 0 24px 64px rgb(83 35 47 / 13%);
+}
+
+.commission-case::after {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: inherit;
+  content: "";
+  pointer-events: none;
+}
+
+.commission-step {
+  display: flex;
+  min-width: max-content;
+  align-items: center;
+  gap: .55rem;
+  border: 1px solid rgb(157 88 100 / 17%);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 54%);
+  padding: .55rem .7rem;
+}
+
+.commission-step span {
+  color: #a26069;
+  font-size: .46rem;
+  font-weight: 850;
+  letter-spacing: .12em;
+}
+
+.commission-step strong {
+  color: #5b3a41;
+  font-size: .48rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.commission-step svg {
+  color: rgb(157 88 100 / 38%);
+}
+
+.commission-tool {
+  transition: transform 280ms cubic-bezier(.22, 1, .36, 1), border-color 280ms ease, box-shadow 280ms ease;
+}
+
+.commission-tool:hover {
+  border-color: rgb(162 96 105 / 42%);
+  box-shadow: 0 26px 70px rgb(83 35 47 / 10%);
+  transform: translateY(-5px);
+}
+
+.consult-persona-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .5rem;
+}
+
+.consult-persona {
+  display: flex;
+  min-height: 3.35rem;
+  align-items: center;
+  gap: .7rem;
+  border: 1px solid rgb(226 167 176 / 14%);
+  border-radius: .75rem;
+  background: rgb(255 255 255 / 2%);
+  padding: .7rem .8rem;
+  color: rgb(255 244 237 / 45%);
+  font-size: .55rem;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: left;
+  transition: border-color 200ms ease, background-color 200ms ease, color 200ms ease, transform 200ms ease;
+}
+
+.consult-persona:hover,
+.consult-persona.is-active {
+  border-color: rgb(216 184 107 / 42%);
+  background: rgb(216 184 107 / 9%);
+  color: #fff2dc;
+}
+
+.consult-persona.is-active {
+  transform: translateY(-1px);
+}
+
+.consult-persona.is-active svg {
+  color: #e1bf77;
+}
+
+@media (min-width: 1024px) {
+  .restoration-reference,
+  .artisan-network,
+  .consultation-reference {
+    min-height: 100svh;
+  }
+
+  .restoration-reference,
+  .artisan-network {
+    display: grid;
+    align-items: center;
+  }
+
+  .restoration-reference {
+    padding-block: clamp(2.25rem, 4svh, 3.75rem) !important;
+  }
+
+  .restoration-intro h2 {
+    margin-top: 1rem;
+    font-size: clamp(3.15rem, 4.5vw, 4.85rem) !important;
+  }
+
+  .restoration-intro > p:last-child {
+    margin-top: .85rem;
+    line-height: 1.65;
+  }
+
+  .restoration-reference .care-mode-tabs,
+  .restoration-reference [role="tabpanel"] {
+    margin-top: 1.25rem;
+  }
+
+  .restoration-reference [role="tabpanel"] article {
+    min-height: 0;
+  }
+
+  .restoration-reference [role="tabpanel"] article {
+    padding: 1.2rem 1.35rem;
+  }
+
+  .restoration-reference [role="tabpanel"] article h3 {
+    margin-top: .65rem;
+    font-size: 1.45rem;
+  }
+
+  .restoration-reference [role="tabpanel"] article p {
+    margin-top: .65rem;
+    line-height: 1.45;
+  }
+
+  .restoration-reference .restoration-promise {
+    margin-top: 1.25rem;
+    padding: 1.15rem 1.4rem;
+  }
+
+  .artisan-network {
+    padding-block: clamp(2.5rem, 4.5svh, 4rem) !important;
+  }
+
+  .artisan-network-intro h2 {
+    margin-top: .9rem;
+    font-size: clamp(3.1rem, 4.7vw, 5.15rem) !important;
+  }
+
+  .artisan-network-grid {
+    margin-top: 1.5rem;
+  }
+
+  .artisan-network .artisan-map-shell {
+    min-height: clamp(440px, 52svh, 520px);
+  }
+
+  .artisan-network .artisan-ledger {
+    padding: 1.45rem;
+  }
+
+  .artisan-network .artisan-ledger h3 {
+    margin-top: .7rem;
+    font-size: clamp(2.2rem, 3.25vw, 3.45rem);
+  }
+
+  .artisan-network .artisan-ledger > div {
+    margin-top: 1rem;
+  }
+
+  .artisan-network .artisan-ledger > p {
+    margin-top: 1rem;
+    line-height: 1.55;
+  }
+
+  .artisan-network .artisan-ledger > a {
+    margin-top: 1rem;
+    min-height: 3rem;
+  }
+
+  .consultation-reference {
+    display: flex;
+    align-items: center;
+  }
+
+  .consultation-reference > .site-container {
+    align-items: center !important;
+    gap: clamp(2rem, 4vw, 4rem);
+    padding-block: clamp(2rem, 4svh, 3.25rem) !important;
+  }
+
+  .consultation-intro {
+    top: 7rem !important;
+  }
+
+  .consultation-intro > p:nth-child(2),
+  .consultation-intro h2,
+  .consultation-intro > span,
+  .consultation-intro > p:nth-of-type(3),
+  .consultation-intro > div {
+    margin-top: 1rem;
+  }
+
+  .consultation-intro h2 {
+    font-size: clamp(3.25rem, 4.7vw, 5.15rem) !important;
+  }
+
+  .consultation-reference .consultation-card-dark {
+    padding: 1.25rem !important;
+  }
+
+  .consultation-reference .consultation-card-dark > div:first-child {
+    margin-bottom: 1rem;
+    padding-bottom: .9rem;
+  }
+
+  .consultation-reference .consultation-card-dark > label,
+  .consultation-reference .consultation-card-dark > fieldset {
+    margin-top: .85rem;
+  }
+
+  .consultation-reference .consult-persona-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .4rem;
+  }
+
+  .consultation-reference .consult-persona {
+    min-height: 2.65rem;
+    padding: .45rem .6rem;
+    font-size: .5rem;
+  }
+
+  .consultation-reference .consult-input {
+    min-height: 2.75rem;
+  }
+
+  .consultation-reference textarea.consult-input {
+    min-height: 4.5rem;
+  }
+
+  .consultation-reference .consult-submit {
+    min-height: 3.1rem;
+    margin-top: .9rem;
+  }
+
+  .consultation-reference .consult-submit + p {
+    margin-top: .65rem;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 800px) {
+  .restoration-reference,
+  .artisan-network {
+    padding-block: 1.75rem !important;
+  }
+
+  .restoration-intro h2,
+  .artisan-network-intro h2 {
+    font-size: clamp(3rem, 4.1vw, 4.25rem) !important;
+  }
+
+  .restoration-reference [role="tabpanel"] article {
+    padding-block: 1rem;
+  }
+
+  .artisan-network .artisan-map-shell {
+    min-height: 410px;
+  }
+
+  .consultation-reference > .site-container {
+    padding-block: 1.25rem !important;
+  }
+
+  .consultation-intro h2 {
+    font-size: clamp(3rem, 4.2vw, 4.35rem) !important;
+  }
+
+  .consultation-reference .consultation-card-dark {
+    padding: 1rem !important;
+  }
+
+  .consultation-reference .consultation-card-dark > label,
+  .consultation-reference .consultation-card-dark > fieldset {
+    margin-top: .65rem;
+  }
+
+  .consultation-reference .consult-persona {
+    min-height: 2.35rem;
+    padding-block: .35rem;
+  }
+
+  .consultation-reference .consult-input {
+    min-height: 2.5rem;
+  }
+
+  .consultation-reference textarea.consult-input {
+    min-height: 3.8rem;
+  }
+}
+
 @media (min-width: 768px) {
   .site-container {
     width: min(calc(100% - 5rem), 1440px);
@@ -2255,6 +2813,20 @@ main .heritage-display {
 
   .consultation-card-dark {
     padding: 1.15rem;
+  }
+
+  .care-mode-tabs {
+    flex-direction: column;
+    border-radius: 1rem;
+  }
+
+  .care-mode-tab {
+    width: 100%;
+    border-radius: .75rem;
+  }
+
+  .consult-persona-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -2419,6 +2991,37 @@ main .heritage-display {
     min-width: 3.7rem;
     padding-inline: .55rem;
   }
+
+  .commission-audience-tab.is-active {
+    transform: translateY(-1px);
+  }
+
+  #commission-audience-panel {
+    min-height: 540px;
+  }
+
+  .artisan-map-shell {
+    min-height: 660px;
+  }
+
+  .artisan-map-silhouette {
+    left: 3%;
+    top: 8%;
+    width: 92%;
+    height: 72%;
+  }
+
+  .artisan-map-pin small {
+    display: none;
+  }
+
+  .artisan-map-pin.is-active small {
+    display: block;
+  }
+
+  .commission-case {
+    min-height: 390px;
+  }
 }
 
 @media (min-width: 1024px) and (max-height: 860px) {
@@ -2484,6 +3087,69 @@ main .heritage-display {
 
   .consultation-reference #consultation-title {
     font-size: clamp(3.4rem, 5vw, 5.2rem) !important;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 980px) {
+  .dharohar-table {
+    display: grid;
+    min-height: calc(100svh - 7rem);
+    grid-template-columns: minmax(0, .84fr) minmax(0, 1.16fr);
+    align-items: center;
+    gap: clamp(1.5rem, 3vw, 3.5rem);
+    padding: clamp(1.5rem, 3.5vh, 2.75rem) max(1.25rem, calc((100vw - 1500px) / 2)) !important;
+  }
+
+  .dharohar-table > .site-container {
+    width: 100%;
+    max-width: none;
+    padding-inline: 0;
+  }
+
+  .dharohar-table > .site-container > div {
+    grid-template-columns: 1fr !important;
+    gap: 1.4rem;
+  }
+
+  .dharohar-table h2 {
+    font-size: clamp(2.35rem, 3.5vw, 3.25rem) !important;
+    line-height: .88 !important;
+  }
+
+  .dharohar-table .table-title-line {
+    white-space: nowrap;
+  }
+
+  .dharohar-table .site-container > div > div:last-child {
+    max-width: 23rem;
+    padding-bottom: 0 !important;
+  }
+
+  .dharohar-table-stage {
+    width: 100%;
+    max-width: none !important;
+    margin-top: 0 !important;
+  }
+
+  .dharohar-table-image-frame {
+    aspect-ratio: 16 / 9;
+  }
+
+  .dharohar-table-card {
+    bottom: 1rem;
+    left: 1rem;
+    width: min(21rem, calc(100% - 2rem));
+    padding: 1rem;
+  }
+
+  .dharohar-table-card > p {
+    margin-top: .7rem;
+    line-height: 1.45;
+  }
+
+  .dharohar-table-card > div:last-child {
+    margin-top: .7rem;
+    padding-top: .7rem;
   }
 }
 

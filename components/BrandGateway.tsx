@@ -2,22 +2,31 @@
 
 import {
   ArrowRight,
-  Building2,
+  BadgeCheck,
+  BookOpen,
+  BriefcaseBusiness,
   CalendarDays,
   Check,
   ChevronLeft,
   ChevronRight,
   CirclePause,
   CirclePlay,
+  Clock3,
+  Crown,
   ExternalLink,
   Feather,
   Gift,
   Hammer,
   HeartHandshake,
   History,
+  Home,
+  Hotel,
+  Layers3,
   Mail,
+  MapPin,
   Menu,
-  PackageCheck,
+  Palette,
+  PartyPopper,
   PenLine,
   RotateCcw,
   Search,
@@ -46,7 +55,7 @@ import {
 type StoreIntent = { href: string; label: string; path: string };
 type StoreLinkProps = ComponentPropsWithoutRef<"a"> & { path: string; eventLabel: string };
 
-const gatewayLinks = [["Collections", "#collection"], ["Our story", "#legacy"], ["Craftsmanship", "#care-guide"], ["Journal", "#rituals"], ["Experience", "#restoration"]] as const;
+const gatewayLinks = [["Collections", "#collection"], ["Commissions", "#commissions"], ["Artisans", "#artisan-network"], ["Craft", "#care-guide"], ["Care", "#restoration"], ["Salon", "#consultation"]] as const;
 
 const heroFrames = [
   { image: "/images/hero-parallax/sunset-background.webp", label: "Sunset over the lake", layer: "backdrop" },
@@ -56,10 +65,10 @@ const heroFrames = [
 ] as const;
 
 const parallaxPlanes = [
-  { x: 1.2, y: .8, scroll: 3, scale: 1.002 },
-  { x: 3, y: 2, scroll: 8, scale: .985 },
-  { x: 6, y: 3.5, scroll: 14, scale: .92 },
-  { x: 8, y: 5, scroll: 20, scale: .965 },
+  { x: 1.2, y: .8, scroll: 2, scale: 1 },
+  { x: 2, y: 1.2, scroll: 4, scale: 1 },
+  { x: 3, y: 1.8, scroll: 6, scale: 1 },
+  { x: 4, y: 2.4, scroll: 8, scale: 1 },
 ] as const;
 
 const materials = [
@@ -116,12 +125,30 @@ const categoryCollections = [
   { name: "Pooja & Ritual", detail: "Handcrafted diya forms made for prayer, celebration and daily devotion.", image: "/images/dharohar-categories/pooja-clean.webp", path: "/collections/pooja-items" },
 ] as const;
 
-const intentions = [
-  { eyebrow: "Cook", title: "At the flame", copy: "Kadhais, handis, patilas, lagans and tawas for the meals your home returns to.", image: "/images/curated/brass-flat-kadhai.webp", path: "/collections/everyday-cookware", cta: "Enter cookware", icon: HeartHandshake },
-  { eyebrow: "Serve", title: "Around the table", copy: "Thalis, bowls, platters, cutlery and serving forms that turn food into gathering.", image: "/images/curated/kansa-thaali-clean.jpg", path: "/collections/tableware", cta: "Set the table", icon: PackageCheck },
-  { eyebrow: "Hydrate", title: "The water ritual", copy: "Copper bottles, tumblers, glasses, carafes, jugs and dispensers for considered daily use.", image: "/images/curated/copper-dispenser-lifestyle.jpg", path: "/collections/drinkware", cta: "Explore hydration", icon: Droplets },
-  { eyebrow: "Gift", title: "For a milestone", copy: "Personalised pieces and presentation-ready sets for beginnings worth remembering.", image: "/images/curated/brass-davara-clean.jpg", path: "/collections/wedding-gifts", cta: "Choose a gift", icon: Gift },
-  { eyebrow: "Restore", title: "Return it to care", copy: "A clear route to re-tinning, polishing, dent repair, engraving updates and expert guidance.", image: "/images/artisan.jpg", path: "/pages/restoration-care", cta: "Begin restoration", icon: Wrench },
+const clientPaths = [
+  { id: "home", label: "Homes & collectors", eyebrow: "Private homes", title: "A kitchen shaped around your rituals.", copy: "Complete kitchen curation, material guidance and personal objects selected for the way your family cooks and gathers.", detail: "Family rhythm · Metal curation · Heirloom engraving", image: "/images/heritage-kitchen.jpg", icon: Home, service: "Complete heritage kitchen" },
+  { id: "wedding", label: "Weddings & gifting", eyebrow: "Celebrations", title: "A gift that enters another family’s story.", copy: "Engraved objects, presentation-ready packaging and thoughtful fulfilment for intimate ceremonies or large guest lists.", detail: "Quantity planning · Engraving · Multi-city delivery", image: "/images/curated/brass-davara-clean.jpg", icon: Crown, service: "Wedding or celebration gifting" },
+  { id: "events", label: "Event planners", eyebrow: "Event commissions", title: "A tablescape that arrives ready.", copy: "Coordinated serveware and gifting programmes shaped around the venue, guest count and a fixed production calendar.", detail: "Guest count · Venue schedule · Fulfilment window", image: "/images/indian-table.jpg", icon: PartyPopper, service: "Event planning and tablescape" },
+  { id: "design", label: "Interior designers", eyebrow: "Trade & interiors", title: "Material character for a larger space.", copy: "Finish libraries, custom dimensions and specification support for residences, studios and considered hospitality interiors.", detail: "Samples · Finish approval · Project specifications", image: "/images/hero-kitchen.jpg", icon: Palette, service: "Interior design or trade project" },
+  { id: "hospitality", label: "Restaurants & hotels", eyebrow: "Hospitality", title: "Made for service, night after night.", copy: "Cookware, tableware and replacement continuity designed around covers, cuisine and the pace of a professional service.", detail: "Covers · Service rhythm · Scheduled care", image: "/images/brass-collection.jpg", icon: Hotel, service: "Restaurant or hospitality project" },
+  { id: "corporate", label: "Corporate gifting", eyebrow: "Institutions", title: "A meaningful gesture, delivered at scale.", copy: "Brand-considered gifting with personal notes, selective co-branding and one coordinated route from approval to dispatch.", detail: "Recipient tiers · Presentation · Distributed fulfilment", image: "/images/product-heritage-set-v3.png", icon: BriefcaseBusiness, service: "Corporate or institutional gifting" },
+] as const;
+
+const artisanRegions = [
+  { id: "jandiala", town: "Jandiala Guru", state: "Punjab", craft: "Thathera hand-hammering", objects: "Copper and brass pots, plates, bowls and community vessels.", status: "Core network", x: 35, y: 15 },
+  { id: "jagadhri", town: "Jagadhri", state: "Haryana", craft: "Utensil forming & finishing", objects: "Brass, copper and steel kitchen forms shaped for dependable production.", status: "Core network", x: 39, y: 23 },
+  { id: "moradabad", town: "Moradabad", state: "Uttar Pradesh", craft: "Casting, chasing & engraving", objects: "Detailed brassware, bowls, serveware and sculptural metal objects.", status: "Core network", x: 48, y: 28 },
+  { id: "lucknow", town: "Lucknow", state: "Uttar Pradesh", craft: "Sheet-metal repoussé", objects: "Parat, deg, sini, patili, paandaan and water vessels.", status: "Core network", x: 56, y: 36 },
+  { id: "varanasi", town: "Varanasi", state: "Uttar Pradesh", craft: "Repoussé & relief work", objects: "Decorative utensils and hand-worked copper and brass surfaces.", status: "Craft atlas", x: 62, y: 42 },
+  { id: "kumaon", town: "Kumaon", state: "Uttarakhand", craft: "Tamta copper work", objects: "Hand-beaten copper kitchen vessels, kalash and water forms.", status: "Craft atlas", x: 48, y: 18 },
+  { id: "sarthebari", town: "Sarthebari", state: "Assam", craft: "Bell-metal forming", objects: "Kahi dishes, bati bowls, lota, sarai and ceremonial vessels.", status: "Craft atlas", x: 84, y: 38 },
+  { id: "mannar", town: "Mannar", state: "Kerala", craft: "Bronze casting", objects: "Urulis, ladles and enduring ritual and household metalware.", status: "Craft atlas", x: 42, y: 83 },
+] as const;
+
+const commissionBriefs = [
+  { number: "01", audience: "Wedding atelier", title: "A family mark, repeated with care.", copy: "Object selection, engraving approval, presentation and distributed delivery organised as one commission.", meta: ["50–500+ gifts", "Personal engraving", "Presentation boxes"], image: "/images/product-heritage-set-v3.png" },
+  { number: "02", audience: "Hospitality table", title: "A material language built for service.", copy: "A coordinated collection for the kitchen and dining room, supported by replacement continuity and scheduled care.", meta: ["Cook & serve", "Sample approval", "Care rotation"], image: "/images/indian-table.jpg" },
+  { number: "03", audience: "Private kitchen", title: "The complete rasoi, considered together.", copy: "A household brief translated into cookware, tableware, water objects and future heirlooms.", meta: ["Family consultation", "Metal curation", "Object passport"], image: "/images/heritage-kitchen.jpg" },
 ] as const;
 
 const tableObjects = [
@@ -192,6 +219,24 @@ function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; 
   return <motion.div className={className} initial={{ opacity: .76, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-36px" }} transition={{ duration: .72, delay, ease: [.22, 1, .36, 1] }}>{children}</motion.div>;
 }
 
+function DharoharWordmark({ className = "", priority = false }: { className?: string; priority?: boolean }) {
+  return (
+    <span className={`dharohar-brand-wordmark relative block ${className}`}>
+      <Image src="/images/dharohar-wordmark.png" alt="Dharohar Heritage Kitchen" fill priority={priority} unoptimized sizes="260px" className="object-contain" />
+    </span>
+  );
+}
+
+function DharoharImageSignature({ className = "" }: { className?: string }) {
+  return (
+    <span className={`dharohar-image-signature ${className}`} aria-hidden="true">
+      <span className="relative block h-full w-full">
+        <Image src="/images/dharohar-wordmark.png" alt="" fill unoptimized sizes="170px" className="object-contain" />
+      </span>
+    </span>
+  );
+}
+
 function GatewayHeader() {
   const [open, setOpen] = useState(false);
   const [activeHref, setActiveHref] = useState("#top");
@@ -220,8 +265,7 @@ function GatewayHeader() {
       <motion.div className="absolute inset-x-0 bottom-0 h-px origin-left bg-[#e4c789]" style={{ scaleX: progress }} />
       <div className="site-container flex h-[88px] items-center justify-between gap-4 sm:h-[100px]">
         <a href="#top" aria-label="Dharohar home" className="min-w-0 shrink-0">
-          <strong className="block whitespace-nowrap font-serif text-[1.65rem] font-medium leading-none tracking-[.075em] text-white sm:text-[2rem]">DHAROHAR</strong>
-          <span className="mt-2 block text-center text-[6px] font-bold uppercase tracking-[.42em] text-white/62 sm:text-[7px]">Heritage utensils</span>
+          <DharoharWordmark priority className="h-[3.8rem] w-[9.75rem] sm:h-[4.5rem] sm:w-[12rem]" />
         </a>
         <nav className="hidden items-center gap-[clamp(1.4rem,2.6vw,3.2rem)] lg:flex" aria-label="Primary navigation">{gatewayLinks.map(([label, href]) => <a key={href} href={href} aria-current={activeHref === href ? "location" : undefined} className={`relative py-3 text-[12px] font-medium tracking-[-.01em] transition after:absolute after:inset-x-0 after:bottom-1 after:h-px after:origin-left after:bg-[#f1d39b] after:transition-transform ${activeHref === href ? "text-[#f2d39a] after:scale-x-100" : "text-white/78 after:scale-x-0 hover:text-white hover:after:scale-x-100"}`}>{label}</a>)}</nav>
         <div className="flex shrink-0 items-center gap-1 sm:gap-2">
@@ -350,7 +394,9 @@ function MaterialExplorer() {
           </div>
           <StoreLink path={active.path} eventLabel={`material_visual_${active.id}`} aria-label={`View all ${active.name} pieces`} className="rose-image-well group relative order-1 min-h-[360px] overflow-hidden bg-[#e4d4c1] lg:order-2 lg:min-h-[520px]">
             <AnimatePresence mode="wait"><motion.div key={active.image} className="absolute inset-0" initial={{ opacity: 0, scale: 1.06 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: .98 }} transition={{ duration: .8 }}><DharoharImage src={active.image} alt={`${active.name} heritage cookware`} fill unoptimized sizes="(max-width: 1024px) 100vw, 55vw" className="object-cover" /><div className="product-glint absolute -inset-y-[20%] left-[-25%] w-[18%] rotate-12 bg-gradient-to-r from-transparent via-white/40 to-transparent blur-sm" /></motion.div></AnimatePresence>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/38 via-transparent to-white/10" /><div className="absolute bottom-6 right-6 inline-flex items-center gap-2 rounded-full border border-white/35 bg-black/25 px-4 py-2 text-[9px] font-bold uppercase tracking-[.18em] text-white backdrop-blur transition duration-300 group-hover:-translate-y-1 group-hover:bg-black/45">View all {active.name} <ArrowRight size={13} /></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/38 via-transparent to-white/10" />
+            <DharoharImageSignature className="left-5 top-5 sm:left-7 sm:top-7" />
+            <div className="absolute bottom-6 right-6 inline-flex items-center gap-2 rounded-full border border-white/35 bg-black/25 px-4 py-2 text-[9px] font-bold uppercase tracking-[.18em] text-white backdrop-blur transition duration-300 group-hover:-translate-y-1 group-hover:bg-black/45">View all {active.name} <ArrowRight size={13} /></div>
           </StoreLink>
         </div>
       </div>
@@ -457,10 +503,8 @@ function CategoryCarousel() {
             <div className="relative aspect-[4/5] sm:aspect-[16/10]">
               <DharoharImage src={category.image} alt={`${category.name} from Dharohar`} fill unoptimized sizes="(max-width: 639px) 86vw, (max-width: 1023px) 72vw, 58vw" className="category-slide-image object-cover" />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(35,19,16,.06)_15%,rgba(35,19,16,.18)_48%,rgba(35,19,16,.88)_100%)]" />
-              <div className="absolute inset-x-0 top-0 flex items-center justify-between gap-4 p-5 sm:p-7">
-                <span className="rounded-full border border-white/30 bg-[#321d19]/45 px-3 py-2 text-[8px] font-extrabold uppercase tracking-[.22em] text-white/90 backdrop-blur-md">Dharohar collection</span>
-                <span className="font-serif text-2xl italic text-white/75">{String(index + 1).padStart(2, "0")}</span>
-              </div>
+              <DharoharImageSignature className="left-5 top-5 sm:left-7 sm:top-7" />
+              <span className="absolute right-5 top-5 z-[7] font-serif text-2xl italic text-white/75 sm:right-7 sm:top-7">{String(index + 1).padStart(2, "0")}</span>
               <div className="absolute inset-x-0 bottom-0 p-5 sm:p-8">
                 <p className="text-[8px] font-extrabold uppercase tracking-[.24em] text-[#f3c8b6]">Explore by purpose</p>
                 <h3 className="mt-2 max-w-3xl font-serif text-[clamp(2.2rem,4.3vw,4.8rem)] leading-[.9] text-white">{category.name}</h3>
@@ -495,7 +539,7 @@ function DharoharTable() {
         <Reveal className="grid gap-7 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
             <p className="inline-flex items-center gap-3 text-[9px] font-bold uppercase tracking-[.25em] text-[#d8b06f]"><span className="h-px w-8 bg-[#d8b06f]/55" /> The Dharohar table</p>
-            <h2 id="dharohar-table-title" className="mt-5 max-w-5xl font-serif text-[clamp(3.35rem,6vw,6.6rem)] leading-[.84] tracking-[-.035em]">A table is where metal<br /><span className="italic text-[#d9a2ab]">becomes memory.</span></h2>
+            <h2 id="dharohar-table-title" className="mt-5 max-w-5xl font-serif text-[clamp(3.35rem,6vw,6.6rem)] leading-[.84] tracking-[-.035em]"><span className="table-title-line">A table is where metal</span><br /><span className="italic text-[#d9a2ab]">becomes memory.</span></h2>
           </div>
           <div className="max-w-sm lg:pb-2">
             <p className="text-sm leading-7 text-white/55">Select an object inside the scene. Each piece has a place, a purpose and a route into your home.</p>
@@ -509,6 +553,7 @@ function DharoharTable() {
           <Image src="/images/experience/dharohar-table-v1.webp" alt="A composed Dharohar table with copper, brass and kansa objects at blue hour" fill unoptimized sizes="(max-width: 767px) 100vw, 1500px" className="object-cover" />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(18,9,11,.46),transparent_42%),linear-gradient(180deg,transparent_54%,rgba(16,8,10,.34))]" />
           <div className="table-vignette pointer-events-none absolute inset-0" />
+          <DharoharImageSignature className="right-5 top-5 sm:right-7 sm:top-7" />
           <p className="absolute left-5 top-5 rounded-full border border-white/18 bg-[#251316]/58 px-4 py-2 text-[8px] font-bold uppercase tracking-[.2em] text-white/68 backdrop-blur-md sm:left-7 sm:top-7">Select a glowing marker</p>
 
           {tableObjects.map((item) => (
@@ -557,6 +602,7 @@ function DharoharTable() {
 }
 
 function LifetimeRestoration() {
+  const [careMode, setCareMode] = useState<"restore" | "membership" | "hospitality">("restore");
   const services = [
     { icon: RotateCcw, title: "Re-tinning / Kalai", copy: "Renew food-contact lining after an object-specific assessment." },
     { icon: Sparkles, title: "Polishing & patina", copy: "Restore brightness or preserve a naturally earned patina." },
@@ -565,21 +611,71 @@ function LifetimeRestoration() {
     { icon: PenLine, title: "Engraving updates", copy: "Refresh a mark or add the next name and date." },
     { icon: HeartHandshake, title: "Care guidance", copy: "Receive lifelong, object-specific maintenance support." },
   ] as const;
+  const memberships = [
+    { name: "Ghar Care", price: "₹4,900", cadence: "per year", credits: "4 care credits", features: ["Annual condition review", "One pickup and return cycle", "10% off additional care"], recommended: false },
+    { name: "Heirloom Circle", price: "₹9,900", cadence: "per year", credits: "10 care credits", features: ["Two logistics cycles", "Priority artisan queue", "Engraving refresh credit", "Digital care ledger"], recommended: true },
+    { name: "Collector’s Reserve", price: "₹18,000", cadence: "per year", credits: "20 care credits", features: ["Twice-yearly review", "Dedicated care advisor", "Priority restoration", "Provenance record"], recommended: false },
+  ] as const;
   const mail = process.env.NEXT_PUBLIC_CONSULTATION_EMAIL ?? "hello@dharohar.in";
 
   return (
     <section id="restoration" className="rose-dark-surface rose-restoration restoration-reference compact-restoration relative overflow-hidden border-y border-[#d8b86b]/18 px-5 py-[clamp(5.5rem,8vw,8.5rem)] text-[#fff4dc]" aria-labelledby="restoration-title">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_83%_16%,rgba(192,104,120,.14),transparent_34%),radial-gradient(circle_at_15%_82%,rgba(168,104,69,.1),transparent_30%)]" />
       <div className="site-container">
-        <Reveal className="relative mx-auto max-w-5xl text-center">
+        <Reveal className="restoration-intro relative mx-auto max-w-5xl text-center">
           <p className="inline-flex items-center gap-3 text-[9px] font-bold uppercase tracking-[.24em] text-[#d8b86b]"><Wrench size={13} /> Lifetime restoration</p>
           <h2 id="restoration-title" className="mt-6 font-serif text-[clamp(3.4rem,5.4vw,5.8rem)] leading-[.9]">Care for a lifetime.<br /><span className="italic">Not only at purchase.</span></h2>
           <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-white/58 sm:text-base">Every Dharohar piece retains a clear route to skilled restoration<br className="hidden sm:block" /> and practical maintenance guidance throughout ownership.</p>
         </Reveal>
 
-        <div className="relative mt-12 grid gap-px overflow-hidden rounded-[1.45rem] border border-white/12 bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, index) => { const Icon = service.icon; return <motion.article key={service.title} initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * .05 }} className="group min-h-[190px] bg-[#321f16] p-6 transition hover:bg-[#3a251a] sm:p-8"><div className="grid grid-cols-[2.5rem_1fr] items-start gap-5"><span className="pt-2 text-[#d8a2aa] transition group-hover:-translate-y-1 group-hover:text-[#f0c5ca]"><Icon size={24} strokeWidth={1.25} /></span><div><p className="text-[7px] font-bold uppercase tracking-[.2em] text-[#d8b86b]">Care 0{index + 1}</p><h3 className="mt-3 font-serif text-[1.65rem] leading-none">{service.title}</h3><p className="mt-3 max-w-[18rem] text-sm leading-6 text-white/48">{service.copy}</p></div></div></motion.article>; })}
+        <div className="care-mode-tabs relative mx-auto mt-9 flex max-w-3xl rounded-full border border-white/12 bg-black/15 p-1" role="tablist" aria-label="Dharohar care programmes">
+          {[
+            ["restore", "One-time restoration"],
+            ["membership", "Care memberships"],
+            ["hospitality", "Hospitality care"],
+          ].map(([id, label]) => <button key={id} type="button" role="tab" aria-selected={careMode === id} onClick={() => setCareMode(id as typeof careMode)} className={`care-mode-tab ${careMode === id ? "is-active" : ""}`}>{label}</button>)}
         </div>
+
+        <AnimatePresence mode="wait">
+          {careMode === "restore" ? (
+            <motion.div key="restore" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} className="relative mt-9 grid gap-px overflow-hidden rounded-[1.45rem] border border-white/12 bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
+              {services.map((service, index) => { const Icon = service.icon; return <article key={service.title} className="group min-h-[180px] bg-[#321f16] p-6 transition hover:bg-[#3a251a] sm:p-7"><div className="grid grid-cols-[2.5rem_1fr] items-start gap-5"><span className="pt-2 text-[#d8a2aa] transition group-hover:-translate-y-1 group-hover:text-[#f0c5ca]"><Icon size={24} strokeWidth={1.25} /></span><div><p className="text-[7px] font-bold uppercase tracking-[.2em] text-[#d8b86b]">Care 0{index + 1}</p><h3 className="mt-3 font-serif text-[1.65rem] leading-none">{service.title}</h3><p className="mt-3 max-w-[18rem] text-sm leading-6 text-white/48">{service.copy}</p></div></div></article>; })}
+            </motion.div>
+          ) : null}
+
+          {careMode === "membership" ? (
+            <motion.div key="membership" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} className="mt-9 grid gap-4 lg:grid-cols-3">
+              {memberships.map((plan) => (
+                <article key={plan.name} className={`care-plan-card relative rounded-[1.45rem] border p-6 sm:p-8 ${plan.recommended ? "is-recommended" : ""}`}>
+                  {plan.recommended ? <span className="absolute right-5 top-5 rounded-full bg-[#d8b86b] px-3 py-1 text-[7px] font-black uppercase tracking-[.14em] text-[#2b151a]">Most considered</span> : null}
+                  <p className="text-[8px] font-bold uppercase tracking-[.2em] text-[#d8b86b]">{plan.credits}</p>
+                  <h3 className="mt-4 font-serif text-4xl">{plan.name}</h3>
+                  <div className="mt-5 flex items-end gap-2"><strong className="font-serif text-5xl font-medium text-[#fff4dc]">{plan.price}</strong><span className="pb-2 text-xs text-white/36">{plan.cadence}</span></div>
+                  <div className="mt-6 space-y-3 border-t border-white/10 pt-5">{plan.features.map((feature) => <p key={feature} className="flex items-center gap-3 text-sm text-white/55"><Check size={14} className="text-[#d8b86b]" />{feature}</p>)}</div>
+                  <a href={`mailto:${mail}?subject=${encodeURIComponent(`Dharohar ${plan.name} membership`)}`} className="restoration-request mt-7 w-full">Choose {plan.name} <ArrowRight size={14} /></a>
+                </article>
+              ))}
+              <p className="col-span-full mt-2 text-center text-[10px] leading-5 text-white/34">Indicative launch pricing. Final inclusions and logistics are confirmed against object size, condition and serviceable location.</p>
+            </motion.div>
+          ) : null}
+
+          {careMode === "hospitality" ? (
+            <motion.div key="hospitality" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} className="hospitality-care-panel mt-9 overflow-hidden rounded-[1.45rem] border border-white/12 bg-[#241018]/76">
+              <div className="grid lg:grid-cols-[.92fr_1.08fr]">
+                <div className="p-7 sm:p-10">
+                  <p className="text-[8px] font-bold uppercase tracking-[.22em] text-[#d8b86b]">Capacity held for your service</p>
+                  <h3 className="mt-4 max-w-xl font-serif text-[clamp(2.8rem,4.7vw,5rem)] leading-[.88]">Care that moves in batches, not emergencies.</h3>
+                  <p className="mt-5 max-w-xl text-sm leading-7 text-white/52">A scheduled restoration route for restaurants, hotels and event collections—so part of the service is cared for while the rest remains in use.</p>
+                  <div className="mt-7 flex items-end gap-3"><strong className="font-serif text-5xl font-medium text-[#efd49a]">₹25,000</strong><span className="pb-2 text-xs text-white/38">from / quarter</span></div>
+                  <a href={`mailto:${mail}?subject=Dharohar%20hospitality%20care`} className="restoration-request mt-7">Build a care rotation <ArrowRight size={14} /></a>
+                </div>
+                <div className="grid gap-px bg-white/10 sm:grid-cols-2">
+                  {[["01", "Condition audit", "Review the working collection and identify priority objects."], ["02", "Rolling batches", "Keep service running while selected pieces return to care."], ["03", "Priority turnaround", "Reserve artisan capacity around the operating calendar."], ["04", "Continuity ledger", "Record work, replacements and future service dates."]].map(([number, title, copy]) => <article key={number} className="bg-[#2b141d] p-6 sm:p-8"><span className="text-[8px] font-bold tracking-[.18em] text-[#d8b86b]">{number}</span><h4 className="mt-4 font-serif text-3xl">{title}</h4><p className="mt-3 text-sm leading-6 text-white/45">{copy}</p></article>)}
+                </div>
+              </div>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
 
         <Reveal className="restoration-promise relative mt-8 flex flex-col gap-7 rounded-[1.25rem] border border-white/12 bg-[#1e120d]/35 p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between">
           <div className="min-w-0 flex-1"><div className="flex items-center gap-5"><p className="shrink-0 text-[8px] font-bold uppercase tracking-[.22em] text-[#d8b86b]">The lifelong promise</p><span className="h-px flex-1 bg-gradient-to-r from-[#d8b86b]/25 to-transparent" /></div><div className="mt-5 flex flex-wrap gap-x-8 gap-y-3 text-xs text-white/58">{["Care remains recorded", "Repair before replacement", "Guidance throughout ownership"].map((item) => <span key={item} className="flex items-center gap-2"><Check size={13} className="text-[#d8b86b]" />{item}</span>)}</div></div>
@@ -623,6 +719,7 @@ function PersonalisationStudio() {
           <div className="relative aspect-[4/5] sm:aspect-[5/4]">
             <Image src="/images/curated/copper-madurai-handi.webp" alt="Copper handi with a live personalised engraving preview" fill unoptimized sizes="(max-width: 1024px) 100vw, 56vw" className="engraving-object-image object-cover" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_53%_66%,transparent_24%,rgba(83,42,25,.1)_70%,rgba(83,42,25,.24)_100%)]" />
+            <DharoharImageSignature className="bottom-5 right-5 sm:bottom-7 sm:right-7" />
             <AnimatePresence>
               {previewState === "engraved" ? (
                 <motion.div key={`${style}-${engraving}`} initial={{ opacity: 0, scale: .94, x: "-50%", y: "-50%", filter: "blur(5px)" }} animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%", filter: "blur(0px)" }} exit={{ opacity: 0, scale: .96, x: "-50%", y: "-50%", filter: "blur(4px)" }} transition={{ duration: .5 }} className="engraving-mark">
@@ -669,22 +766,181 @@ function PersonalisationStudio() {
   );
 }
 
-function OccasionRoutes() {
+function CommissioningHall() {
+  const [activeId, setActiveId] = useState<(typeof clientPaths)[number]["id"]>("home");
+  const active = clientPaths.find((item) => item.id === activeId) ?? clientPaths[0];
+  const ActiveIcon = active.icon;
+
+  function prepareConsultation() {
+    window.dispatchEvent(new CustomEvent("dharohar:consultation-persona", { detail: { persona: active.label, service: active.service } }));
+    track("commission_path", active.id);
+  }
+
   return (
-    <section id="occasions" className="rose-surface rose-occasions bg-[#fffaf0] px-5 py-[clamp(3.75rem,6vw,6rem)]" aria-labelledby="occasions-title">
+    <section id="commissions" className="commissioning-hall relative isolate overflow-hidden bg-[#f8efe9] px-5 py-[clamp(4.5rem,7vw,7rem)]" aria-labelledby="commissions-title">
+      <div className="commissioning-hall-glow pointer-events-none absolute inset-0 -z-10" />
       <div className="site-container">
-        <Reveal className="mx-auto max-w-5xl text-center"><p className="heritage-label">Objects for every ritual</p><h2 id="occasions-title" className="heritage-display mt-5 text-[clamp(3.2rem,5.5vw,5.7rem)] leading-[.88]">From flame to table.<br />From water to memory.</h2><p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#746756] sm:text-base">Cook, serve, hydrate, gift—and care for objects made to remain.</p></Reveal>
-        <div className="no-scrollbar mt-9 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 lg:grid lg:grid-cols-12 lg:overflow-visible">
-          {intentions.map((item, index) => { const Icon = item.icon; return (
-            <motion.article key={item.title} whileHover={{ y: -6 }} transition={{ duration: .35 }} className={`ritual-doorway group relative min-h-[400px] min-w-[80vw] snap-center overflow-hidden rounded-[1.5rem] text-white lg:min-w-0 ${index === 0 ? "lg:col-span-7 lg:min-h-[500px]" : index === 1 ? "lg:col-span-5 lg:min-h-[500px]" : "lg:col-span-4"}`}>
-              <DharoharImage src={item.image} alt={`${item.title} in the Dharohar collection`} fill unoptimized sizes="(max-width: 1024px) 88vw, 48vw" className="object-cover transition duration-[1400ms] group-hover:scale-[1.055]" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#160e09]/96 via-[#160e09]/26 to-black/5" />
-              <div className="doorway-light pointer-events-none absolute inset-0" />
-              <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7"><span className="grid size-10 place-items-center rounded-full border border-white/30 bg-black/15 backdrop-blur transition duration-500 group-hover:border-[#e2c27d] group-hover:bg-[#e2c27d] group-hover:text-[#2a1a12]"><Icon size={18} /></span><p className="mt-4 text-[8px] font-bold uppercase tracking-[.2em] text-[#e2c27d]">{item.eyebrow}</p><h3 className="mt-2 font-serif text-3xl sm:text-4xl">{item.title}</h3><p className="mt-3 max-w-md text-sm leading-6 text-white/64">{item.copy}</p><StoreLink path={item.path} eventLabel={`intention_${index + 1}`} className="mt-5 inline-flex items-center gap-2 text-[8px] font-extrabold uppercase tracking-[.16em] text-[#f2d79c] transition group-hover:gap-4">{item.cta} <ArrowRight size={14} /></StoreLink></div>
-            </motion.article>
-          ); })}
+        <Reveal className="grid gap-7 lg:grid-cols-[.9fr_1.1fr] lg:items-end">
+          <div>
+            <p className="heritage-label">The commissioning hall</p>
+            <h2 id="commissions-title" className="heritage-display mt-5 max-w-4xl text-[clamp(3.2rem,5.5vw,5.9rem)] leading-[.87]">One craft.<br /><span className="italic text-[#a26069]">Many kinds of tables.</span></h2>
+          </div>
+          <p className="max-w-xl text-sm leading-7 text-[#756269] sm:text-base lg:justify-self-end">From one family kitchen to a wedding of five hundred, every commission begins with how the objects will be lived with.</p>
+        </Reveal>
+
+        <div className="mt-10 grid overflow-hidden rounded-[1.8rem] border border-[#a26069]/22 bg-[#2a171c] shadow-[0_32px_100px_rgba(74,32,43,.18)] lg:grid-cols-[.37fr_.63fr]">
+          <div role="tablist" aria-label="Who Dharohar serves" className="commission-audience-tabs no-scrollbar flex gap-2 overflow-x-auto border-b border-white/10 p-3 lg:flex-col lg:overflow-visible lg:border-b-0 lg:border-r lg:p-5">
+            {clientPaths.map((item, index) => {
+              const Icon = item.icon;
+              const selected = item.id === active.id;
+              return (
+                <button key={item.id} type="button" role="tab" aria-selected={selected} aria-controls="commission-audience-panel" onClick={() => setActiveId(item.id)} className={`commission-audience-tab ${selected ? "is-active" : ""}`}>
+                  <span className="text-[8px] font-semibold tracking-[.16em] text-white/28">0{index + 1}</span>
+                  <span className="grid size-9 shrink-0 place-items-center rounded-full border border-white/12"><Icon size={16} strokeWidth={1.4} /></span>
+                  <span className="whitespace-nowrap text-left text-[10px] font-bold uppercase tracking-[.12em]">{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div id="commission-audience-panel" role="tabpanel" className="relative min-h-[560px] overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div key={active.id} className="absolute inset-0" initial={{ opacity: 0, scale: 1.035 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: .985 }} transition={{ duration: .7, ease: [.22, 1, .36, 1] }}>
+                <DharoharImage src={active.image} alt={`${active.label} commission by Dharohar`} fill unoptimized sizes="(max-width: 1024px) 100vw, 64vw" className="object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#160b10] via-[#1a0d12]/34 to-black/4" />
+                <DharoharImageSignature className="right-5 top-5 sm:right-7 sm:top-7" />
+              </motion.div>
+            </AnimatePresence>
+
+            <AnimatePresence mode="wait">
+              <motion.div key={`${active.id}-copy`} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }} transition={{ duration: .48 }} className="absolute inset-x-0 bottom-0 p-6 text-[#fff8ec] sm:p-9">
+                <span className="grid size-11 place-items-center rounded-full border border-[#e2c27d]/35 bg-black/20 text-[#ebc88a] backdrop-blur"><ActiveIcon size={19} strokeWidth={1.35} /></span>
+                <p className="mt-5 text-[8px] font-bold uppercase tracking-[.22em] text-[#e4bd79]">{active.eyebrow}</p>
+                <h3 className="mt-3 max-w-2xl font-serif text-[clamp(2.45rem,4vw,4.6rem)] leading-[.9]">{active.title}</h3>
+                <p className="mt-4 max-w-xl text-sm leading-7 text-white/66">{active.copy}</p>
+                <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+                  <span className="text-[9px] font-bold uppercase tracking-[.14em] text-white/45">{active.detail}</span>
+                  <a href="#consultation" onClick={prepareConsultation} className="commission-brief-cta">Build my commission <ArrowRight size={14} /></a>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
-        <Reveal className="rose-trade-panel mt-6 flex flex-col gap-6 rounded-[1.6rem] border border-[#b78b3c]/24 bg-[#f3e6d2] p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8"><div className="flex items-start gap-4"><span className="grid size-12 shrink-0 place-items-center rounded-full border border-[#b78b3c]/35 text-[#9d712a]"><Building2 size={20} /></span><div><p className="text-[8px] font-bold uppercase tracking-[.19em] text-[#9d712a]">For designers and hospitality</p><h3 className="mt-2 font-serif text-3xl text-[#4d3823]">Objects composed for a larger space.</h3><p className="mt-2 max-w-2xl text-sm leading-6 text-[#746756]">A separate project route for restaurants, boutique stays, gifting programmes and considered interiors.</p></div></div><StoreLink path="/pages/trade-and-hospitality" eventLabel="trade_route" className="heritage-button shrink-0">Start a project <ArrowRight size={14} /></StoreLink></Reveal>
+      </div>
+    </section>
+  );
+}
+
+function ArtisanNetwork() {
+  const [activeId, setActiveId] = useState<(typeof artisanRegions)[number]["id"]>("jandiala");
+  const active = artisanRegions.find((item) => item.id === activeId) ?? artisanRegions[0];
+
+  return (
+    <section id="artisan-network" className="artisan-network relative isolate overflow-hidden bg-[#1a1012] px-5 py-[clamp(4.5rem,7vw,7rem)] text-[#fff5e5]" aria-labelledby="artisan-network-title">
+      <div className="artisan-network-aura pointer-events-none absolute inset-0 -z-10" />
+      <div className="site-container">
+        <Reveal className="artisan-network-intro grid gap-7 lg:grid-cols-[1fr_.8fr] lg:items-end">
+          <div><p className="inline-flex items-center gap-3 text-[9px] font-bold uppercase tracking-[.24em] text-[#d8b86b]"><MapPin size={13} /> The hands of Dharohar</p><h2 id="artisan-network-title" className="mt-5 max-w-5xl font-serif text-[clamp(3.4rem,5.8vw,6.3rem)] leading-[.86]">A country of hands<br /><span className="italic text-[#d89aa6]">behind every object.</span></h2></div>
+          <p className="max-w-xl text-sm leading-7 text-white/55 sm:text-base lg:justify-self-end">A reliable network across North India, connected to a wider atlas of living metal traditions and matched to the process each commission needs.</p>
+        </Reveal>
+
+        <div className="artisan-network-grid mt-10 grid gap-5 lg:grid-cols-[1.12fr_.88fr]">
+          <Reveal className="artisan-map-shell relative min-h-[520px] overflow-hidden rounded-[1.8rem] border border-[#d8b86b]/18 bg-[#241416] p-6 sm:p-9">
+            <div className="artisan-map-grid pointer-events-none absolute inset-0" />
+            <div className="artisan-map-silhouette absolute left-[9%] top-[7%] h-[84%] w-[70%]" aria-hidden="true" />
+            <div className="absolute left-6 top-6 z-20 rounded-full border border-[#d8b86b]/24 bg-[#170c0f]/72 px-4 py-2 text-[8px] font-bold uppercase tracking-[.18em] text-[#e5c684] backdrop-blur sm:left-9 sm:top-9">Select a workshop region</div>
+            {artisanRegions.map((region) => (
+              <button key={region.id} type="button" onClick={() => setActiveId(region.id)} aria-label={`Explore ${region.town}, ${region.state}`} aria-pressed={active.id === region.id} className={`artisan-map-pin ${active.id === region.id ? "is-active" : ""}`} style={{ left: `${region.x}%`, top: `${region.y}%` }}>
+                <span />
+                <small>{region.town}</small>
+              </button>
+            ))}
+            <AnimatePresence mode="wait">
+              <motion.div key={active.id} className="artisan-map-story absolute inset-x-6 bottom-6 z-20 rounded-[1.3rem] border border-white/12 bg-[#1b0d12]/88 p-5 backdrop-blur-xl sm:inset-x-auto sm:bottom-9 sm:left-9 sm:w-[24rem] sm:p-6" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+                <div className="flex items-center justify-between gap-4"><p className="text-[8px] font-bold uppercase tracking-[.2em] text-[#d8b86b]">{active.status}</p><span className="text-[8px] uppercase tracking-[.15em] text-white/32">{active.state}</span></div>
+                <h3 className="mt-3 font-serif text-4xl">{active.town}</h3>
+                <p className="mt-2 text-sm font-semibold text-[#e8b5be]">{active.craft}</p>
+                <p className="mt-3 text-sm leading-6 text-white/52">{active.objects}</p>
+              </motion.div>
+            </AnimatePresence>
+          </Reveal>
+
+          <Reveal className="artisan-ledger rounded-[1.8rem] border border-white/10 bg-white/[.035] p-6 sm:p-8">
+            <p className="text-[8px] font-bold uppercase tracking-[.22em] text-[#d8b86b]">Network ledger</p>
+            <h3 className="mt-4 max-w-xl font-serif text-[clamp(2.5rem,4vw,4.2rem)] leading-[.9]">The right hand for every process.</h3>
+            <div className="mt-7 grid grid-cols-2 gap-px overflow-hidden rounded-[1.2rem] border border-white/10 bg-white/10">
+              {[["04", "Core regions"], ["08", "Craft traditions"], ["06", "Care processes"], ["01", "Quality standard"]].map(([value, label]) => <div key={label} className="bg-[#211216] p-5"><strong className="font-serif text-4xl font-medium text-[#efd59e]">{value}</strong><span className="mt-1 block text-[8px] font-bold uppercase tracking-[.14em] text-white/38">{label}</span></div>)}
+            </div>
+            <div className="mt-7 space-y-3">
+              {["Workshop matched to process", "Samples approved before scale", "Quality checks recorded", "Repair route retained after delivery"].map((item) => <div key={item} className="flex items-center gap-3 border-b border-white/8 pb-3 text-sm text-white/58"><BadgeCheck size={16} className="shrink-0 text-[#d8b86b]" />{item}</div>)}
+            </div>
+            <p className="mt-6 text-xs leading-6 text-white/34">Core network identifies active Dharohar workshop relationships. Craft atlas locations recognise important regional traditions and should be presented as partners only after formal onboarding.</p>
+            <a href="#consultation" onClick={() => window.dispatchEvent(new CustomEvent("dharohar:consultation-persona", { detail: { persona: "Interior designers", service: "Custom product development" } }))} className="restoration-request mt-7">Discuss a custom commission <ArrowRight size={14} /></a>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CommissionProof() {
+  const tools = [
+    { icon: Layers3, label: "Trade material library", title: "Specify before you commission.", copy: "Review finish directions, care requirements, dimensions and sample routes for an interior or hospitality brief.", persona: "Interior designers", service: "Interior design or trade project" },
+    { icon: Gift, label: "Wedding gift atelier", title: "Build the gift around the moment.", copy: "Shape quantity, object, engraving, presentation and delivery into one approval-ready gifting brief.", persona: "Weddings & gifting", service: "Wedding or celebration gifting" },
+    { icon: BookOpen, label: "Object passport", title: "Keep the story with the object.", copy: "Record material, workshop region, engraving, care guidance and future restoration events.", persona: "Homes & collectors", service: "Object passport and provenance" },
+  ] as const;
+
+  function routeToConsultation(persona: string, service: string) {
+    window.dispatchEvent(new CustomEvent("dharohar:consultation-persona", { detail: { persona, service } }));
+  }
+
+  return (
+    <section id="commission-archive" className="commission-proof overflow-hidden bg-[#fffaf4] px-5 py-[clamp(4.5rem,7vw,7rem)]" aria-labelledby="commission-proof-title">
+      <div className="site-container">
+        <Reveal className="grid gap-7 lg:grid-cols-[1fr_.72fr] lg:items-end">
+          <div><p className="heritage-label">The commission room</p><h2 id="commission-proof-title" className="heritage-display mt-5 max-w-5xl text-[clamp(3.25rem,5.5vw,5.9rem)] leading-[.87]">Briefs designed<br /><span className="italic text-[#a26069]">to become heirlooms.</span></h2></div>
+          <p className="max-w-lg text-sm leading-7 text-[#756269] sm:text-base lg:justify-self-end">Three ways Dharohar can turn scale, specification and personal meaning into one composed collection.</p>
+        </Reveal>
+
+        <div className="mt-10 grid gap-4 lg:grid-cols-12">
+          {commissionBriefs.map((brief, index) => (
+            <motion.article key={brief.number} whileHover={{ y: -5 }} className={`commission-case group relative min-h-[430px] overflow-hidden rounded-[1.55rem] text-white ${index === 0 ? "lg:col-span-5" : index === 1 ? "lg:col-span-4" : "lg:col-span-3"}`}>
+              <DharoharImage src={brief.image} alt={`${brief.audience} commission direction`} fill unoptimized sizes="(max-width: 1024px) 100vw, 42vw" className="object-cover transition duration-[1200ms] group-hover:scale-[1.045]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#160d10]/98 via-[#241318]/28 to-black/6" />
+              <DharoharImageSignature className="right-5 top-5" />
+              <div className="absolute inset-x-0 bottom-0 p-6">
+                <div className="flex items-center justify-between"><p className="text-[8px] font-bold uppercase tracking-[.2em] text-[#e2c27d]">{brief.audience}</p><span className="text-[8px] tracking-[.16em] text-white/42">{brief.number}</span></div>
+                <h3 className="mt-3 font-serif text-[2.25rem] leading-[.9]">{brief.title}</h3>
+                <p className="mt-4 text-sm leading-6 text-white/58">{brief.copy}</p>
+                <div className="mt-5 flex flex-wrap gap-2">{brief.meta.map((item) => <span key={item} className="rounded-full border border-white/14 bg-black/14 px-3 py-1.5 text-[7px] font-bold uppercase tracking-[.12em] text-white/58 backdrop-blur">{item}</span>)}</div>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+
+        <Reveal className="commission-journey mt-5 rounded-[1.55rem] border border-[#a26069]/20 bg-[#f7eae7] p-6 sm:p-8">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div><p className="text-[8px] font-bold uppercase tracking-[.2em] text-[#9d5864]">From brief to heirloom</p><h3 className="mt-2 font-serif text-3xl text-[#4c2e35]">A production journey you can see.</h3></div>
+            <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1">
+              {["Consultation", "Curation", "Sample", "Approval", "Production", "Quality", "Delivery", "Lifetime care"].map((step, index) => <div key={step} className="commission-step"><span>{String(index + 1).padStart(2, "0")}</span><strong>{step}</strong>{index < 7 ? <ArrowRight size={12} /> : null}</div>)}
+            </div>
+          </div>
+        </Reveal>
+
+        <div className="mt-5 grid gap-4 lg:grid-cols-3">
+          {tools.map((tool) => {
+            const Icon = tool.icon;
+            return (
+              <Reveal key={tool.label} className="commission-tool rounded-[1.55rem] border border-[#a26069]/20 bg-white p-6 shadow-[0_18px_48px_rgba(83,35,47,.06)] sm:p-8">
+                <span className="grid size-12 place-items-center rounded-full border border-[#a26069]/24 text-[#9d5864]"><Icon size={20} strokeWidth={1.35} /></span>
+                <p className="mt-6 text-[8px] font-bold uppercase tracking-[.2em] text-[#9d5864]">{tool.label}</p>
+                <h3 className="mt-3 font-serif text-3xl leading-none text-[#4c2e35]">{tool.title}</h3>
+                <p className="mt-4 text-sm leading-6 text-[#756269]">{tool.copy}</p>
+                <a href="#consultation" onClick={() => routeToConsultation(tool.persona, tool.service)} className="mt-6 inline-flex items-center gap-2 text-[8px] font-black uppercase tracking-[.17em] text-[#8d4653]">Prepare this brief <ArrowRight size={13} /></a>
+              </Reveal>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
@@ -708,7 +964,7 @@ function TrustSequence() {
   );
 }
 
-function ConsultationGateway() {
+export function LegacyConsultationGateway() {
   const [status, setStatus] = useState("We usually reply within one working day.");
   const [interest, setInterest] = useState("Complete heritage kitchen");
   const [submitting, setSubmitting] = useState(false);
@@ -755,6 +1011,181 @@ function ConsultationGateway() {
   }
   const gifting = interest === "Wedding or festive gifting";
   return <form onSubmit={submit} className="consultation-card consultation-card-dark rounded-[1.6rem] border p-5 shadow-[0_28px_80px_rgba(0,0,0,.28)] backdrop-blur sm:p-8"><div className="mb-6 border-b border-white/10 pb-5"><p className="text-[8px] font-bold uppercase tracking-[.2em] text-[#d77f90]">Request consultation</p><p className="mt-2 font-serif text-[1.75rem] leading-none text-[#fff5e7]">A thoughtful first conversation</p></div><div className="grid gap-5 sm:grid-cols-2"><label><span className="consult-label">Your name</span><input required name="name" autoComplete="name" className="consult-input" placeholder="Name" /></label><label><span className="consult-label">Email</span><input required name="email" type="email" autoComplete="email" className="consult-input" placeholder="you@example.com" /></label></div><div className="mt-5 grid gap-5 sm:grid-cols-2"><label><span className="consult-label">I am interested in</span><select name="interest" className="consult-input" value={interest} onChange={(event) => setInterest(event.target.value)}><option>Complete heritage kitchen</option><option>Wedding or festive gifting</option><option>Everyday cookware</option><option>Lifetime restoration and care</option><option>Design or hospitality project</option><option>Engraving consultation</option></select></label><label><span className="consult-label">Preferred time</span><select name="timing" className="consult-input" defaultValue="Weekday morning"><option>Weekday morning</option><option>Weekday afternoon</option><option>Weekday evening</option><option>Weekend</option></select></label></div><AnimatePresence initial={false}>{gifting ? <motion.div initial={{ height: 0, opacity: .7 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: .7 }} className="overflow-hidden"><div className="mt-5 grid gap-5 sm:grid-cols-3"><label><span className="consult-label">Occasion date</span><input name="occasionDate" type="date" className="consult-input" /></label><label><span className="consult-label">Quantity</span><input name="quantity" inputMode="numeric" className="consult-input" placeholder="e.g. 25" /></label><label><span className="consult-label">Budget range</span><input name="budget" className="consult-input" placeholder="₹ range" /></label></div></motion.div> : null}</AnimatePresence><label className="mt-5 block"><span className="consult-label">Tell us a little more</span><textarea name="message" rows={3} className="consult-input h-auto resize-none py-3" placeholder="The occasion, family size, preferred metals, engraving or care needs…" /></label><button type="submit" disabled={submitting} className="consult-submit mt-5 inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-lg px-6 text-[10px] font-bold uppercase tracking-[.18em] transition disabled:cursor-wait disabled:opacity-60">{submitting ? "Sending request" : "Prepare consultation request"} <ArrowRight size={15} /></button><p aria-live="polite" className="mt-4 min-h-5 text-center text-xs text-white/58"><ShieldCheck size={14} className="mr-2 inline text-[#ce7587]" />{status}</p><p className="mt-1 text-center text-[9px] leading-4 text-white/38">Your details are safe and handled with care.</p></form>;
+}
+
+function ConsultationGateway() {
+  type ConsultationField = {
+    name: string;
+    label: string;
+    placeholder?: string;
+    type?: "text" | "date" | "number" | "url";
+    options?: readonly string[];
+  };
+
+  const audiences = [
+    { label: "Homes & collectors", icon: Home },
+    { label: "Weddings & gifting", icon: Crown },
+    { label: "Event planners", icon: PartyPopper },
+    { label: "Interior designers", icon: Palette },
+    { label: "Restaurants & hotels", icon: Hotel },
+    { label: "Corporate gifting", icon: BriefcaseBusiness },
+  ] as const;
+  const services = [
+    "Complete heritage kitchen",
+    "Wedding or celebration gifting",
+    "Bulk or trade order",
+    "Restaurant or hospitality project",
+    "Custom product development",
+    "Engraving and personalisation",
+    "Restoration",
+    "Annual care membership",
+  ] as const;
+  const fieldsByAudience: Record<string, ConsultationField[]> = {
+    "Homes & collectors": [
+      { name: "householdSize", label: "Household size", type: "number", placeholder: "e.g. 5" },
+      { name: "cookingStyle", label: "Cooking rhythm", options: ["Daily family cooking", "Slow and ceremonial", "Entertaining often", "Building a complete kitchen"] },
+      { name: "preferredMetal", label: "Preferred metal", options: ["Help me choose", "Copper / Tamra", "Brass / Peetal", "Bronze / Kansa", "A considered mix"] },
+      { name: "city", label: "City", placeholder: "Where the collection will live" },
+    ],
+    "Weddings & gifting": [
+      { name: "eventDate", label: "Celebration date", type: "date" },
+      { name: "quantity", label: "Number of gifts", type: "number", placeholder: "e.g. 150" },
+      { name: "budget", label: "Budget per gift", placeholder: "₹ range" },
+      { name: "engraving", label: "Personalisation", options: ["Names or initials", "Wedding date", "Family mark", "Not decided yet"] },
+    ],
+    "Event planners": [
+      { name: "eventDate", label: "Event date", type: "date" },
+      { name: "guestCount", label: "Guest count", type: "number", placeholder: "e.g. 300" },
+      { name: "venue", label: "Venue & city", placeholder: "Venue or destination" },
+      { name: "fulfilment", label: "Requirement", options: ["Guest gifting", "Tablescape and service", "Ceremonial objects", "Complete event commission"] },
+    ],
+    "Interior designers": [
+      { name: "projectType", label: "Project type", options: ["Private residence", "Restaurant or café", "Boutique stay", "Retail or studio", "Other interior"] },
+      { name: "city", label: "Project city", placeholder: "City" },
+      { name: "quantity", label: "Estimated quantity", placeholder: "Pieces or room count" },
+      { name: "referenceLink", label: "Drawings / moodboard link", type: "url", placeholder: "https://" },
+    ],
+    "Restaurants & hotels": [
+      { name: "covers", label: "Number of covers", type: "number", placeholder: "e.g. 80" },
+      { name: "openingDate", label: "Opening / service date", type: "date" },
+      { name: "requirement", label: "Primary requirement", options: ["Cookware", "Tableware", "Serveware", "A complete material language"] },
+      { name: "careCadence", label: "Care cadence", options: ["One-time project", "Quarterly rotation", "Annual programme", "Help me decide"] },
+    ],
+    "Corporate gifting": [
+      { name: "quantity", label: "Recipient count", type: "number", placeholder: "e.g. 250" },
+      { name: "deliveryDate", label: "Required by", type: "date" },
+      { name: "budget", label: "Budget per recipient", placeholder: "₹ range" },
+      { name: "branding", label: "Presentation", options: ["Dharohar presentation", "Personal note", "Selective co-branding", "Multiple recipient tiers"] },
+    ],
+  };
+
+  const [status, setStatus] = useState("We usually reply within one working day.");
+  const [persona, setPersona] = useState("Homes & collectors");
+  const [service, setService] = useState("Complete heritage kitchen");
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    const selectPersona = (event: Event) => {
+      const detail = (event as CustomEvent<{ persona?: string; service?: string }>).detail;
+      if (detail.persona) setPersona(detail.persona);
+      if (detail.service) setService(detail.service);
+    };
+    window.addEventListener("dharohar:consultation-persona", selectPersona);
+    return () => window.removeEventListener("dharohar:consultation-persona", selectPersona);
+  }, []);
+
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formElement = event.currentTarget;
+    const entries = Array.from(new FormData(formElement).entries()).map(([key, value]) => [key, String(value)] as const);
+    const payload = Object.fromEntries(entries);
+    const endpoint = process.env.NEXT_PUBLIC_CONSULTATION_ENDPOINT;
+    const destination = process.env.NEXT_PUBLIC_CONSULTATION_EMAIL ?? "hello@dharohar.in";
+    const subject = encodeURIComponent(`Dharohar consultation — ${persona} — ${service}`);
+    const body = encodeURIComponent(entries.filter(([, value]) => value.trim()).map(([key, value]) => `${key.replace(/([A-Z])/g, " $1")}: ${value}`).join("\n"));
+    track("consultation_start", `${persona}:${service}`);
+
+    if (endpoint) {
+      setSubmitting(true);
+      setStatus("Sending your private consultation request…");
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...payload, persona, service, source: "dharohar-brand-gateway" }),
+        });
+        if (!response.ok) throw new Error("Consultation endpoint rejected the request");
+        track("consultation_submitted", `${persona}:${service}`);
+        setStatus("Thank you. Your considered brief is with the Dharohar team.");
+        formElement.reset();
+      } catch {
+        setStatus("We could not send this request. Please use ‘Email directly’ and we’ll help personally.");
+      } finally {
+        setSubmitting(false);
+      }
+      return;
+    }
+
+    setStatus("Your email app is opening with the brief prepared.");
+    window.location.href = `mailto:${destination}?subject=${subject}&body=${body}`;
+  }
+
+  const dynamicFields = fieldsByAudience[persona] ?? fieldsByAudience["Homes & collectors"];
+
+  return (
+    <form onSubmit={submit} className="consultation-card consultation-card-dark rounded-[1.6rem] border p-5 shadow-[0_28px_80px_rgba(0,0,0,.28)] backdrop-blur sm:p-8">
+      <div className="mb-6 flex items-end justify-between gap-5 border-b border-white/10 pb-5">
+        <div><p className="text-[8px] font-bold uppercase tracking-[.2em] text-[#d77f90]">Request consultation</p><p className="mt-2 font-serif text-[2rem] leading-none text-[#fff5e7]">A brief that understands you</p></div>
+        <span className="hidden text-[8px] font-bold uppercase tracking-[.16em] text-white/28 sm:block">About 60 seconds</span>
+      </div>
+
+      <fieldset>
+        <legend className="consult-label">01 · Who are we creating for?</legend>
+        <div className="consult-persona-grid">
+          {audiences.map((audience) => {
+            const Icon = audience.icon;
+            return <button key={audience.label} type="button" aria-pressed={persona === audience.label} onClick={() => setPersona(audience.label)} className={`consult-persona ${persona === audience.label ? "is-active" : ""}`}><Icon size={15} /><span>{audience.label}</span></button>;
+          })}
+        </div>
+        <input type="hidden" name="persona" value={persona} />
+      </fieldset>
+
+      <label className="mt-6 block">
+        <span className="consult-label">02 · What would you like help with?</span>
+        <select name="service" className="consult-input" value={service} onChange={(event) => setService(event.target.value)}>
+          {services.map((option) => <option key={option}>{option}</option>)}
+        </select>
+      </label>
+
+      <fieldset className="mt-6">
+        <legend className="consult-label">03 · The useful details</legend>
+        <AnimatePresence mode="wait">
+          <motion.div key={persona} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {dynamicFields.map((field) => (
+              <label key={field.name}>
+                <span className="consult-label">{field.label}</span>
+                {field.options ? (
+                  <select name={field.name} className="consult-input" defaultValue={field.options[0]}>{field.options.map((option) => <option key={option}>{option}</option>)}</select>
+                ) : (
+                  <input name={field.name} type={field.type ?? "text"} className="consult-input" placeholder={field.placeholder} />
+                )}
+              </label>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+      </fieldset>
+
+      <div className="mt-6 grid gap-4 sm:grid-cols-2">
+        <label><span className="consult-label">Your name</span><input required name="name" autoComplete="name" className="consult-input" placeholder="Name" /></label>
+        <label><span className="consult-label">Email</span><input required name="email" type="email" autoComplete="email" className="consult-input" placeholder="you@example.com" /></label>
+      </div>
+      <label className="mt-4 block"><span className="consult-label">Anything we should understand?</span><textarea name="message" rows={3} className="consult-input h-auto resize-none py-3" placeholder="The occasion, design intention, preferred metals, care needs or anything that matters…" /></label>
+      <label className="mt-4 block"><span className="consult-label">Preferred conversation</span><select name="timing" className="consult-input" defaultValue="Weekday morning"><option>Weekday morning</option><option>Weekday afternoon</option><option>Weekday evening</option><option>Weekend</option></select></label>
+      <button type="submit" disabled={submitting} className="consult-submit mt-5 inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-lg px-6 text-[10px] font-bold uppercase tracking-[.18em] transition disabled:cursor-wait disabled:opacity-60">{submitting ? "Sending request" : "Prepare consultation request"} <ArrowRight size={15} /></button>
+      <p aria-live="polite" className="mt-4 min-h-5 text-center text-xs text-white/58"><ShieldCheck size={14} className="mr-2 inline text-[#ce7587]" />{status}</p>
+      <p className="mt-1 text-center text-[9px] leading-4 text-white/38">Your details are handled privately and used only to prepare this consultation.</p>
+    </form>
+  );
 }
 
 function CareDock() {
@@ -804,16 +1235,18 @@ export function BrandGateway() {
         <CinematicHero />
         <CategoryCarousel />
         <section className="rose-marquee marquee-mask overflow-hidden border-y border-[#b78b3c]/25 bg-[#fff8eb]" aria-label="Dharohar assurances"><div className="heritage-marquee flex w-max">{[0, 1].map((set) => <div key={set} aria-hidden={set === 1} className="flex">{[[Hammer, "Handcrafted in India"], [ShieldCheck, "Copper, brass & kansa"], [Feather, "Personal engraving"], [HeartHandshake, "Lifetime restoration"]].map(([Icon, label]) => <div key={`${set}-${label as string}`} className="flex min-w-[300px] items-center gap-4 border-r border-[#b78b3c]/20 px-8 py-5"><span className="grid size-11 place-items-center rounded-full border border-[#b78b3c]/40 text-[#a4772d]"><Icon size={19} /></span><span className="font-serif text-xl text-[#4f3b25]">{label as string}</span></div>)}</div>)}</div></section>
+        <CommissioningHall />
         <MaterialExplorer />
         <PersonalisationStudio />
+        <ArtisanNetwork />
         <TrustSequence />
         <DharoharTable />
         <LifetimeRestoration />
-        <OccasionRoutes />
-        <section id="consultation" className="rose-dark-surface rose-consultation consultation-reference consultation-salon relative isolate overflow-hidden px-5 text-[#fff8e9]" aria-labelledby="consultation-title"><div className="consultation-orb pointer-events-none absolute -left-[18%] top-[10%] -z-10 size-[48rem] rounded-full" /><div className="site-container grid gap-12 py-[clamp(5.5rem,8vw,8rem)] lg:grid-cols-[.9fr_1.1fr] lg:items-center"><Reveal><p className="text-[9px] font-bold uppercase tracking-[.24em] text-[#d7a56f]">The Dharohar private salon</p><p className="mt-6 text-[10px] font-bold uppercase tracking-[.24em] text-[#d77f90]">Gift concierge <span className="px-2 text-[#d7a56f]">•</span> Kitchen consultation</p><h2 id="consultation-title" className="mt-7 max-w-2xl font-serif text-[clamp(3.7rem,6vw,6.6rem)] leading-[.87]">A quieter way<br />to begin.</h2><span className="mt-7 block h-px w-10 bg-[#d7a56f]" /><p className="mt-6 max-w-xl text-sm leading-7 text-white/60 sm:text-base">Tell us about the rituals, gifting moment or design project you are considering. We’ll prepare a thoughtful curation into the collection.</p><div className="mt-8 flex flex-wrap gap-3">{booking ? <a href={booking} target="_blank" rel="noreferrer" onClick={() => track("booking_click", "consultation")} className="salon-primary-button"><CalendarDays size={16} /> Prepare in 30 minutes</a> : <a href={`mailto:${process.env.NEXT_PUBLIC_CONSULTATION_EMAIL ?? "hello@dharohar.in"}?subject=Dharohar%2030-minute%20consultation`} className="salon-primary-button"><CalendarDays size={16} /> Prepare in 30 minutes</a>}<a href={`mailto:${process.env.NEXT_PUBLIC_CONSULTATION_EMAIL ?? "hello@dharohar.in"}`} className="salon-secondary-button"><Mail size={16} /> Email directly</a></div><div className="mt-9 flex flex-wrap gap-6 text-[9px] font-bold uppercase tracking-[.14em] text-white/42"><span className="flex items-center gap-3"><Users size={17} className="text-[#ce7587]" /> Personal concierge care</span><span className="hidden h-5 w-px bg-white/12 sm:block" /><span className="flex items-center gap-3"><Gift size={17} className="text-[#ce7587]" /> Gifting and designing</span></div></Reveal><ConsultationGateway /></div></section>
+        <CommissionProof />
+        <section id="consultation" className="rose-dark-surface rose-consultation consultation-reference consultation-salon relative isolate overflow-hidden px-5 text-[#fff8e9]" aria-labelledby="consultation-title"><div className="consultation-orb pointer-events-none absolute -left-[18%] top-[10%] -z-10 size-[48rem] rounded-full" /><div className="site-container grid gap-12 py-[clamp(5.5rem,8vw,8rem)] lg:grid-cols-[.8fr_1.2fr] lg:items-start"><Reveal className="consultation-intro lg:sticky lg:top-32"><p className="text-[9px] font-bold uppercase tracking-[.24em] text-[#d7a56f]">The Dharohar private salon</p><p className="mt-6 text-[10px] font-bold uppercase tracking-[.24em] text-[#d77f90]">Homes <span className="px-2 text-[#d7a56f]">•</span> Celebrations <span className="px-2 text-[#d7a56f]">•</span> Trade</p><h2 id="consultation-title" className="mt-7 max-w-2xl font-serif text-[clamp(3.7rem,6vw,6.6rem)] leading-[.87]">A quieter way<br />to begin.</h2><span className="mt-7 block h-px w-10 bg-[#d7a56f]" /><p className="mt-6 max-w-xl text-sm leading-7 text-white/60 sm:text-base">Choose who you are creating for and what you need. The brief will adapt—whether it is one home, a wedding, an interior or a restaurant in service.</p><div className="mt-8 flex flex-wrap gap-3">{booking ? <a href={booking} target="_blank" rel="noreferrer" onClick={() => track("booking_click", "consultation")} className="salon-primary-button"><CalendarDays size={16} /> Speak for 30 minutes</a> : <a href={`mailto:${process.env.NEXT_PUBLIC_CONSULTATION_EMAIL ?? "hello@dharohar.in"}?subject=Dharohar%2030-minute%20consultation`} className="salon-primary-button"><CalendarDays size={16} /> Speak for 30 minutes</a>}<a href={`mailto:${process.env.NEXT_PUBLIC_CONSULTATION_EMAIL ?? "hello@dharohar.in"}`} className="salon-secondary-button"><Mail size={16} /> Email directly</a></div><div className="mt-9 flex flex-wrap gap-6 text-[9px] font-bold uppercase tracking-[.14em] text-white/42"><span className="flex items-center gap-3"><Users size={17} className="text-[#ce7587]" /> Personal concierge</span><span className="hidden h-5 w-px bg-white/12 sm:block" /><span className="flex items-center gap-3"><Clock3 size={17} className="text-[#ce7587]" /> One working day response</span></div></Reveal><ConsultationGateway /></div></section>
       </main>
       <CareDock />
-      <footer className="rose-footer border-t border-white/10 bg-[#18110d] px-5 text-[#fff5df]"><div className="site-container flex flex-col gap-8 py-10 md:flex-row md:items-center md:justify-between"><a href="#top" className="flex items-center gap-3"><span className="relative size-14 overflow-hidden rounded-full bg-[#fffaf0]"><Image src="/images/dharohar-mark.png" alt="" fill unoptimized sizes="56px" className="object-contain mix-blend-multiply" /></span><span><strong className="block font-serif text-2xl tracking-[.12em]">DHAROHAR</strong><span className="text-[7px] font-bold uppercase tracking-[.3em] text-[#d8b86b]">Heritage Kitchen</span></span></a><nav className="flex flex-wrap gap-x-6 gap-y-3 text-[9px] font-bold uppercase tracking-[.15em] text-white/48" aria-label="Footer navigation"><a href="#materials" className="hover:text-white">Materials</a><a href="#legacy" className="hover:text-white">Your story</a><a href="#care-guide" className="hover:text-white">Material wisdom</a><a href="#rituals" className="hover:text-white">Objects</a><a href="#restoration" className="hover:text-white">Lifetime care</a><a href="#consultation" className="hover:text-white">Consultation</a><StoreLink path="/collections/all" eventLabel="footer_visit_store" className="inline-flex items-center gap-1 text-[#e2c27d]">Visit store <ArrowRight size={11} /></StoreLink></nav><p className="text-[9px] uppercase tracking-[.12em] text-white/32">© 2026 Dharohar</p></div></footer>
+      <footer className="rose-footer border-t border-white/10 bg-[#18110d] px-5 text-[#fff5df]"><div className="site-container flex flex-col gap-8 py-10 md:flex-row md:items-center md:justify-between"><a href="#top" aria-label="Dharohar home"><DharoharWordmark className="h-[5rem] w-[13.5rem]" /></a><nav className="flex flex-wrap gap-x-6 gap-y-3 text-[9px] font-bold uppercase tracking-[.15em] text-white/48" aria-label="Footer navigation"><a href="#collection" className="hover:text-white">Collections</a><a href="#commissions" className="hover:text-white">Commissions</a><a href="#artisan-network" className="hover:text-white">Artisans</a><a href="#rituals" className="hover:text-white">Objects</a><a href="#restoration" className="hover:text-white">Care plans</a><a href="#consultation" className="hover:text-white">Consultation</a><StoreLink path="/collections/all" eventLabel="footer_visit_store" className="inline-flex items-center gap-1 text-[#e2c27d]">Visit store <ArrowRight size={11} /></StoreLink></nav><p className="text-[9px] uppercase tracking-[.12em] text-white/32">© 2026 Dharohar</p></div></footer>
       <AnimatePresence>{storeIntent ? <StoreHandoff intent={storeIntent} onClose={() => setStoreIntent(null)} /> : null}</AnimatePresence>
     </>
   );

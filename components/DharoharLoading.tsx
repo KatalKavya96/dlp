@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 
 const criticalAssets = [
   "/images/dharohar-mark.png",
+  "/images/dharohar-wordmark.png",
   "/images/hero-parallax/sunset-background.webp",
   "/images/hero-parallax/architecture.webp",
   "/images/hero-parallax/cookware.webp",
@@ -150,7 +151,9 @@ export function DharoharLoader() {
               <span className="dharohar-loader-orbit dharohar-loader-orbit-inner" />
               <span className="dharohar-loader-monogram">D</span>
             </div>
-            <p className="dharohar-loader-wordmark">Dharohar</p>
+            <span className="dharohar-loader-wordmark-image">
+              <Image src="/images/dharohar-wordmark.png" alt="Dharohar Heritage Kitchen" fill priority unoptimized sizes="360px" className="object-contain" />
+            </span>
             <p className="dharohar-loader-kicker">Crafted by tradition · Carried by you</p>
             <div className="dharohar-loader-progress" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}>
               <motion.span animate={{ width: `${progress}%` }} transition={{ duration: .45, ease: [.22, 1, .36, 1] }} />
