@@ -16,7 +16,7 @@ export default function Home() {
         "@type": "ItemList",
         name: "Dharohar utensil categories",
         itemListElement: [
-          ["Cookware", "/collections/cookware-by-p-tal"],
+          ["Cookware", "/collections/cookware"],
           ["Kitchen Utensils", "/collections/kitchen-utensils"],
           ["Kitchen Accessories", "/collections/kitchen-accessories"],
           ["Drinkware", "/collections/drinkware"],

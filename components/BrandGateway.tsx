@@ -130,7 +130,7 @@ const generations = [
 ] as const;
 
 const categoryCollections = [
-  { name: "Cookware", detail: "Kadhais, patilas, tawas and lagans made for the everyday flame.", image: "/images/dharohar-categories/cookware.webp", path: "/collections/cookware-by-p-tal" },
+  { name: "Cookware", detail: "Kadhais, patilas, tawas and lagans made for the everyday flame.", image: "/images/dharohar-categories/cookware.webp", path: "/collections/cookware" },
   { name: "Kitchen Utensils", detail: "Purposeful forms for stirring, turning, simmering and serving.", image: "/images/dharohar-categories/kitchen-utensils.webp", path: "/collections/kitchen-utensils" },
   { name: "Kitchen Accessories", detail: "The smaller objects that make a thoughtful rasoi feel complete.", image: "/images/dharohar-categories/kitchen-accessories-clean.webp", path: "/collections/kitchen-accessories" },
   { name: "Drinkware", detail: "Bottles, glasses, tumblers and dispensers for a considered water ritual.", image: "/images/dharohar-categories/drinkware-clean.webp", path: "/collections/drinkware" },
