@@ -2,7 +2,6 @@
 
 import {
   ArrowRight,
-  BookOpenText,
   Building2,
   CalendarDays,
   Check,
@@ -333,12 +332,7 @@ function CinematicHero() {
           <div className="hero-assurances flex min-w-0 items-center" aria-label="Dharohar assurances">
             {[[Hammer, "Handcrafted", "Excellence"], [ShieldCheck, "Traditional", "Metals"], [History, "Made to Last", "Generations"]].map(([Icon, title, detail]) => <div key={title as string} className="hero-assurance"><span className="grid size-10 shrink-0 place-items-center rounded-full border border-white/30 text-[#f2cc9a]"><Icon size={16} strokeWidth={1.4} /></span><span><strong>{title as string}</strong><small>{detail as string}</small></span></div>)}
           </div>
-          <aside className="hero-craft-card hidden w-[250px] shrink-0 rounded-[1.35rem] border border-white/14 bg-[#2b1a13]/72 p-5 backdrop-blur-xl lg:block">
-            <div className="flex items-center justify-between"><span className="grid size-10 place-items-center rounded-full bg-[#af7454]/35 text-[#ffd6a7]"><Sparkles size={16} /></span><button type="button" onClick={() => setPlaying((value) => !value)} className="grid size-9 place-items-center rounded-full border border-white/18 text-white/68" aria-label={playing ? "Pause cinematic motion" : "Play cinematic motion"}>{playing ? <CirclePause size={15} /> : <CirclePlay size={15} />}</button></div>
-            <h2 className="mt-4 font-serif text-xl">Legacy of Craft</h2>
-            <p className="mt-3 text-xs leading-5 text-white/62">Every piece carries a story of heritage, skill, and soul.</p>
-            <a href="#care-guide" className="mt-5 flex items-center justify-between text-[10px] font-semibold text-[#efbd8a]">Discover craftsmanship <ArrowRight size={14} /></a>
-          </aside>
+          <button type="button" onClick={() => setPlaying((value) => !value)} className="hidden size-10 shrink-0 place-items-center rounded-full border border-white/20 bg-[#2b1a13]/45 text-white/70 backdrop-blur-md lg:grid" aria-label={playing ? "Pause cinematic motion" : "Play cinematic motion"}>{playing ? <CirclePause size={15} /> : <CirclePlay size={15} />}</button>
         </div>
       </div>
     </section>
@@ -519,7 +513,7 @@ function UtensilCarousel() {
   return (
     <section id="rituals" className="rose-surface rose-gallery utensil-gallery overflow-hidden bg-[#f4eadb] px-5 py-[clamp(3.75rem,6vw,6rem)]" aria-labelledby="utensil-gallery-title">
       <div className="site-container">
-        <Reveal className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><div><p className="heritage-label w-fit">The wider object library</p><h2 id="utensil-gallery-title" className="heritage-display mt-5 max-w-5xl text-[clamp(3.2rem,5.5vw,5.7rem)] leading-[.88]">A whole rasoi,<br /><span className="italic text-[#9d712a]">object by object.</span></h2></div><div className="max-w-md"><p className="text-sm leading-7 text-[#746756]">Move beyond similar vessels into preparation tools, storage, tableware, hydration and the small details that complete a kitchen.</p><div className="mt-5 flex gap-2"><button type="button" onClick={() => move(-1)} aria-label="Previous utensil" className="carousel-control"><ChevronLeft size={18} /></button><button type="button" onClick={() => move(1)} aria-label="Next utensil" className="carousel-control"><ChevronRight size={18} /></button><button type="button" onClick={() => setPlaying((current) => !current)} aria-label={playing ? "Pause utensil carousel" : "Play utensil carousel"} className="carousel-control">{playing ? <CirclePause size={17} /> : <CirclePlay size={17} />}</button></div></div></Reveal>
+        <Reveal className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><div><p className="heritage-label w-fit">The wider object library</p><h2 id="utensil-gallery-title" className="heritage-display mt-5 max-w-5xl text-[clamp(3.2rem,5.5vw,5.7rem)] leading-[.88]">A whole rasoi,<br /><span className="italic text-[#9d712a]">object by object.</span></h2></div><div className="flex gap-2"><button type="button" onClick={() => move(-1)} aria-label="Previous utensil" className="carousel-control"><ChevronLeft size={18} /></button><button type="button" onClick={() => move(1)} aria-label="Next utensil" className="carousel-control"><ChevronRight size={18} /></button><button type="button" onClick={() => setPlaying((current) => !current)} aria-label={playing ? "Pause utensil carousel" : "Play utensil carousel"} className="carousel-control">{playing ? <CirclePause size={17} /> : <CirclePlay size={17} />}</button></div></Reveal>
 
         <div className="rose-gallery-stage mt-9 grid overflow-hidden rounded-[1.7rem] border border-[#b78b3c]/25 bg-[#fffaf0] shadow-[0_24px_70px_rgba(88,55,23,.12)] lg:grid-cols-[1.25fr_.75fr]">
           <div className="relative min-h-[460px] overflow-hidden bg-[#d8c8b6] lg:min-h-[600px]">
@@ -622,7 +616,6 @@ function TrustSequence() {
       <div className="site-container relative">
         <Reveal className="mx-auto max-w-5xl text-center"><p className="heritage-label">Heritage, explained with care</p><h2 id="trust-title" className="heritage-display mt-5 text-[clamp(3.2rem,5.5vw,5.7rem)] leading-[.9]">Material wisdom.<br />Modern clarity.</h2><p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#746756] sm:text-base">Useful knowledge without broad medical promises—so every object is chosen, used and maintained with confidence.</p></Reveal>
         <div className="mt-9 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{principles.map((item, index) => { const Icon = item.icon; return <motion.article key={item.title} initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * .1 }} className="wisdom-card group rounded-[1.4rem] border border-[#b78b3c]/25 bg-[#fffaf0]/76 p-5 text-center shadow-[0_14px_36px_rgba(94,61,25,.05)] backdrop-blur"><span className="mx-auto grid size-16 place-items-center rounded-full border border-[#b78b3c]/40 text-[#a4772d] transition duration-500 group-hover:-translate-y-1 group-hover:bg-[#a4772d] group-hover:text-white"><Icon size={24} strokeWidth={1.35} /></span><p className="mt-4 text-[7px] font-bold uppercase tracking-[.18em] text-[#a4772d]">Principle 0{index + 1}</p><h3 className="mt-2 font-serif text-2xl text-[#4d3823]">{item.title}</h3><p className="mt-3 text-sm leading-6 text-[#746756]">{item.copy}</p><div className="mt-4 border-t border-[#b78b3c]/20 pt-3 text-left"><p className="text-[7px] font-bold uppercase tracking-[.15em] text-[#9a8468]">Inside the guide</p><p className="mt-2 text-xs leading-5 text-[#6c5a43]">Tradition · Evidence · Safe everyday use</p></div></motion.article>; })}</div>
-        <Reveal className="mx-auto mt-9 max-w-4xl rounded-2xl border border-[#b78b3c]/24 bg-white/45 p-5 text-center"><p className="text-sm leading-7 text-[#695a47]"><strong className="font-semibold text-[#4d3823]">Our evidence standard:</strong> composition, lining, use guidance and care boundaries remain specific to the object. Any health-related statement should appear only with relevant product testing and an accessible source.</p><div className="mt-5 flex flex-wrap justify-center gap-3"><StoreLink path="/pages/material-and-care-guide" eventLabel="material_guide" className="heritage-button">Open the material guide <BookOpenText size={14} /></StoreLink><a href="#consultation" className="heritage-button heritage-button-filled">Ask a material question <ArrowRight size={14} /></a></div></Reveal>
       </div>
     </section>
   );

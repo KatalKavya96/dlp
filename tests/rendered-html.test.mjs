@@ -95,7 +95,7 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.match(gateway, /Pause cinematic motion/);
   assert.doesNotMatch(gateway, /cinematic-pointer-light/);
   assert.match(gateway, /Pause utensil carousel/);
-  assert.match(gateway, /hero-craft-card/);
+  assert.doesNotMatch(gateway, /hero-craft-card|Legacy of Craft|Our evidence standard|Move beyond similar vessels/);
   assert.match(gateway, /LifetimeRestoration/);
   assert.match(gateway, /Re-tinning \/ Kalai/);
   assert.match(gateway, /copper-dispenser-lifestyle\.jpg/);
@@ -125,6 +125,8 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.match(gateway, /useReducedMotion/);
   assert.doesNotMatch(gateway, /\.example/);
   assert.match(layout, /generateMetadata/);
+  assert.match(layout, /Bodoni_Moda/);
+  assert.match(layout, /Manrope/);
   assert.match(layout, /x-forwarded-host/);
   assert.match(layout, /openGraph/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
