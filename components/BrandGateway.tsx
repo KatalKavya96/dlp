@@ -10,7 +10,6 @@ import {
   ChevronRight,
   CirclePause,
   CirclePlay,
-  Clock3,
   ExternalLink,
   Feather,
   Gift,
@@ -21,10 +20,8 @@ import {
   Menu,
   PackageCheck,
   PenLine,
-  QrCode,
   RotateCcw,
   Search,
-  Send,
   ShieldCheck,
   ShoppingBag,
   Sparkles,
@@ -105,30 +102,6 @@ const materials = [
   },
 ] as const;
 
-const generations = [
-  {
-    number: "01",
-    era: "Made today",
-    title: "An artisan gives it form.",
-    copy: "The hammer marks remain visible. The maker, material and intended use begin the object’s recorded story.",
-    image: "/images/artisan.jpg",
-  },
-  {
-    number: "02",
-    era: "Lived with",
-    title: "A family gives it meaning.",
-    copy: "It gathers recipes, celebrations and the warm evidence of use—then returns for care whenever it needs attention.",
-    image: "/images/curated/styled-copper-pair.webp",
-  },
-  {
-    number: "03",
-    era: "Carried forward",
-    title: "The next generation receives both.",
-    copy: "The vessel travels with its provenance, care history and the names that transformed a useful object into a family inheritance.",
-    image: "/images/curated/kansa-thaali-clean.jpg",
-  },
-] as const;
-
 const categoryCollections = [
   { name: "Cookware", detail: "Kadhais, patilas, tawas and lagans made for the everyday flame.", image: "/images/dharohar-categories/cookware.webp", path: "/collections/cookware" },
   { name: "Kitchen Utensils", detail: "Purposeful forms for stirring, turning, simmering and serving.", image: "/images/dharohar-categories/kitchen-utensils.webp", path: "/collections/kitchen-utensils" },
@@ -144,64 +117,12 @@ const categoryCollections = [
   { name: "Pooja & Ritual", detail: "Handcrafted diya forms made for prayer, celebration and daily devotion.", image: "/images/dharohar-categories/pooja-clean.webp", path: "/collections/pooja-items" },
 ] as const;
 
-const passportDetails = [
-  { id: "maker", icon: Hammer, label: "Maker & origin", title: "A person, not a production line.", copy: "The passport records the artisan or workshop responsible for the piece and the craft region it belongs to." },
-  { id: "material", icon: ShieldCheck, label: "Material clarity", title: "Know what touches your food.", copy: "Composition, lining, intended use and care boundaries stay attached to the object throughout its life." },
-  { id: "guidance", icon: HeartHandshake, label: "Care guidance", title: "Guidance shaped around the object.", copy: "Cleaning, storage, food compatibility and everyday care remain easy to revisit whenever the piece is used." },
-  { id: "restoration", icon: History, label: "Restoration history", title: "Every return becomes a chapter.", copy: "Re-tinning, polishing, dent repair and engraving updates form a dated service record instead of disappearing with time." },
-  { id: "family", icon: PenLine, label: "Engraving & family record", title: "Ownership carries meaning.", copy: "Names, dates and the reason the piece entered the family create a provenance that can travel with it." },
-  { id: "transfer", icon: BookOpenText, label: "Next keeper", title: "The record travels forward.", copy: "A future owner receives the maker story, care history and family context together with the physical object." },
-] as const;
-
 const intentions = [
   { eyebrow: "Cook", title: "At the flame", copy: "Kadhais, handis, patilas, lagans and tawas for the meals your home returns to.", image: "/images/curated/brass-flat-kadhai.webp", path: "/collections/everyday-cookware", cta: "Enter cookware", icon: HeartHandshake },
   { eyebrow: "Serve", title: "Around the table", copy: "Thalis, bowls, platters, cutlery and serving forms that turn food into gathering.", image: "/images/curated/kansa-thaali-clean.jpg", path: "/collections/tableware", cta: "Set the table", icon: PackageCheck },
   { eyebrow: "Hydrate", title: "The water ritual", copy: "Copper bottles, tumblers, glasses, carafes, jugs and dispensers for considered daily use.", image: "/images/curated/copper-dispenser-lifestyle.jpg", path: "/collections/drinkware", cta: "Explore hydration", icon: Droplets },
   { eyebrow: "Gift", title: "For a milestone", copy: "Personalised pieces and presentation-ready sets for beginnings worth remembering.", image: "/images/curated/brass-davara-clean.jpg", path: "/collections/wedding-gifts", cta: "Choose a gift", icon: Gift },
   { eyebrow: "Restore", title: "Return it to care", copy: "A clear route to re-tinning, polishing, dent repair, engraving updates and expert guidance.", image: "/images/artisan.jpg", path: "/pages/restoration-care", cta: "Begin restoration", icon: Wrench },
-] as const;
-
-const ritualWorlds = [
-  {
-    id: "hydrate",
-    eyebrow: "Hydration ritual",
-    title: "Water, carried beautifully.",
-    copy: "From a hand-hammered bottle at your desk to tumblers, carafes, jugs and dispensers at the family table.",
-    image: "/images/curated/copper-dispenser-lifestyle.jpg",
-    path: "/collections/drinkware",
-    objects: ["Bottles", "Tumblers", "Glasses", "Carafes & jugs", "Dispensers"],
-    gallery: [["/images/curated/copper-bottle.jpg", "Copper bottle"], ["/images/curated/copper-dispenser-lifestyle.jpg", "Copper water vessel"], ["/images/curated/copper-dispenser.png", "Water dispenser"]],
-  },
-  {
-    id: "morning",
-    eyebrow: "Morning ritual",
-    title: "The first pour of the day.",
-    copy: "Davara coffee sets and small serving forms made for familiar gestures that deserve better objects.",
-    image: "/images/curated/brass-davara-clean.jpg",
-    path: "/collections/drinkware",
-    objects: ["Davara sets", "Coffee tumblers", "Tea service", "Small trays"],
-    gallery: [["/images/curated/brass-davara-clean.jpg", "Brass davara set"], ["/images/curated/copper-bottle.jpg", "Copper bottle"], ["/images/curated/brass-roti-box.jpg", "Brass roti box"]],
-  },
-  {
-    id: "table",
-    eyebrow: "Table ritual",
-    title: "A table with material memory.",
-    copy: "Thalis, bowls, platters and cutlery composed as a warm, generous landscape rather than separate products.",
-    image: "/images/curated/kansa-thaali-clean.jpg",
-    path: "/collections/tableware",
-    objects: ["Thalis", "Bowls", "Platters", "Cutlery", "Serveware"],
-    gallery: [["/images/curated/kansa-thaali-clean.jpg", "Kansa thali"], ["/images/curated/brass-cutlery.jpg", "Engraved cutlery"], ["/images/curated/brass-roti-box.jpg", "Roti dabba"]],
-  },
-  {
-    id: "prepare",
-    eyebrow: "Kitchen ritual",
-    title: "Before the flame is lit.",
-    copy: "Paraats, masala boxes, ghee pots and ladles bring craft into the quieter moments of preparation.",
-    image: "/images/curated/brass-ladles-clean.png",
-    path: "/collections/kitchen-utensils",
-    objects: ["Paraats", "Masala boxes", "Ghee pots", "Ladles", "Preparation bowls"],
-    gallery: [["/images/curated/brass-paraat.jpg", "Brass paraat"], ["/images/curated/brass-masala-box.jpg", "Masala daani"], ["/images/curated/brass-ladles-clean.png", "Ladle set"]],
-  },
 ] as const;
 
 const utensilCarousel = [
@@ -573,49 +494,6 @@ function CategoryCarousel() {
   );
 }
 
-function RitualUniverse() {
-  const [activeId, setActiveId] = useState<(typeof ritualWorlds)[number]["id"]>("hydrate");
-  const active = ritualWorlds.find((item) => item.id === activeId) ?? ritualWorlds[0];
-  const reducedMotion = useReducedMotion();
-
-  return (
-    <section id="rituals" className="ritual-cinema relative isolate overflow-hidden bg-[#0f0a07] px-5 py-[clamp(4rem,7vw,7rem)] text-[#fff4dc]" aria-labelledby="rituals-title">
-      <div className="absolute inset-0 -z-30">
-        {reducedMotion ? <Image src="/videos/water-ritual-poster.jpg" alt="" fill unoptimized sizes="100vw" className="object-cover" /> : <video className="cinematic-film h-full w-full object-cover" autoPlay muted loop playsInline preload="metadata" poster="/videos/water-ritual-poster.jpg" aria-hidden="true"><source src="/videos/water-ritual-master.mp4" type="video/mp4" /></video>}
-      </div>
-      <div className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(12,7,4,.96)_0%,rgba(12,7,4,.78)_42%,rgba(12,7,4,.26)_72%,rgba(12,7,4,.7)),linear-gradient(180deg,rgba(10,6,4,.16),rgba(10,6,4,.9))]" />
-      <div className="cinema-grain pointer-events-none absolute inset-0 -z-10" />
-      <div className="site-container">
-        <Reveal className="max-w-5xl">
-          <p className="inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[.24em] text-[#e0c27d]"><Droplets size={14} /> Beyond the stove</p>
-          <h2 id="rituals-title" className="mt-5 font-serif text-[clamp(3.3rem,5.5vw,6rem)] leading-[.85]">The collection travels<br /><span className="italic text-[#e7ca8d]">beyond the flame.</span></h2>
-          <p className="mt-5 max-w-xl text-sm leading-7 text-white/62 sm:text-base">One metal home, seen through the gestures that give each object purpose—from the first pour to the family table.</p>
-        </Reveal>
-
-        <div className="mt-10 grid gap-4 lg:grid-cols-[.72fr_1.28fr] lg:items-end">
-          <div className="cinema-chapters min-w-0 rounded-[1.8rem] border border-white/14 bg-black/28 p-4 shadow-[0_35px_90px_rgba(0,0,0,.34)] backdrop-blur-xl" role="tablist" aria-label="Explore the Dharohar product world by ritual">
-            <p className="px-3 pb-3 pt-2 text-[8px] font-bold uppercase tracking-[.22em] text-white/38">Four chapters of use</p>
-            <div className="no-scrollbar flex snap-x snap-mandatory gap-2 overflow-x-auto pb-2 lg:block lg:overflow-visible lg:pb-0">{ritualWorlds.map((item, index) => {
-              const selected = activeId === item.id;
-              return <button key={item.id} type="button" role="tab" aria-selected={selected} onClick={() => setActiveId(item.id)} className={`group flex min-w-[270px] snap-center items-center gap-4 rounded-2xl border px-4 py-4 text-left transition duration-500 lg:w-full lg:min-w-0 ${selected ? "border-[#d8b86b]/55 bg-[#d8b86b]/14 text-white" : "border-transparent text-white/48 hover:border-white/12 hover:bg-white/5 hover:text-white/78"}`}><span className={`grid size-10 shrink-0 place-items-center rounded-full border text-[9px] font-bold transition ${selected ? "border-[#d8b86b] bg-[#d8b86b] text-[#24160f]" : "border-white/18"}`}>0{index + 1}</span><span className="flex-1"><span className="block text-[8px] font-bold uppercase tracking-[.17em] text-[#d8b86b]">{item.eyebrow}</span><span className="mt-1 block font-serif text-2xl leading-none">{item.title}</span></span><ArrowRight size={14} className={`text-[#d8b86b] transition ${selected ? "translate-x-0 opacity-100" : "-translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"}`} /></button>;
-            })}</div>
-          </div>
-
-          <AnimatePresence mode="wait">
-            <motion.article key={active.id} className="ritual-glass-panel min-w-0 overflow-hidden rounded-[1.6rem] border border-white/16 bg-[#1a100a]/54 p-5 shadow-[0_28px_80px_rgba(0,0,0,.36)] backdrop-blur-xl sm:p-7" initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -18 }} transition={{ duration: .58, ease: [.22, 1, .36, 1] }}>
-              <div className="grid gap-6 sm:grid-cols-[1fr_190px] sm:items-end">
-                <div><p className="text-[8px] font-bold uppercase tracking-[.22em] text-[#e2c27d]">Now entering · {active.eyebrow}</p><h3 className="mt-3 max-w-2xl font-serif text-[clamp(2.8rem,4.6vw,5rem)] leading-[.88]">{active.title}</h3><p className="mt-4 max-w-2xl text-sm leading-7 text-white/64">{active.copy}</p><div className="mt-4 flex flex-wrap gap-2">{active.objects.map((item) => <span key={item} className="rounded-full border border-white/16 bg-black/18 px-3 py-2 text-[8px] font-bold uppercase tracking-[.14em] text-white/65">{item}</span>)}</div><StoreLink path={active.path} eventLabel={`ritual_${active.id}`} className="heritage-button heritage-button-filled mt-5">Enter this ritual <ArrowRight size={14} /></StoreLink></div>
-                <div className="grid grid-cols-3 gap-2 sm:grid-cols-1" aria-label={`${active.eyebrow} featured objects`}>{active.gallery.map(([src, label], index) => <div key={label} className={`group/thumb relative overflow-hidden rounded-xl border border-white/12 bg-white/5 ${index === 0 ? "col-span-2 aspect-[1.6/1] sm:col-span-1 sm:aspect-[1.25/1]" : "aspect-square sm:hidden"}`}><DharoharImage src={src} alt={label} fill unoptimized sizes="220px" className="object-cover transition duration-700 group-hover/thumb:scale-105" /><div className="absolute inset-0 bg-gradient-to-t from-black/58 to-transparent" /><p className="absolute inset-x-3 bottom-3 text-[7px] font-bold uppercase tracking-[.13em] text-white/72">{label}</p></div>)}</div>
-              </div>
-            </motion.article>
-          </AnimatePresence>
-        </div>
-        <p className="mt-7 text-[8px] uppercase tracking-[.17em] text-white/32">High-resolution motion study · muted by design · pauses with reduced-motion settings</p>
-      </div>
-    </section>
-  );
-}
-
 function UtensilCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
@@ -657,43 +535,6 @@ function UtensilCarousel() {
         <div ref={railRef} className="no-scrollbar mt-5 flex snap-x gap-3 overflow-x-auto pb-3" role="tablist" aria-label="Choose a utensil to feature">
           {utensilCarousel.map((item, index) => <button key={item.name} type="button" role="tab" aria-selected={activeIndex === index} onClick={() => select(index)} className={`rose-gallery-thumb group flex min-w-[230px] snap-center items-center gap-3 rounded-2xl border p-3 text-left transition sm:min-w-[270px] ${activeIndex === index ? "border-[#9d712a] bg-[#fffaf0] shadow-[0_12px_32px_rgba(88,55,23,.1)]" : "border-[#b78b3c]/20 bg-white/30 hover:border-[#b78b3c]/55"}`}><span className="relative size-16 shrink-0 overflow-hidden rounded-xl bg-[#d8c8b6]"><DharoharImage src={item.image} alt="" fill unoptimized sizes="64px" className="object-cover transition duration-500 group-hover:scale-105" /></span><span><span className="block text-[8px] font-bold uppercase tracking-[.16em] text-[#a4772d]">{item.number} · {item.purpose}</span><span className="mt-2 block font-serif text-xl leading-none text-[#4d3823]">{item.name}</span></span></button>)}
         </div>
-      </div>
-    </section>
-  );
-}
-
-function PassportExperience() {
-  const [activeId, setActiveId] = useState("maker");
-  const active = passportDetails.find((item) => item.id === activeId) ?? passportDetails[0];
-  const Icon = active.icon;
-  const serviceHistory = [["2027", "Kalai renewed"], ["2031", "Dent repaired"], ["2035", "Engraving updated"]] as const;
-  const visual = active.id === "restoration" ? "/images/curated/styled-copper-detail.webp" : "/images/artisan.jpg";
-  return (
-    <section id="passport" className="overflow-hidden bg-[#fffaf0] px-5 py-[clamp(3.75rem,6vw,6rem)]" aria-labelledby="passport-title">
-      <div className="site-container">
-        <div className="grid gap-8 lg:grid-cols-[1.05fr_.95fr] lg:items-center">
-        <Reveal className="relative min-h-[560px] overflow-hidden rounded-[1.6rem] lg:min-h-[600px]">
-          <AnimatePresence mode="wait"><motion.div key={visual} className="absolute inset-0" initial={{ opacity: 0, scale: 1.04 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: .75 }}><DharoharImage src={visual} alt={active.id === "restoration" ? "Close view of a copper object receiving engraving care" : "Metal artisan working in a traditional workshop"} fill unoptimized sizes="(max-width: 1024px) 100vw, 52vw" className="object-cover" style={{ objectPosition: active.id === "restoration" ? "50% 50%" : "50% 30%" }} /></motion.div></AnimatePresence>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#160e09]/92 via-transparent to-transparent" />
-          <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-white/25 bg-[#fffaf0]/94 p-6 text-[#4b3824] shadow-2xl backdrop-blur sm:inset-x-8 sm:bottom-8">
-            <div className="flex items-center justify-between gap-4"><div><p className="text-[9px] font-bold uppercase tracking-[.2em] text-[#9d712a]">Living ownership record</p><p className="mt-2 font-serif text-3xl">DH–2037 · Family Lagaan</p></div><QrCode size={34} className="text-[#8b632a]" /></div>
-            <AnimatePresence mode="wait"><motion.div key={active.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="mt-5 border-t border-[#b78b3c]/20 pt-5"><div className="flex items-start gap-4"><span className="grid size-11 shrink-0 place-items-center rounded-full bg-[#9d712a] text-white"><Icon size={18} /></span><div><h3 className="font-serif text-2xl">{active.title}</h3><p className="mt-2 text-sm leading-6 text-[#746756]">{active.copy}</p></div></div>{active.id === "restoration" ? <ol className="mt-5 grid gap-2 sm:grid-cols-3">{serviceHistory.map(([year, event]) => <li key={year} className="rounded-xl border border-[#b78b3c]/20 bg-white/65 p-3"><span className="text-[8px] font-bold uppercase tracking-[.16em] text-[#9d712a]">{year}</span><span className="mt-1 block font-serif text-lg">{event}</span></li>)}</ol> : null}</motion.div></AnimatePresence>
-          </div>
-        </Reveal>
-          <Reveal delay={.12}>
-          <p className="heritage-label w-fit">Heritage passport</p>
-          <h2 id="passport-title" className="heritage-display mt-5 text-[clamp(3.1rem,5vw,5.4rem)] leading-[.9]">The story stays with the object. <span className="italic text-[#9d712a]">So does its care.</span></h2>
-          <p className="mt-4 max-w-xl text-sm leading-7 text-[#746756] sm:text-base">Open each chapter to see how provenance, material knowledge, restoration and family history remain legible long after the box is gone.</p>
-          <div className="mt-7 grid gap-2 sm:grid-cols-2">{passportDetails.map((item, index) => { const ItemIcon = item.icon; const selected = activeId === item.id; return <button key={item.id} type="button" onClick={() => setActiveId(item.id)} className={`flex min-h-20 w-full items-center gap-3 rounded-xl border p-3 text-left transition ${selected ? "border-[#b78b3c] bg-[#f0e1c8] shadow-[0_10px_24px_rgba(102,67,25,.07)]" : "border-[#b78b3c]/18 bg-transparent hover:border-[#b78b3c]/45"}`}><span className={`grid size-9 shrink-0 place-items-center rounded-full ${selected ? "bg-[#9d712a] text-white" : "bg-[#efe2ce] text-[#9d712a]"}`}><ItemIcon size={16} /></span><span><span className="block text-[7px] font-bold uppercase tracking-[.17em] text-[#9a8468]">Chapter 0{index + 1}</span><span className="mt-1 block font-serif text-lg leading-none text-[#4d3823]">{item.label}</span></span></button>; })}</div>
-          <div className="mt-5 flex flex-wrap gap-3"><button type="button" onClick={() => setActiveId("restoration")} className="heritage-button heritage-button-filled">Open a sample care record <History size={14} /></button><a href="#consultation" className="heritage-button">Register my piece <ArrowRight size={14} /></a></div>
-          </Reveal>
-        </div>
-        <Reveal className="mt-9 overflow-hidden rounded-[1.5rem] border border-[#b78b3c]/24 bg-[#f2e5d1] shadow-[0_18px_48px_rgba(90,57,23,.07)]">
-          <div className="grid lg:grid-cols-[.72fr_1.28fr]">
-            <div className="p-5 sm:p-7"><p className="text-[8px] font-bold uppercase tracking-[.22em] text-[#9d712a]">One object · Three keepers</p><h3 className="mt-3 font-serif text-3xl leading-[.98] text-[#4d3823] sm:text-4xl">Its life continues inside the passport.</h3><p className="mt-4 text-sm leading-7 text-[#746756]">The workshop, the family and the next generation become a concise living timeline—without adding another long section to the page.</p></div>
-            <ol className="grid border-t border-[#b78b3c]/18 sm:grid-cols-3 lg:border-l lg:border-t-0">{generations.map((item) => <li key={item.number} className="group border-b border-[#b78b3c]/18 p-6 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0"><span className="font-serif text-5xl text-[#b78b3c]/45 transition group-hover:text-[#9d712a]">{item.number}</span><p className="mt-5 text-[8px] font-bold uppercase tracking-[.17em] text-[#9d712a]">{item.era}</p><h4 className="mt-2 font-serif text-2xl leading-none text-[#4d3823]">{item.title}</h4><p className="mt-3 text-xs leading-6 text-[#746756]">{item.copy}</p></li>)}</ol>
-          </div>
-        </Reveal>
       </div>
     </section>
   );

@@ -64,7 +64,8 @@ test("server-renders the finished Dharohar brand gateway", async () => {
   assert.match(html, /From flame to table\./);
   assert.match(html, /Material wisdom\./);
   assert.match(html, /Modern clarity\./);
-  assert.match(html, /A quieter way to begin\./);
+  assert.match(html, /A quieter way/);
+  assert.match(html, /to begin\./);
   assert.match(html, /<meta property="og:image" content="http:\/\/localhost:3000\/og\.png"/i);
   assert.match(html, /<link rel="icon" href="http:\/\/localhost:3000\/favicon\.png"/i);
   assert.match(html, /application\/ld\+json/);
@@ -98,7 +99,6 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.match(gateway, /LifetimeRestoration/);
   assert.match(gateway, /Re-tinning \/ Kalai/);
   assert.match(gateway, /copper-dispenser-lifestyle\.jpg/);
-  assert.match(gateway, /styled-copper-pair\.webp/);
   const heroFramesSource = gateway.match(/const heroFrames = \[([\s\S]*?)\] as const;/)?.[1] ?? "";
   assert.doesNotMatch(heroFramesSource, /artisan|indian-table/i);
   assert.doesNotMatch(gateway, /\/images\/indian-table\.jpg/);
@@ -112,14 +112,12 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.match(gateway, /dharohar:store-intent/);
   assert.match(gateway, /dharohar-store-handoff-seen/);
   assert.match(gateway, /function CareDock/);
-  assert.match(gateway, /One object · Three keepers/);
   assert.ok(gateway.indexOf("<PersonalisationStudio />") < gateway.indexOf("<UtensilCarousel />"));
   assert.ok(gateway.indexOf("<TrustSequence />") < gateway.indexOf("<UtensilCarousel />"));
   assert.doesNotMatch(gateway.match(/<main>([\s\S]*?)<\/main>/)?.[1] ?? "", /<RitualUniverse \/>|<PassportExperience \/>/);
   assert.doesNotMatch(gateway, /function GuidedFinder/);
   assert.doesNotMatch(gateway, /href="#finder"/);
   assert.doesNotMatch(gateway.match(/<main>([\s\S]*?)<\/main>/)?.[1] ?? "", /<GenerationalStory \/>/);
-  assert.match(gateway, /water-ritual-master\.mp4/);
   assert.match(gateway, /function UtensilCarousel/);
   assert.match(gateway, /function CategoryCarousel/);
   assert.match(gateway, /category carousel/);
