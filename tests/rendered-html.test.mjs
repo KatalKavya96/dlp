@@ -106,6 +106,7 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.match(gateway, /NEXT_PUBLIC_CONSULTATION_ENDPOINT/);
   assert.match(gateway, /Prepare consultation request/);
   assert.match(gateway, /Pause cinematic motion/);
+  assert.match(gateway, /header_visit_store"[^>]*className="hero-nav-icon grid"/);
   assert.doesNotMatch(gateway, /cinematic-pointer-light/);
   assert.match(gateway, /Select a glowing marker/);
   assert.doesNotMatch(gateway, /hero-craft-card|Legacy of Craft|Our evidence standard|Move beyond similar vessels/);
