@@ -28,7 +28,7 @@ body {
   overflow-x: hidden;
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-dharohar-sans), "Avenir Next", "Helvetica Neue", Arial, sans-serif;
   text-rendering: optimizeLegibility;
 }
 
@@ -110,7 +110,7 @@ html[data-dharohar-loading] {
 }
 
 .dharohar-loader-monogram {
-  font-family: var(--font-cormorant), "Iowan Old Style", serif;
+  font-family: var(--font-dharohar-serif), "Didot", "Iowan Old Style", serif;
   font-size: clamp(3.4rem, 7vw, 5rem);
   font-weight: 500;
   line-height: 1;
@@ -120,7 +120,7 @@ html[data-dharohar-loading] {
 
 .dharohar-loader-wordmark {
   margin-top: 1.6rem;
-  font-family: var(--font-cormorant), "Iowan Old Style", serif;
+  font-family: var(--font-dharohar-serif), "Didot", "Iowan Old Style", serif;
   font-size: clamp(2.3rem, 6vw, 3.4rem);
   font-weight: 500;
   letter-spacing: .18em;
@@ -241,7 +241,7 @@ button {
 }
 
 .font-serif {
-  font-family: var(--font-cormorant), "Iowan Old Style", "Baskerville", "Times New Roman", serif !important;
+  font-family: var(--font-dharohar-serif), "Didot", "Iowan Old Style", "Baskerville", "Times New Roman", serif !important;
   font-variation-settings: "opsz" 56;
 }
 
@@ -334,7 +334,7 @@ main .site-container {
 
 .heritage-display {
   color: #4b361f;
-  font-family: var(--font-cormorant), "Iowan Old Style", "Baskerville", serif;
+  font-family: var(--font-dharohar-serif), "Didot", "Iowan Old Style", "Baskerville", serif;
   font-weight: 500;
   letter-spacing: -.035em;
   text-wrap: balance;
@@ -524,7 +524,7 @@ main section[id] {
   background: rgb(255 252 245 / 75%);
   padding-inline: 1rem;
   color: #4e3a24;
-  font-family: var(--font-cormorant), serif;
+  font-family: var(--font-dharohar-serif), "Didot", serif;
   font-size: 1.15rem;
   outline: none;
   transition: border-color 200ms ease, box-shadow 200ms ease;

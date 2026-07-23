@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { Cormorant_Garamond, Geist } from "next/font/google";
+import { Bodoni_Moda, Manrope } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const manrope = Manrope({
+  variable: "--font-dharohar-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const bodoni = Bodoni_Moda({
+  variable: "--font-dharohar-serif",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   style: ["normal", "italic"],
@@ -61,7 +62,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-IN">
-      <body className={`${geistSans.variable} ${cormorant.variable} antialiased`}>{children}</body>
+      <body className={`${manrope.variable} ${bodoni.variable} antialiased`}>{children}</body>
     </html>
   );
 }
