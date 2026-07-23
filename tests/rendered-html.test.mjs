@@ -128,6 +128,9 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.match(css, /\.artisan-network \.artisan-map-shell/);
   assert.match(css, /\.consultation-reference \.consult-persona-grid/);
   assert.match(css, /width:\s*clamp\(5\.8rem,\s*8vw,\s*7\.35rem\)/);
+  assert.match(css, /Calmer desktop scale/);
+  assert.match(css, /width:\s*min\(calc\(100%\s*-\s*6rem\),\s*1240px\)/);
+  assert.match(css, /\.category-slide[\s\S]*min-width:\s*min\(46vw,\s*640px\)/);
   const heroFramesSource = gateway.match(/const heroFrames = \[([\s\S]*?)\] as const;/)?.[1] ?? "";
   assert.doesNotMatch(heroFramesSource, /artisan|indian-table/i);
   assert.doesNotMatch(gateway, /P[•·.\-]?TAL/i);

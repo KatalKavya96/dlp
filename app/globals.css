@@ -3153,6 +3153,300 @@ h4 {
   }
 }
 
+/* Calmer desktop scale for laptop and desktop displays at 100% browser zoom. */
+@media (min-width: 1024px) {
+  .site-container {
+    width: min(calc(100% - 6rem), 1240px);
+  }
+
+  .gateway-header .site-container {
+    height: 5.25rem !important;
+  }
+
+  .gateway-header .dharohar-brand-wordmark {
+    width: 10.25rem !important;
+    height: 3.85rem !important;
+  }
+
+  .gateway-header nav {
+    gap: clamp(1.5rem, 2.2vw, 2.6rem) !important;
+  }
+
+  .gateway-header nav > a {
+    font-size: .68rem !important;
+  }
+
+  .hero-nav-icon {
+    width: 2.45rem;
+    height: 2.45rem;
+  }
+
+  .parallax-hero-content {
+    padding-top: 7.25rem !important;
+  }
+
+  .parallax-hero-content > div {
+    max-width: 27rem;
+  }
+
+  .parallax-hero-content h1 {
+    font-size: clamp(3.3rem, 4vw, 4.6rem) !important;
+    line-height: .88 !important;
+  }
+
+  .parallax-hero-content h1 + p {
+    max-width: 23rem;
+    margin-top: 1.15rem;
+    font-size: .88rem;
+    line-height: 1.75;
+  }
+
+  main .heritage-display {
+    font-size: clamp(2.8rem, 4vw, 4.2rem) !important;
+    letter-spacing: -.025em;
+  }
+
+  #commissions-title,
+  #artisan-network-title,
+  #restoration-title,
+  #commission-proof-title,
+  #consultation-title {
+    font-size: clamp(3rem, 4.35vw, 4.7rem) !important;
+    line-height: .91 !important;
+  }
+
+  .rose-materials,
+  .category-carousel,
+  .commissioning-hall,
+  #legacy,
+  .commission-proof {
+    padding-block: clamp(4.5rem, 7vw, 6.75rem) !important;
+  }
+
+  .category-carousel-rail {
+    gap: 1.75rem;
+    margin-top: 2.75rem;
+  }
+
+  .category-slide {
+    min-width: min(46vw, 640px) !important;
+    border-radius: 1.4rem !important;
+    box-shadow:
+      0 26px 62px rgb(77 38 47 / 11%),
+      0 2px 0 rgb(166 95 106 / 12%);
+  }
+
+  .category-slide > div {
+    aspect-ratio: 16 / 9.2 !important;
+  }
+
+  .category-slide h3 {
+    font-size: clamp(2.35rem, 3.6vw, 3.8rem) !important;
+  }
+
+  .category-slide p {
+    max-width: 29rem;
+  }
+
+  .category-slide .category-explore-button {
+    min-height: 2.8rem;
+    padding-inline: 1rem;
+  }
+
+  .rose-material-card,
+  .engraving-object-stage,
+  .commissioning-hall .site-container > div:last-child,
+  .artisan-map-shell,
+  .artisan-ledger,
+  .commission-case,
+  .consultation-card {
+    border-radius: 1.35rem !important;
+  }
+
+  .rose-material-card {
+    margin-top: 2.5rem;
+  }
+
+  .rose-material-card .rose-image-well {
+    min-height: 450px !important;
+  }
+
+  .rose-material-card h3 {
+    font-size: 3.25rem !important;
+  }
+
+  .rose-material-card p {
+    max-width: 34rem;
+  }
+
+  .commissioning-hall .site-container > div:last-child {
+    margin-top: 2.5rem;
+  }
+
+  #commission-audience-panel {
+    min-height: 500px;
+  }
+
+  .commission-audience-tabs {
+    padding: 1rem;
+  }
+
+  .commission-audience-tab {
+    gap: .7rem;
+    padding: .62rem .7rem;
+  }
+
+  #commission-audience-panel h3 {
+    max-width: 33rem;
+    font-size: clamp(2.65rem, 3.5vw, 3.85rem) !important;
+  }
+
+  #commission-audience-panel p {
+    max-width: 32rem;
+  }
+
+  .artisan-network-intro,
+  .commission-proof .site-container > div:first-child,
+  .commissioning-hall .site-container > div:first-child {
+    column-gap: 4rem;
+  }
+
+  .artisan-network-grid {
+    gap: 1.5rem;
+  }
+
+  .artisan-network .artisan-map-shell {
+    min-height: clamp(420px, 50svh, 490px);
+  }
+
+  .artisan-network .artisan-ledger {
+    padding: 1.65rem;
+  }
+
+  .artisan-network .artisan-ledger h3 {
+    max-width: 22rem;
+    font-size: clamp(2.15rem, 3vw, 3.15rem);
+  }
+
+  .artisan-network .artisan-ledger > div:nth-of-type(2) {
+    gap: .1rem;
+  }
+
+  .restoration-reference .site-container {
+    max-width: 1180px;
+  }
+
+  .restoration-reference [role="tabpanel"] {
+    gap: 1px;
+  }
+
+  .restoration-reference [role="tabpanel"] article {
+    padding: 1.3rem 1.45rem;
+  }
+
+  .restoration-reference [role="tabpanel"] article h3 {
+    font-size: 1.35rem;
+  }
+
+  .restoration-reference [role="tabpanel"] article p {
+    font-size: .78rem;
+    line-height: 1.55;
+  }
+
+  .commission-proof .site-container {
+    max-width: 1180px;
+  }
+
+  .commission-case {
+    min-height: 385px;
+  }
+
+  .commission-case h3 {
+    font-size: 2rem !important;
+    line-height: .96 !important;
+  }
+
+  .commission-case > div:last-child {
+    padding: 1.35rem;
+  }
+
+  .commission-journey {
+    margin-top: 1.5rem;
+  }
+
+  .commission-tool {
+    padding: 1.55rem !important;
+  }
+
+  .commission-tool h3 {
+    font-size: 1.85rem;
+  }
+
+  .consultation-reference > .site-container {
+    width: min(calc(100% - 7rem), 1180px);
+    grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr) !important;
+    gap: 4.5rem;
+  }
+
+  .consultation-intro {
+    max-width: 25rem;
+  }
+
+  .consultation-intro h2 {
+    max-width: 22rem;
+  }
+
+  .consultation-intro > p {
+    max-width: 24rem;
+  }
+
+  .consultation-reference .consultation-card-dark {
+    border-color: rgb(226 167 176 / 14%) !important;
+    padding: 1.4rem !important;
+    box-shadow:
+      inset 0 1px rgb(255 255 255 / 3%),
+      0 24px 68px rgb(0 0 0 / 20%) !important;
+  }
+
+  .consultation-reference .consult-persona-grid {
+    gap: .55rem;
+  }
+
+  .consultation-reference .consult-persona {
+    border-color: rgb(226 167 176 / 10%);
+    background: rgb(255 255 255 / 1.5%);
+  }
+
+  .consultation-reference .consult-input {
+    border-color: rgb(226 167 176 / 13%);
+    background-color: rgb(255 255 255 / 2.5%);
+    font-size: .8rem;
+  }
+
+  .rose-footer .site-container {
+    padding-block: 2rem;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 820px) {
+  .restoration-reference [role="tabpanel"] article {
+    padding: 1rem 1.15rem;
+  }
+
+  .consultation-reference > .site-container {
+    gap: 3rem;
+    padding-block: 1.1rem !important;
+  }
+
+  .consultation-reference .consultation-card-dark {
+    padding: 1rem !important;
+  }
+
+  .consultation-intro h2 {
+    font-size: clamp(2.85rem, 4vw, 4.1rem) !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
