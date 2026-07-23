@@ -74,7 +74,7 @@ The current images are editorial placeholders sourced under the Unsplash license
 
 `heritage-product-rail.webp` is an optimized original AI-generated Dharohar visual created for the compact product rail, with the high-resolution PNG retained as its editable campaign master. It contains no copied branding, packaging, reviews or discount claims from the supplied references.
 
-The high-resolution P-TAL files requested for design review are stored under `public/images/reference/ptal/`, with optimized derivatives under `public/images/curated/`. The four styled Copper Lagaan review images are retained at their source resolution alongside 2000 × 2000 WebP derivatives named `ptal-styled-copper-*`. They are temporary reference assets and require usage permission or replacement with Dharohar-owned photography before commercial launch.
+Commercial photography in `public/images/curated/` and `public/images/dharohar-categories/` should remain free of third-party wordmarks, packaging, and visible attribution. Keep the public build visually and semantically branded only as Dharohar.
 
 The restoration and water-ritual motion studies use unbranded, royalty-free Pexels footage: [traditional copper hammering by Kenan Turguç](https://www.pexels.com/video/artisan-crafting-traditional-copper-hammering-30614799/) and [a copper water ritual by Yan Krukau](https://www.pexels.com/video/person-pouring-water-on-a-copper-mug-8810908/). Both should eventually be replaced with Dharohar-owned campaign masters while preserving their portrait framing.
 

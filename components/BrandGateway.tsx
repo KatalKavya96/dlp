@@ -60,10 +60,10 @@ const heroFrames = [
 ] as const;
 
 const parallaxPlanes = [
-  { x: 1.5, y: 1, scroll: 4, scale: 1.01 },
-  { x: 4, y: 2.5, scroll: 10, scale: 1.018 },
-  { x: 8, y: 4.5, scroll: 18, scale: 1.028 },
-  { x: 12, y: 7, scroll: 28, scale: 1.04 },
+  { x: 1.2, y: .8, scroll: 3, scale: 1.002 },
+  { x: 3, y: 2, scroll: 8, scale: .985 },
+  { x: 6, y: 3.5, scroll: 14, scale: .92 },
+  { x: 8, y: 5, scroll: 20, scale: .965 },
 ] as const;
 
 const materials = [
@@ -75,7 +75,7 @@ const materials = [
     story: "A material of ceremony and control, chosen for slow dishes, considered serving and objects intended to age beautifully.",
     bestFor: "Slow cooking · Festive tables · Statement gifts",
     care: "Dry promptly; restore the exterior glow when desired.",
-    image: "/images/curated/ptal-copper-madurai-handi.webp",
+    image: "/images/curated/copper-madurai-handi.webp",
     path: "/collections/copper-cookware",
     tone: "#a85d35",
   },
@@ -87,7 +87,7 @@ const materials = [
     story: "The golden metal of the Indian rasoi, suited to practical everyday forms and generous vessels made for sharing.",
     bestFor: "Everyday curries · Serving · Complete rasoi sets",
     care: "Use the intended lining; wash gently and dry completely.",
-    image: "/images/curated/ptal-brass-kadhai-set.webp",
+    image: "/images/curated/brass-kadhai-set.webp",
     path: "/collections/brass-cookware",
     tone: "#b78b3c",
   },
@@ -118,7 +118,7 @@ const generations = [
     era: "Lived with",
     title: "A family gives it meaning.",
     copy: "It gathers recipes, celebrations and the warm evidence of use—then returns for care whenever it needs attention.",
-    image: "/images/curated/ptal-styled-copper-pair.webp",
+    image: "/images/curated/styled-copper-pair.webp",
   },
   {
     number: "03",
@@ -130,18 +130,18 @@ const generations = [
 ] as const;
 
 const categoryCollections = [
-  { name: "Cookware", detail: "Kadhais, patilas, tawas and lagans made for the everyday flame.", image: "/images/ptal-categories/cookware.webp", path: "/collections/cookware-by-p-tal" },
-  { name: "Kitchen Utensils", detail: "Purposeful forms for stirring, turning, simmering and serving.", image: "/images/ptal-categories/kitchen-utensils.webp", path: "/collections/kitchen-utensils" },
-  { name: "Kitchen Accessories", detail: "The smaller objects that make a thoughtful rasoi feel complete.", image: "/images/ptal-categories/kitchen-accessories.webp", path: "/collections/kitchen-accessories" },
-  { name: "Drinkware", detail: "Bottles, glasses, tumblers and dispensers for a considered water ritual.", image: "/images/ptal-categories/drinkware.webp", path: "/collections/drinkware" },
-  { name: "Tableware", detail: "Handcrafted pieces that bring warmth and ceremony to every setting.", image: "/images/ptal-categories/tableware.webp", path: "/collections/tableware" },
-  { name: "Dinnerware", detail: "Complete thaalis and dining sets for tables made to gather around.", image: "/images/ptal-categories/dinnerware.webp", path: "/collections/dinnerware" },
-  { name: "Sets & Combos", detail: "Useful pairings assembled for new kitchens, gifting and everyday ease.", image: "/images/ptal-categories/sets.webp", path: "/collections/combos-and-sets" },
-  { name: "Copper for Water", detail: "Tamba vessels shaped around storing, pouring and sharing water.", image: "/images/ptal-categories/copper-water.webp", path: "/collections/copper-tamba-utensils-and-vessels" },
-  { name: "Brass for Cooking & Eating", detail: "The golden character of peetal, from the stove to the family table.", image: "/images/ptal-categories/brass.webp", path: "/collections/brass-pital-utensils-and-vessels" },
-  { name: "Kansa for Eating", detail: "Bronze dining forms with a grounded weight and unmistakable resonance.", image: "/images/ptal-categories/kansa.webp", path: "/collections/kansa-bronze-utensils-and-vessels" },
-  { name: "Home Décor", detail: "Metal accents and quiet statements for the spaces around the table.", image: "/images/ptal-categories/home-decor.webp", path: "/collections/home-decor-1" },
-  { name: "Pooja & Ritual", detail: "Handcrafted diya forms made for prayer, celebration and daily devotion.", image: "/images/ptal-categories/pooja.webp", path: "/collections/pooja-items" },
+  { name: "Cookware", detail: "Kadhais, patilas, tawas and lagans made for the everyday flame.", image: "/images/dharohar-categories/cookware.webp", path: "/collections/cookware-by-p-tal" },
+  { name: "Kitchen Utensils", detail: "Purposeful forms for stirring, turning, simmering and serving.", image: "/images/dharohar-categories/kitchen-utensils.webp", path: "/collections/kitchen-utensils" },
+  { name: "Kitchen Accessories", detail: "The smaller objects that make a thoughtful rasoi feel complete.", image: "/images/dharohar-categories/kitchen-accessories-clean.webp", path: "/collections/kitchen-accessories" },
+  { name: "Drinkware", detail: "Bottles, glasses, tumblers and dispensers for a considered water ritual.", image: "/images/dharohar-categories/drinkware-clean.webp", path: "/collections/drinkware" },
+  { name: "Tableware", detail: "Handcrafted pieces that bring warmth and ceremony to every setting.", image: "/images/dharohar-categories/tableware-clean.webp", path: "/collections/tableware" },
+  { name: "Dinnerware", detail: "Complete thaalis and dining sets for tables made to gather around.", image: "/images/dharohar-categories/dinnerware.webp", path: "/collections/dinnerware" },
+  { name: "Sets & Combos", detail: "Useful pairings assembled for new kitchens, gifting and everyday ease.", image: "/images/dharohar-categories/sets.webp", path: "/collections/combos-and-sets" },
+  { name: "Copper for Water", detail: "Tamba vessels shaped around storing, pouring and sharing water.", image: "/images/dharohar-categories/copper-water.webp", path: "/collections/copper-tamba-utensils-and-vessels" },
+  { name: "Brass for Cooking & Eating", detail: "The golden character of peetal, from the stove to the family table.", image: "/images/dharohar-categories/brass.webp", path: "/collections/brass-pital-utensils-and-vessels" },
+  { name: "Kansa for Eating", detail: "Bronze dining forms with a grounded weight and unmistakable resonance.", image: "/images/dharohar-categories/kansa-clean.webp", path: "/collections/kansa-bronze-utensils-and-vessels" },
+  { name: "Home Décor", detail: "Metal accents and quiet statements for the spaces around the table.", image: "/images/dharohar-categories/home-decor.webp", path: "/collections/home-decor-1" },
+  { name: "Pooja & Ritual", detail: "Handcrafted diya forms made for prayer, celebration and daily devotion.", image: "/images/dharohar-categories/pooja-clean.webp", path: "/collections/pooja-items" },
 ] as const;
 
 const passportDetails = [
@@ -154,9 +154,9 @@ const passportDetails = [
 ] as const;
 
 const intentions = [
-  { eyebrow: "Cook", title: "At the flame", copy: "Kadhais, handis, patilas, lagans and tawas for the meals your home returns to.", image: "/images/curated/ptal-brass-flat-kadhai.webp", path: "/collections/everyday-cookware", cta: "Enter cookware", icon: HeartHandshake },
+  { eyebrow: "Cook", title: "At the flame", copy: "Kadhais, handis, patilas, lagans and tawas for the meals your home returns to.", image: "/images/curated/brass-flat-kadhai.webp", path: "/collections/everyday-cookware", cta: "Enter cookware", icon: HeartHandshake },
   { eyebrow: "Serve", title: "Around the table", copy: "Thalis, bowls, platters, cutlery and serving forms that turn food into gathering.", image: "/images/curated/kansa-thaali-clean.jpg", path: "/collections/tableware", cta: "Set the table", icon: PackageCheck },
-  { eyebrow: "Hydrate", title: "The water ritual", copy: "Copper bottles, tumblers, glasses, carafes, jugs and dispensers for considered daily use.", image: "/images/curated/ptal-copper-dispenser-lifestyle.jpg", path: "/collections/drinkware", cta: "Explore hydration", icon: Droplets },
+  { eyebrow: "Hydrate", title: "The water ritual", copy: "Copper bottles, tumblers, glasses, carafes, jugs and dispensers for considered daily use.", image: "/images/curated/copper-dispenser-lifestyle.jpg", path: "/collections/drinkware", cta: "Explore hydration", icon: Droplets },
   { eyebrow: "Gift", title: "For a milestone", copy: "Personalised pieces and presentation-ready sets for beginnings worth remembering.", image: "/images/curated/brass-davara-clean.jpg", path: "/collections/wedding-gifts", cta: "Choose a gift", icon: Gift },
   { eyebrow: "Restore", title: "Return it to care", copy: "A clear route to re-tinning, polishing, dent repair, engraving updates and expert guidance.", image: "/images/artisan.jpg", path: "/pages/restoration-care", cta: "Begin restoration", icon: Wrench },
 ] as const;
@@ -167,10 +167,10 @@ const ritualWorlds = [
     eyebrow: "Hydration ritual",
     title: "Water, carried beautifully.",
     copy: "From a hand-hammered bottle at your desk to tumblers, carafes, jugs and dispensers at the family table.",
-    image: "/images/curated/ptal-copper-dispenser-lifestyle.jpg",
+    image: "/images/curated/copper-dispenser-lifestyle.jpg",
     path: "/collections/drinkware",
     objects: ["Bottles", "Tumblers", "Glasses", "Carafes & jugs", "Dispensers"],
-    gallery: [["/images/curated/ptal-copper-bottle.jpg", "Copper bottle"], ["/images/curated/ptal-copper-dispenser-lifestyle.jpg", "Copper water vessel"], ["/images/curated/ptal-copper-dispenser.png", "Water dispenser"]],
+    gallery: [["/images/curated/copper-bottle.jpg", "Copper bottle"], ["/images/curated/copper-dispenser-lifestyle.jpg", "Copper water vessel"], ["/images/curated/copper-dispenser.png", "Water dispenser"]],
   },
   {
     id: "morning",
@@ -180,7 +180,7 @@ const ritualWorlds = [
     image: "/images/curated/brass-davara-clean.jpg",
     path: "/collections/drinkware",
     objects: ["Davara sets", "Coffee tumblers", "Tea service", "Small trays"],
-    gallery: [["/images/curated/brass-davara-clean.jpg", "Brass davara set"], ["/images/curated/ptal-copper-bottle.jpg", "Copper bottle"], ["/images/curated/ptal-brass-roti-box.jpg", "Brass roti box"]],
+    gallery: [["/images/curated/brass-davara-clean.jpg", "Brass davara set"], ["/images/curated/copper-bottle.jpg", "Copper bottle"], ["/images/curated/brass-roti-box.jpg", "Brass roti box"]],
   },
   {
     id: "table",
@@ -190,7 +190,7 @@ const ritualWorlds = [
     image: "/images/curated/kansa-thaali-clean.jpg",
     path: "/collections/tableware",
     objects: ["Thalis", "Bowls", "Platters", "Cutlery", "Serveware"],
-    gallery: [["/images/curated/kansa-thaali-clean.jpg", "Kansa thali"], ["/images/curated/ptal-brass-cutlery.jpg", "Engraved cutlery"], ["/images/curated/ptal-brass-roti-box.jpg", "Roti dabba"]],
+    gallery: [["/images/curated/kansa-thaali-clean.jpg", "Kansa thali"], ["/images/curated/brass-cutlery.jpg", "Engraved cutlery"], ["/images/curated/brass-roti-box.jpg", "Roti dabba"]],
   },
   {
     id: "prepare",
@@ -200,18 +200,18 @@ const ritualWorlds = [
     image: "/images/curated/brass-ladles-clean.png",
     path: "/collections/kitchen-utensils",
     objects: ["Paraats", "Masala boxes", "Ghee pots", "Ladles", "Preparation bowls"],
-    gallery: [["/images/curated/ptal-brass-paraat.jpg", "Brass paraat"], ["/images/curated/ptal-brass-masala-box.jpg", "Masala daani"], ["/images/curated/brass-ladles-clean.png", "Ladle set"]],
+    gallery: [["/images/curated/brass-paraat.jpg", "Brass paraat"], ["/images/curated/brass-masala-box.jpg", "Masala daani"], ["/images/curated/brass-ladles-clean.png", "Ladle set"]],
   },
 ] as const;
 
 const utensilCarousel = [
-  { number: "01", name: "Masala Daani", material: "Hammered brass", purpose: "Preparation", copy: "A lidded spice box that brings a familiar kitchen object into sharper material focus.", image: "/images/curated/ptal-brass-masala-box.jpg", path: "/products/brass-masala-box" },
-  { number: "02", name: "Brass Paraat", material: "Hand-shaped brass", purpose: "Mixing & kneading", copy: "A broad preparation form with a luminous hammered surface and generous working area.", image: "/images/curated/ptal-brass-paraat.jpg", path: "/products/brass-paraat" },
+  { number: "01", name: "Masala Daani", material: "Hammered brass", purpose: "Preparation", copy: "A lidded spice box that brings a familiar kitchen object into sharper material focus.", image: "/images/curated/brass-masala-box.jpg", path: "/products/brass-masala-box" },
+  { number: "02", name: "Brass Paraat", material: "Hand-shaped brass", purpose: "Mixing & kneading", copy: "A broad preparation form with a luminous hammered surface and generous working area.", image: "/images/curated/brass-paraat.jpg", path: "/products/brass-paraat" },
   { number: "03", name: "Rasoi Ladle Set", material: "Brass · Wood", purpose: "Cooking tools", copy: "Four distinct working ends turn the everyday cooking tool into a considered set.", image: "/images/curated/brass-ladles-clean.png", path: "/products/set-of-brass-ladles" },
-  { number: "04", name: "Roti Dabba", material: "Hammered brass", purpose: "Table service", copy: "A warm, sculptural chapati box designed to move easily from kitchen to table.", image: "/images/curated/ptal-brass-roti-box.jpg", path: "/products/brass-chapati-box-roti-dabba" },
-  { number: "05", name: "Engraved Cutlery", material: "Patterned brass", purpose: "Table detail", copy: "Forks and spoons with a decorative handle language that rewards a closer look.", image: "/images/curated/ptal-brass-cutlery.jpg", path: "/products/brass-spoons-forks" },
+  { number: "04", name: "Roti Dabba", material: "Hammered brass", purpose: "Table service", copy: "A warm, sculptural chapati box designed to move easily from kitchen to table.", image: "/images/curated/brass-roti-box.jpg", path: "/products/brass-chapati-box-roti-dabba" },
+  { number: "05", name: "Engraved Cutlery", material: "Patterned brass", purpose: "Table detail", copy: "Forks and spoons with a decorative handle language that rewards a closer look.", image: "/images/curated/brass-cutlery.jpg", path: "/products/brass-spoons-forks" },
   { number: "06", name: "Kansa Thaali", material: "Kansa bronze", purpose: "Dining ritual", copy: "A complete plate, bowls, glass and spoon composed as one material family.", image: "/images/curated/kansa-thaali-clean.jpg", path: "/products/kansa-thaali-set" },
-  { number: "07", name: "Copper Bottle", material: "Hammered copper", purpose: "Hydration", copy: "A modern upright form with a tactile hammered body and cork-finished cap.", image: "/images/curated/ptal-copper-bottle.jpg", path: "/products/copper-water-bottle" },
+  { number: "07", name: "Copper Bottle", material: "Hammered copper", purpose: "Hydration", copy: "A modern upright form with a tactile hammered body and cork-finished cap.", image: "/images/curated/copper-bottle.jpg", path: "/products/copper-water-bottle" },
   { number: "08", name: "Davara Set", material: "Polished brass", purpose: "Morning ritual", copy: "A paired coffee service that carries a distinctly Indian ritual into the present.", image: "/images/curated/brass-davara-clean.jpg", path: "/products/brass-dabara-coffee-serving-tumbler-set-set-of-2" },
 ] as const;
 
@@ -515,11 +515,11 @@ function CategoryCarousel() {
         <Reveal>
           <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
-              <p className="heritage-label w-fit">The complete P•TAL world</p>
+              <p className="heritage-label w-fit">The complete Dharohar world</p>
               <h2 id="collection-title" className="heritage-display mt-5 max-w-5xl text-[clamp(3.15rem,5.6vw,6rem)] leading-[.88]">Every ritual.<br /><span className="italic text-[#a26069]">Every category.</span></h2>
             </div>
             <div className="max-w-md lg:pb-1">
-              <p className="text-sm leading-7 text-[#746756]">Move through the entire utensil collection—one clear category at a time, with original imagery from P•TAL.</p>
+              <p className="text-sm leading-7 text-[#746756]">Move through the entire utensil collection—one clear category at a time, shaped around how each object lives in the home.</p>
               <div className="mt-5 flex items-center gap-2">
                 <button type="button" onClick={() => goTo(activeIndex - 1)} aria-label="Previous product category" className="category-carousel-control"><ChevronLeft size={18} /></button>
                 <button type="button" onClick={() => setPlaying((current) => !current)} aria-label={`${playing ? "Pause" : "Play"} category carousel`} aria-pressed={!playing} className="category-carousel-control">{playing ? <CirclePause size={18} /> : <CirclePlay size={18} />}</button>
@@ -538,15 +538,15 @@ function CategoryCarousel() {
         className="category-carousel-rail no-scrollbar mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-8 sm:gap-6"
         role="region"
         aria-roledescription="carousel"
-        aria-label="P•TAL product categories"
+        aria-label="Dharohar product categories"
       >
         {categoryCollections.map((category, index) => (
           <article key={category.name} className="category-slide group relative isolate min-w-[86vw] snap-center overflow-hidden rounded-[1.7rem] bg-[#38241f] sm:min-w-[72vw] lg:min-w-[58vw] xl:min-w-[50vw]" aria-roledescription="slide" aria-label={`${index + 1} of ${categoryCollections.length}: ${category.name}`}>
             <div className="relative aspect-[4/5] sm:aspect-[16/10]">
-              <DharoharImage src={category.image} alt={`${category.name} from P•TAL`} fill unoptimized sizes="(max-width: 639px) 86vw, (max-width: 1023px) 72vw, 58vw" className="category-slide-image object-cover" />
+              <DharoharImage src={category.image} alt={`${category.name} from Dharohar`} fill unoptimized sizes="(max-width: 639px) 86vw, (max-width: 1023px) 72vw, 58vw" className="category-slide-image object-cover" />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(35,19,16,.06)_15%,rgba(35,19,16,.18)_48%,rgba(35,19,16,.88)_100%)]" />
               <div className="absolute inset-x-0 top-0 flex items-center justify-between gap-4 p-5 sm:p-7">
-                <span className="rounded-full border border-white/30 bg-[#321d19]/45 px-3 py-2 text-[8px] font-extrabold uppercase tracking-[.22em] text-white/90 backdrop-blur-md">P•TAL collection</span>
+                <span className="rounded-full border border-white/30 bg-[#321d19]/45 px-3 py-2 text-[8px] font-extrabold uppercase tracking-[.22em] text-white/90 backdrop-blur-md">Dharohar collection</span>
                 <span className="font-serif text-2xl italic text-white/75">{String(index + 1).padStart(2, "0")}</span>
               </div>
               <div className="absolute inset-x-0 bottom-0 p-5 sm:p-8">
@@ -667,7 +667,7 @@ function PassportExperience() {
   const active = passportDetails.find((item) => item.id === activeId) ?? passportDetails[0];
   const Icon = active.icon;
   const serviceHistory = [["2027", "Kalai renewed"], ["2031", "Dent repaired"], ["2035", "Engraving updated"]] as const;
-  const visual = active.id === "restoration" ? "/images/curated/ptal-styled-copper-detail.webp" : "/images/artisan.jpg";
+  const visual = active.id === "restoration" ? "/images/curated/styled-copper-detail.webp" : "/images/artisan.jpg";
   return (
     <section id="passport" className="overflow-hidden bg-[#fffaf0] px-5 py-[clamp(3.75rem,6vw,6rem)]" aria-labelledby="passport-title">
       <div className="site-container">
@@ -740,7 +740,7 @@ function PersonalisationStudio() {
   return (
     <section id="legacy" className="overflow-hidden bg-[#efe1cb] px-5 py-[clamp(3.75rem,6vw,6rem)]" aria-labelledby="legacy-title">
       <div className="site-container grid gap-8 lg:grid-cols-[1.05fr_.95fr] lg:items-center">
-        <Reveal className="relative mx-auto aspect-square w-full max-w-[540px] overflow-hidden rounded-full border-[12px] border-[#fffaf0]/70 bg-[#c38257] shadow-[0_28px_76px_rgba(94,52,23,.18)]"><Image src="/images/curated/ptal-copper-madurai-handi.webp" alt="Copper handi with a live engraving preview" fill unoptimized sizes="(max-width: 1024px) 95vw, 52vw" className="object-cover" /><div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_38%,rgba(56,24,10,.32)_100%)]" /><div className="absolute inset-x-[17%] bottom-[17%] rounded-xl border border-[#ffe2b3]/35 bg-[#4e2615]/42 px-4 py-4 text-center text-[#ffe6b8] shadow-2xl backdrop-blur-[3px]"><Feather className="mx-auto mb-2" size={19} strokeWidth={1.2} /><AnimatePresence mode="wait"><motion.p key={`${style}-${engraving}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="font-serif text-[clamp(1.25rem,4vw,2.3rem)] leading-none text-shadow-sm">{engraving || placeholders[style]}</motion.p></AnimatePresence><p className="mt-2 text-[7px] font-bold uppercase tracking-[.28em] text-[#f4c77d]">Preview engraving</p></div><div className="ambient-reflection pointer-events-none absolute inset-y-0 left-0 w-28" /></Reveal>
+        <Reveal className="relative mx-auto aspect-square w-full max-w-[460px] overflow-hidden rounded-full border-[10px] border-[#fffaf0]/70 bg-[#c38257] shadow-[0_28px_76px_rgba(94,52,23,.18)]"><Image src="/images/curated/copper-madurai-handi.webp" alt="Copper handi with a live engraving preview" fill unoptimized sizes="(max-width: 1024px) 95vw, 46vw" className="object-cover" /><div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_38%,rgba(56,24,10,.32)_100%)]" /><div className="absolute inset-x-[17%] bottom-[17%] rounded-xl border border-[#ffe2b3]/35 bg-[#4e2615]/42 px-4 py-4 text-center text-[#ffe6b8] shadow-2xl backdrop-blur-[3px]"><Feather className="mx-auto mb-2" size={19} strokeWidth={1.2} /><AnimatePresence mode="wait"><motion.p key={`${style}-${engraving}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="font-serif text-[clamp(1.25rem,4vw,2.3rem)] leading-none text-shadow-sm">{engraving || placeholders[style]}</motion.p></AnimatePresence><p className="mt-2 text-[7px] font-bold uppercase tracking-[.28em] text-[#f4c77d]">Preview engraving</p></div><div className="ambient-reflection pointer-events-none absolute inset-y-0 left-0 w-28" /></Reveal>
         <Reveal delay={.12}><p className="heritage-label w-fit">Personalisation studio</p><h2 id="legacy-title" className="heritage-display mt-5 text-[clamp(3.1rem,5vw,5.4rem)] leading-[.88]">See your story on the object.</h2><p className="mt-4 max-w-xl text-sm leading-7 sm:text-base text-[#746756]">Create a live first impression. Final placement, scale and spelling remain subject to engraving approval.</p><div className="mt-6 flex flex-wrap gap-2" role="group" aria-label="Engraving type">{(["family", "wedding", "message"] as const).map((item) => <button key={item} type="button" onClick={() => { setStyle(item); setEngraving(placeholders[item]); }} className={`rounded-full border px-4 py-2 text-[9px] font-bold uppercase tracking-[.16em] transition ${style === item ? "border-[#8f5f27] bg-[#8f5f27] text-white" : "border-[#b78b3c]/35 text-[#765323]"}`}>{item === "family" ? "Family name" : item === "wedding" ? "Wedding date" : "Short message"}</button>)}</div><label className="mt-5 block max-w-lg"><span className="heritage-field-label">Your engraving preview</span><input value={engraving} maxLength={32} onChange={(event) => setEngraving(event.target.value)} className="heritage-input" aria-label="Your engraving preview" /></label><div className="mt-5 flex flex-wrap gap-3"><StoreLink path="/collections/personalised-gifts" eventLabel="personalisation_continue" className="heritage-button heritage-button-filled">Personalise on the store <ArrowRight size={15} /></StoreLink><a href="#consultation" className="heritage-button">Ask an engraving expert</a></div><div className="mt-6 flex flex-wrap gap-x-7 gap-y-3 text-xs text-[#725c41]">{["Product selection", "Engraving approval", "Presentation-ready packaging"].map((item) => <span key={item} className="flex items-center gap-2"><Check size={14} className="text-[#a4772d]" />{item}</span>)}</div></Reveal>
       </div>
     </section>
