@@ -6,11 +6,10 @@ import { useEffect, useMemo, useState } from "react";
 
 const criticalAssets = [
   "/images/dharohar-mark.png",
-  "/images/curated/ptal-styled-copper-pair.webp",
-  "/images/curated/ptal-copper-dispenser-lifestyle.jpg",
-  "/images/curated/brass-ladles-clean.png",
-  "/images/curated/ptal-brass-masala-box.jpg",
-  "/images/curated/ptal-brass-paraat.jpg",
+  "/images/hero-parallax/sunset-background.webp",
+  "/images/hero-parallax/architecture.webp",
+  "/images/hero-parallax/cookware.webp",
+  "/images/hero-parallax/curtain.webp",
 ] as const;
 
 const secondaryAssets = [
