@@ -1740,6 +1740,287 @@ main .heritage-display {
   transform: translateY(-3px);
 }
 
+.dharohar-table {
+  position: relative;
+  background:
+    radial-gradient(circle at 78% 12%, rgb(178 94 111 / 17%), transparent 30%),
+    radial-gradient(circle at 12% 88%, rgb(177 125 65 / 11%), transparent 26%),
+    linear-gradient(145deg, #1b0f12, #2b171c 52%, #160b0e);
+}
+
+.dharohar-table::before {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 35%, rgb(255 255 255 / 10%) 0 1px, transparent 1.2px),
+    radial-gradient(circle at 70% 65%, rgb(216 176 111 / 8%) 0 1px, transparent 1.2px);
+  background-size: 190px 170px, 260px 240px;
+  content: "";
+  opacity: .16;
+  pointer-events: none;
+}
+
+.table-complete-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .7rem;
+  border-bottom: 1px solid rgb(216 176 111 / 48%);
+  padding-bottom: .5rem;
+  color: #edc787;
+  font-size: .54rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  transition: gap 250ms ease, border-color 250ms ease, color 250ms ease;
+}
+
+.table-complete-link:hover {
+  gap: 1rem;
+  border-color: #edc787;
+  color: #ffe5b1;
+}
+
+.dharohar-table-stage {
+  position: relative;
+}
+
+.dharohar-table-image-frame {
+  aspect-ratio: 16 / 9;
+}
+
+.table-vignette {
+  box-shadow: inset 0 0 130px rgb(15 6 8 / 60%);
+}
+
+.table-hotspot {
+  position: absolute;
+  z-index: 5;
+  display: grid;
+  width: 2.9rem;
+  height: 2.9rem;
+  place-items: center;
+  border-radius: 999px;
+  color: #2b1715;
+  transform: translate(-50%, -50%);
+  transition: transform 220ms ease;
+}
+
+.table-hotspot:hover,
+.table-hotspot[aria-pressed="true"] {
+  transform: translate(-50%, -50%) scale(1.12);
+}
+
+.table-hotspot-pulse {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgb(255 226 174 / 68%);
+  border-radius: inherit;
+  background: rgb(255 232 191 / 10%);
+  box-shadow: 0 0 24px rgb(239 191 113 / 38%);
+  animation: table-hotspot-pulse 2.4s ease-out infinite;
+}
+
+.table-hotspot-core {
+  position: relative;
+  display: grid;
+  width: 1.7rem;
+  height: 1.7rem;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 70%);
+  border-radius: inherit;
+  background: #eccb8c;
+  box-shadow: 0 5px 16px rgb(27 10 10 / 45%);
+  font-size: 1rem;
+  line-height: 1;
+  transition: background-color 220ms ease, color 220ms ease, transform 220ms ease;
+}
+
+.table-hotspot[aria-pressed="true"] .table-hotspot-core {
+  background: #b76e79;
+  color: #fff9ef;
+  transform: rotate(45deg);
+}
+
+.dharohar-table-card {
+  position: absolute;
+  z-index: 8;
+  bottom: 1.8rem;
+  left: 1.8rem;
+  width: min(25rem, calc(100% - 3.6rem));
+  border: 1px solid rgb(255 255 255 / 15%);
+  border-radius: 1.35rem;
+  background: rgb(31 15 18 / 82%);
+  padding: 1.25rem;
+  box-shadow: 0 25px 70px rgb(0 0 0 / 34%), inset 0 1px rgb(255 255 255 / 7%);
+  backdrop-filter: blur(18px);
+}
+
+.table-mobile-tab {
+  flex: 0 0 auto;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 999px;
+  padding: .7rem 1rem;
+  color: rgb(255 255 255 / 52%);
+  font-size: .48rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.table-mobile-tab[aria-selected="true"] {
+  border-color: rgb(216 176 111 / 58%);
+  background: rgb(216 176 111 / 13%);
+  color: #edc787;
+}
+
+.engraving-story {
+  background:
+    radial-gradient(circle at 82% 15%, rgb(192 130 105 / 16%), transparent 30%),
+    linear-gradient(145deg, #f3e6d3, #ead5bf 55%, #f7eee2);
+}
+
+.engraving-glow {
+  background: radial-gradient(circle, rgb(183 110 121 / 24%), transparent 68%);
+  filter: blur(14px);
+}
+
+.engraving-object-stage {
+  isolation: isolate;
+}
+
+.engraving-object-image {
+  filter: saturate(.92) contrast(1.02) sepia(.04);
+  object-position: 50% 55%;
+  transition: filter 500ms ease, transform 800ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.engraving-object-stage:hover .engraving-object-image {
+  filter: saturate(1.04) contrast(1.04) sepia(.02);
+  transform: scale(1.018);
+}
+
+.engraving-view-button {
+  min-width: 4.4rem;
+  border-radius: 999px;
+  padding: .55rem .8rem;
+  color: #80644e;
+  font-size: .46rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: background-color 200ms ease, color 200ms ease, box-shadow 200ms ease;
+}
+
+.engraving-view-button-active {
+  background: #6f3b31;
+  color: #fff8ea;
+  box-shadow: 0 5px 14px rgb(76 35 27 / 20%);
+}
+
+.engraving-mark {
+  position: absolute;
+  top: 61%;
+  left: 53%;
+  width: min(46%, 17rem);
+  padding: .8rem 1rem;
+  color: #ffe1a5;
+  text-align: center;
+  text-shadow:
+    0 1px 0 rgb(74 29 19 / 70%),
+    0 0 8px rgb(255 211 140 / 36%);
+}
+
+.engraving-mark::before,
+.engraving-mark::after {
+  display: block;
+  width: 70%;
+  height: 1px;
+  margin-inline: auto;
+  background: linear-gradient(90deg, transparent, rgb(255 222 163 / 68%), transparent);
+  content: "";
+}
+
+.engraving-mark::before {
+  margin-bottom: .7rem;
+}
+
+.engraving-mark::after {
+  margin-top: .65rem;
+}
+
+.engraving-mark p {
+  font-size: clamp(1.15rem, 2.5vw, 2.15rem);
+}
+
+.engraving-state-copy {
+  padding: 1.15rem 1.3rem;
+  text-align: left;
+  transition: background-color 220ms ease;
+}
+
+.engraving-state-copy span {
+  display: block;
+  color: #9a7656;
+  font-size: .43rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.engraving-state-copy strong {
+  display: block;
+  margin-top: .45rem;
+  color: #5d4632;
+  font-family: var(--font-dharohar-serif), "Didot", serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.engraving-state-copy-active {
+  background: rgb(183 110 121 / 9%);
+}
+
+.engraving-mode-button {
+  border: 1px solid rgb(143 95 39 / 34%);
+  border-radius: 999px;
+  padding: .65rem 1rem;
+  color: #765323;
+  font-size: .52rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  transition: border-color 200ms ease, background-color 200ms ease, color 200ms ease, transform 200ms ease;
+}
+
+.engraving-mode-button:hover {
+  transform: translateY(-2px);
+}
+
+.engraving-mode-button-active {
+  border-color: #8f5f27;
+  background: #8f5f27;
+  color: #fffaf0;
+}
+
+.engraving-input {
+  border-color: rgb(143 95 39 / 26%) !important;
+  background: rgb(255 250 240 / 78%) !important;
+  font-family: var(--font-dharohar-serif), "Didot", serif !important;
+  font-size: 1.35rem !important;
+}
+
+@keyframes table-hotspot-pulse {
+  0% {
+    opacity: .95;
+    transform: scale(.72);
+  }
+  75%,
+  100% {
+    opacity: 0;
+    transform: scale(1.55);
+  }
+}
+
 .utensil-gallery {
   position: relative;
 }
@@ -2100,6 +2381,43 @@ main .heritage-display {
 
   .hero-story-link {
     font-size: .72rem;
+  }
+
+  .dharohar-table-image-frame {
+    aspect-ratio: 16 / 10;
+  }
+
+  .table-hotspot {
+    display: none;
+  }
+
+  .dharohar-table-card {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+    margin-top: .8rem;
+    border-color: rgb(255 255 255 / 12%);
+    background: rgb(39 20 24 / 92%);
+  }
+
+  .engraving-mark {
+    top: 63%;
+    width: 54%;
+    padding-inline: .35rem;
+  }
+
+  .engraving-mark p {
+    font-size: clamp(1rem, 5vw, 1.45rem);
+  }
+
+  .engraving-object-stage > div:first-child {
+    align-items: flex-start;
+  }
+
+  .engraving-view-button {
+    min-width: 3.7rem;
+    padding-inline: .55rem;
   }
 }
 

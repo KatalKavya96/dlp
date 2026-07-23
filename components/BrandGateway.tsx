@@ -124,15 +124,12 @@ const intentions = [
   { eyebrow: "Restore", title: "Return it to care", copy: "A clear route to re-tinning, polishing, dent repair, engraving updates and expert guidance.", image: "/images/artisan.jpg", path: "/pages/restoration-care", cta: "Begin restoration", icon: Wrench },
 ] as const;
 
-const utensilCarousel = [
-  { number: "01", name: "Masala Daani", material: "Hammered brass", purpose: "Preparation", copy: "A lidded spice box that brings a familiar kitchen object into sharper material focus.", image: "/images/curated/brass-masala-box.jpg", path: "/products/brass-masala-box" },
-  { number: "02", name: "Brass Paraat", material: "Hand-shaped brass", purpose: "Mixing & kneading", copy: "A broad preparation form with a luminous hammered surface and generous working area.", image: "/images/curated/brass-paraat.jpg", path: "/products/brass-paraat" },
-  { number: "03", name: "Rasoi Ladle Set", material: "Brass · Wood", purpose: "Cooking tools", copy: "Four distinct working ends turn the everyday cooking tool into a considered set.", image: "/images/curated/brass-ladles-clean.png", path: "/products/set-of-brass-ladles" },
-  { number: "04", name: "Roti Dabba", material: "Hammered brass", purpose: "Table service", copy: "A warm, sculptural chapati box designed to move easily from kitchen to table.", image: "/images/curated/brass-roti-box.jpg", path: "/products/brass-chapati-box-roti-dabba" },
-  { number: "05", name: "Engraved Cutlery", material: "Patterned brass", purpose: "Table detail", copy: "Forks and spoons with a decorative handle language that rewards a closer look.", image: "/images/curated/brass-cutlery.jpg", path: "/products/brass-spoons-forks" },
-  { number: "06", name: "Kansa Thaali", material: "Kansa bronze", purpose: "Dining ritual", copy: "A complete plate, bowls, glass and spoon composed as one material family.", image: "/images/curated/kansa-thaali-clean.jpg", path: "/products/kansa-thaali-set" },
-  { number: "07", name: "Copper Bottle", material: "Hammered copper", purpose: "Hydration", copy: "A modern upright form with a tactile hammered body and cork-finished cap.", image: "/images/curated/copper-bottle.jpg", path: "/products/copper-water-bottle" },
-  { number: "08", name: "Davara Set", material: "Polished brass", purpose: "Morning ritual", copy: "A paired coffee service that carries a distinctly Indian ritual into the present.", image: "/images/curated/brass-davara-clean.jpg", path: "/products/brass-dabara-coffee-serving-tumbler-set-set-of-2" },
+const tableObjects = [
+  { id: "thali", number: "01", name: "Kansa Thali", material: "Kansa bronze", purpose: "The complete place setting", copy: "A generous thali, katoris and tumbler composed as one calm material family.", path: "/products/kansa-thaali-set", image: "/images/curated/kansa-thaali-clean.jpg", x: 55, y: 70 },
+  { id: "roti", number: "02", name: "Roti Dabba", material: "Hammered brass", purpose: "Warmth at the centre", copy: "A sculptural chapati box made to travel naturally from the rasoi to the family table.", path: "/products/brass-chapati-box-roti-dabba", image: "/images/curated/brass-roti-box.jpg", x: 88, y: 51 },
+  { id: "bottle", number: "03", name: "Copper Bottle", material: "Hammered copper", purpose: "The water ritual", copy: "A quiet upright form that brings hand-worked copper into an everyday gesture.", path: "/products/copper-water-bottle", image: "/images/curated/copper-bottle.jpg", x: 75, y: 34 },
+  { id: "handi", number: "04", name: "Copper Handi", material: "Copper · Brass", purpose: "From flame to table", copy: "A rounded serving form whose warm surface holds the light as beautifully as the meal.", path: "/collections/copper-cookware", image: "/images/curated/copper-madurai-handi.webp", x: 64, y: 52 },
+  { id: "serve", number: "05", name: "Serving Kadhai", material: "Polished brass", purpose: "For shared dishes", copy: "A wide handled form made for generous serving and the rituals that happen around it.", path: "/products/brass-kadhai", image: "/images/curated/brass-flat-kadhai.webp", x: 42, y: 52 },
 ] as const;
 
 function storeHref(path: string, content: string) {
@@ -488,48 +485,73 @@ function CategoryCarousel() {
   );
 }
 
-function UtensilCarousel() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [playing, setPlaying] = useState(true);
-  const reducedMotion = useReducedMotion();
-  const railRef = useRef<HTMLDivElement>(null);
-  const active = utensilCarousel[activeIndex];
-
-  useEffect(() => {
-    if (!playing || reducedMotion) return;
-    const timer = window.setInterval(() => setActiveIndex((current) => (current + 1) % utensilCarousel.length), 5200);
-    return () => window.clearInterval(timer);
-  }, [playing, reducedMotion]);
-
-  function select(index: number) {
-    setActiveIndex(index);
-    railRef.current?.children[index]?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", inline: "center", block: "nearest" });
-  }
-
-  function move(direction: number) {
-    select((activeIndex + direction + utensilCarousel.length) % utensilCarousel.length);
-  }
+function DharoharTable() {
+  const [activeId, setActiveId] = useState<(typeof tableObjects)[number]["id"]>("thali");
+  const active = tableObjects.find((item) => item.id === activeId) ?? tableObjects[0];
 
   return (
-    <section id="rituals" className="rose-surface rose-gallery utensil-gallery overflow-hidden bg-[#f4eadb] px-5 py-[clamp(3.75rem,6vw,6rem)]" aria-labelledby="utensil-gallery-title">
+    <section id="rituals" className="dharohar-table overflow-hidden bg-[#1d1114] px-5 py-[clamp(4rem,7vw,7rem)] text-[#fff8ed]" aria-labelledby="dharohar-table-title">
       <div className="site-container">
-        <Reveal className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><div><p className="heritage-label w-fit">The wider object library</p><h2 id="utensil-gallery-title" className="heritage-display mt-5 max-w-5xl text-[clamp(3.2rem,5.5vw,5.7rem)] leading-[.88]">A whole rasoi,<br /><span className="italic text-[#9d712a]">object by object.</span></h2></div><div className="flex gap-2"><button type="button" onClick={() => move(-1)} aria-label="Previous utensil" className="carousel-control"><ChevronLeft size={18} /></button><button type="button" onClick={() => move(1)} aria-label="Next utensil" className="carousel-control"><ChevronRight size={18} /></button><button type="button" onClick={() => setPlaying((current) => !current)} aria-label={playing ? "Pause utensil carousel" : "Play utensil carousel"} className="carousel-control">{playing ? <CirclePause size={17} /> : <CirclePlay size={17} />}</button></div></Reveal>
-
-        <div className="rose-gallery-stage mt-9 grid overflow-hidden rounded-[1.7rem] border border-[#b78b3c]/25 bg-[#fffaf0] shadow-[0_24px_70px_rgba(88,55,23,.12)] lg:grid-cols-[1.25fr_.75fr]">
-          <div className="relative min-h-[460px] overflow-hidden bg-[#d8c8b6] lg:min-h-[600px]">
-            <AnimatePresence mode="wait"><motion.div key={active.image} className="absolute inset-0" initial={{ opacity: 0, scale: 1.045 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: .99 }} transition={{ duration: .8, ease: [.22, 1, .36, 1] }}><DharoharImage src={active.image} alt={`${active.name}, ${active.material}`} fill unoptimized sizes="(max-width: 1024px) 100vw, 64vw" className="object-cover" /></motion.div></AnimatePresence>
-            <div className="absolute inset-0 bg-gradient-to-t from-[#160e09]/72 via-transparent to-white/6" />
-            <div className="product-glint absolute -inset-y-[20%] left-[-25%] w-[18%] rotate-12 bg-gradient-to-r from-transparent via-white/45 to-transparent blur-sm" />
-            <div className="absolute left-6 top-6 rounded-full border border-white/35 bg-black/18 px-4 py-2 text-[8px] font-bold uppercase tracking-[.18em] text-white backdrop-blur">{active.purpose}</div>
-            <div className="absolute inset-x-6 bottom-6 text-white sm:inset-x-8 sm:bottom-8"><p className="text-[8px] font-bold uppercase tracking-[.2em] text-[#f0cf87]">Object {active.number} of {String(utensilCarousel.length).padStart(2, "0")}</p><h3 className="mt-2 font-serif text-[clamp(3rem,5.5vw,5.8rem)] leading-[.86]">{active.name}</h3></div>
+        <Reveal className="grid gap-7 lg:grid-cols-[1fr_auto] lg:items-end">
+          <div>
+            <p className="inline-flex items-center gap-3 text-[9px] font-bold uppercase tracking-[.25em] text-[#d8b06f]"><span className="h-px w-8 bg-[#d8b06f]/55" /> The Dharohar table</p>
+            <h2 id="dharohar-table-title" className="mt-5 max-w-5xl font-serif text-[clamp(3.35rem,6vw,6.6rem)] leading-[.84] tracking-[-.035em]">A table is where metal<br /><span className="italic text-[#d9a2ab]">becomes memory.</span></h2>
           </div>
-          <AnimatePresence mode="wait"><motion.div key={`details-${active.number}`} className="flex flex-col justify-center p-5 sm:p-7 lg:p-9" initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }} transition={{ duration: .5 }}><p className="text-[8px] font-bold uppercase tracking-[.2em] text-[#9d712a]">{active.material}</p><h3 className="mt-3 font-serif text-4xl leading-[.92] text-[#4d3823] sm:text-5xl">Not everything precious is a centrepiece.</h3><p className="mt-4 text-sm leading-7 text-[#746756] sm:text-base">{active.copy}</p><div className="mt-6 border-y border-[#b78b3c]/20 py-4"><p className="text-[8px] font-bold uppercase tracking-[.16em] text-[#9a8468]">Place in the home</p><p className="mt-2 font-serif text-xl text-[#5d4328]">{active.purpose}</p></div><StoreLink path={active.path} eventLabel={`utensil_${active.number}`} className="heritage-button heritage-button-filled mt-5 w-fit">View this object <ArrowRight size={14} /></StoreLink></motion.div></AnimatePresence>
+          <div className="max-w-sm lg:pb-2">
+            <p className="text-sm leading-7 text-white/55">Select an object inside the scene. Each piece has a place, a purpose and a route into your home.</p>
+            <StoreLink path="/collections/tableware" eventLabel="table_complete" className="table-complete-link mt-5">Complete this table <ArrowRight size={15} /></StoreLink>
+          </div>
+        </Reveal>
+      </div>
+
+      <Reveal className="dharohar-table-stage mx-auto mt-10 max-w-[1500px]">
+        <div className="dharohar-table-image-frame relative isolate overflow-hidden rounded-[1.7rem] border border-white/14 bg-[#29171a] shadow-[0_42px_120px_rgba(0,0,0,.4)]">
+          <Image src="/images/experience/dharohar-table-v1.webp" alt="A composed Dharohar table with copper, brass and kansa objects at blue hour" fill unoptimized sizes="(max-width: 767px) 100vw, 1500px" className="object-cover" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(18,9,11,.46),transparent_42%),linear-gradient(180deg,transparent_54%,rgba(16,8,10,.34))]" />
+          <div className="table-vignette pointer-events-none absolute inset-0" />
+          <p className="absolute left-5 top-5 rounded-full border border-white/18 bg-[#251316]/58 px-4 py-2 text-[8px] font-bold uppercase tracking-[.2em] text-white/68 backdrop-blur-md sm:left-7 sm:top-7">Select a glowing marker</p>
+
+          {tableObjects.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              aria-pressed={activeId === item.id}
+              aria-label={`Explore ${item.name}`}
+              onClick={() => setActiveId(item.id)}
+              className="table-hotspot"
+              style={{ left: `${item.x}%`, top: `${item.y}%` }}
+            >
+              <span className="table-hotspot-pulse" />
+              <span className="table-hotspot-core">+</span>
+              <span className="sr-only">{item.name}</span>
+            </button>
+          ))}
         </div>
 
-        <div ref={railRef} className="no-scrollbar mt-5 flex snap-x gap-3 overflow-x-auto pb-3" role="tablist" aria-label="Choose a utensil to feature">
-          {utensilCarousel.map((item, index) => <button key={item.name} type="button" role="tab" aria-selected={activeIndex === index} onClick={() => select(index)} className={`rose-gallery-thumb group flex min-w-[230px] snap-center items-center gap-3 rounded-2xl border p-3 text-left transition sm:min-w-[270px] ${activeIndex === index ? "border-[#9d712a] bg-[#fffaf0] shadow-[0_12px_32px_rgba(88,55,23,.1)]" : "border-[#b78b3c]/20 bg-white/30 hover:border-[#b78b3c]/55"}`}><span className="relative size-16 shrink-0 overflow-hidden rounded-xl bg-[#d8c8b6]"><DharoharImage src={item.image} alt="" fill unoptimized sizes="64px" className="object-cover transition duration-500 group-hover:scale-105" /></span><span><span className="block text-[8px] font-bold uppercase tracking-[.16em] text-[#a4772d]">{item.number} · {item.purpose}</span><span className="mt-2 block font-serif text-xl leading-none text-[#4d3823]">{item.name}</span></span></button>)}
+        <AnimatePresence mode="wait">
+          <motion.aside key={active.id} className="dharohar-table-card" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: .4, ease: [.22, 1, .36, 1] }} aria-live="polite">
+            <div className="grid grid-cols-[4.4rem_1fr] gap-4">
+              <div className="relative aspect-square overflow-hidden rounded-xl bg-[#d6c3b2]">
+                <DharoharImage src={active.image} alt="" fill unoptimized sizes="72px" className="object-cover" />
+              </div>
+              <div>
+                <p className="text-[7px] font-bold uppercase tracking-[.22em] text-[#d8b06f]">Object {active.number} · {active.material}</p>
+                <h3 className="mt-2 font-serif text-[1.7rem] leading-none text-white">{active.name}</h3>
+                <p className="mt-2 text-[9px] font-bold uppercase tracking-[.14em] text-[#d9a2ab]">{active.purpose}</p>
+              </div>
+            </div>
+            <p className="mt-4 text-xs leading-6 text-white/58">{active.copy}</p>
+            <div className="mt-4 flex items-center justify-between gap-4 border-t border-white/12 pt-4">
+              <StoreLink path={active.path} eventLabel={`table_${active.id}`} className="inline-flex items-center gap-2 text-[8px] font-bold uppercase tracking-[.18em] text-[#edc787]">View this object <ArrowRight size={13} /></StoreLink>
+              <span className="text-[8px] uppercase tracking-[.16em] text-white/30">{active.number} / 05</span>
+            </div>
+          </motion.aside>
+        </AnimatePresence>
+
+        <div className="no-scrollbar mt-4 flex gap-2 overflow-x-auto pb-2 md:hidden" role="tablist" aria-label="Objects on the Dharohar table">
+          {tableObjects.map((item) => <button key={item.id} type="button" role="tab" aria-selected={activeId === item.id} onClick={() => setActiveId(item.id)} className="table-mobile-tab">{item.number} · {item.name}</button>)}
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }
@@ -571,12 +593,77 @@ function LifetimeRestoration() {
 function PersonalisationStudio() {
   const [engraving, setEngraving] = useState("The Sharma Family");
   const [style, setStyle] = useState<"family" | "wedding" | "message">("family");
+  const [previewState, setPreviewState] = useState<"before" | "engraved">("engraved");
+  const [copyStatus, setCopyStatus] = useState("Keep this inscription");
   const placeholders = { family: "The Sharma Family", wedding: "Aarav & Meera · 2027", message: "With love, always" };
+
+  async function copyInscription() {
+    try {
+      await navigator.clipboard.writeText(engraving || placeholders[style]);
+      setCopyStatus("Inscription copied");
+    } catch {
+      setCopyStatus("Your inscription is ready");
+    }
+    window.setTimeout(() => setCopyStatus("Keep this inscription"), 2200);
+  }
+
   return (
-    <section id="legacy" className="overflow-hidden bg-[#efe1cb] px-5 py-[clamp(3.75rem,6vw,6rem)]" aria-labelledby="legacy-title">
-      <div className="site-container grid gap-8 lg:grid-cols-[1.05fr_.95fr] lg:items-center">
-        <Reveal className="relative mx-auto aspect-square w-full max-w-[460px] overflow-hidden rounded-full border-[10px] border-[#fffaf0]/70 bg-[#c38257] shadow-[0_28px_76px_rgba(94,52,23,.18)]"><Image src="/images/curated/copper-madurai-handi.webp" alt="Copper handi with a live engraving preview" fill unoptimized sizes="(max-width: 1024px) 95vw, 46vw" className="object-cover" /><div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_38%,rgba(56,24,10,.32)_100%)]" /><div className="absolute inset-x-[17%] bottom-[17%] rounded-xl border border-[#ffe2b3]/35 bg-[#4e2615]/42 px-4 py-4 text-center text-[#ffe6b8] shadow-2xl backdrop-blur-[3px]"><Feather className="mx-auto mb-2" size={19} strokeWidth={1.2} /><AnimatePresence mode="wait"><motion.p key={`${style}-${engraving}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="font-serif text-[clamp(1.25rem,4vw,2.3rem)] leading-none text-shadow-sm">{engraving || placeholders[style]}</motion.p></AnimatePresence><p className="mt-2 text-[7px] font-bold uppercase tracking-[.28em] text-[#f4c77d]">Preview engraving</p></div><div className="ambient-reflection pointer-events-none absolute inset-y-0 left-0 w-28" /></Reveal>
-        <Reveal delay={.12}><p className="heritage-label w-fit">Personalisation studio</p><h2 id="legacy-title" className="heritage-display mt-5 text-[clamp(3.1rem,5vw,5.4rem)] leading-[.88]">See your story on the object.</h2><p className="mt-4 max-w-xl text-sm leading-7 sm:text-base text-[#746756]">Create a live first impression. Final placement, scale and spelling remain subject to engraving approval.</p><div className="mt-6 flex flex-wrap gap-2" role="group" aria-label="Engraving type">{(["family", "wedding", "message"] as const).map((item) => <button key={item} type="button" onClick={() => { setStyle(item); setEngraving(placeholders[item]); }} className={`rounded-full border px-4 py-2 text-[9px] font-bold uppercase tracking-[.16em] transition ${style === item ? "border-[#8f5f27] bg-[#8f5f27] text-white" : "border-[#b78b3c]/35 text-[#765323]"}`}>{item === "family" ? "Family name" : item === "wedding" ? "Wedding date" : "Short message"}</button>)}</div><label className="mt-5 block max-w-lg"><span className="heritage-field-label">Your engraving preview</span><input value={engraving} maxLength={32} onChange={(event) => setEngraving(event.target.value)} className="heritage-input" aria-label="Your engraving preview" /></label><div className="mt-5 flex flex-wrap gap-3"><StoreLink path="/collections/personalised-gifts" eventLabel="personalisation_continue" className="heritage-button heritage-button-filled">Personalise on the store <ArrowRight size={15} /></StoreLink><a href="#consultation" className="heritage-button">Ask an engraving expert</a></div><div className="mt-6 flex flex-wrap gap-x-7 gap-y-3 text-xs text-[#725c41]">{["Product selection", "Engraving approval", "Presentation-ready packaging"].map((item) => <span key={item} className="flex items-center gap-2"><Check size={14} className="text-[#a4772d]" />{item}</span>)}</div></Reveal>
+    <section id="legacy" className="engraving-story relative isolate overflow-hidden bg-[#efe1cb] px-5 py-[clamp(4rem,7vw,7rem)]" aria-labelledby="legacy-title">
+      <div className="engraving-glow pointer-events-none absolute -right-[14%] top-[8%] -z-10 size-[42rem] rounded-full" />
+      <div className="site-container grid gap-10 lg:grid-cols-[1.08fr_.92fr] lg:items-center">
+        <Reveal className="engraving-object-stage relative overflow-hidden rounded-[1.8rem] border border-[#b78b3c]/25 bg-[#f8eee1] shadow-[0_32px_90px_rgba(79,42,24,.16)]">
+          <div className="absolute inset-x-5 top-5 z-20 flex items-center justify-between gap-4 sm:inset-x-7 sm:top-7">
+            <p className="text-[8px] font-bold uppercase tracking-[.22em] text-[#8d5b2c]">Live object study</p>
+            <div className="flex rounded-full border border-[#8d5b2c]/20 bg-[#fffaf0]/78 p-1 backdrop-blur" role="group" aria-label="Compare engraving">
+              <button type="button" onClick={() => setPreviewState("before")} aria-pressed={previewState === "before"} className={`engraving-view-button ${previewState === "before" ? "engraving-view-button-active" : ""}`}>Before</button>
+              <button type="button" onClick={() => setPreviewState("engraved")} aria-pressed={previewState === "engraved"} className={`engraving-view-button ${previewState === "engraved" ? "engraving-view-button-active" : ""}`}>Engraved</button>
+            </div>
+          </div>
+
+          <div className="relative aspect-[4/5] sm:aspect-[5/4]">
+            <Image src="/images/curated/copper-madurai-handi.webp" alt="Copper handi with a live personalised engraving preview" fill unoptimized sizes="(max-width: 1024px) 100vw, 56vw" className="engraving-object-image object-cover" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_53%_66%,transparent_24%,rgba(83,42,25,.1)_70%,rgba(83,42,25,.24)_100%)]" />
+            <AnimatePresence>
+              {previewState === "engraved" ? (
+                <motion.div key={`${style}-${engraving}`} initial={{ opacity: 0, scale: .94, x: "-50%", y: "-50%", filter: "blur(5px)" }} animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%", filter: "blur(0px)" }} exit={{ opacity: 0, scale: .96, x: "-50%", y: "-50%", filter: "blur(4px)" }} transition={{ duration: .5 }} className="engraving-mark">
+                  <Feather className="mx-auto mb-2" size={15} strokeWidth={1.15} />
+                  <p className="font-serif leading-[.95]">{engraving || placeholders[style]}</p>
+                  <span className="mt-2 block text-[6px] font-bold uppercase tracking-[.28em]">Dharohar personalisation</span>
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
+            <div className="ambient-reflection pointer-events-none absolute inset-y-0 left-0 w-28" />
+          </div>
+
+          <div className="grid border-t border-[#b78b3c]/18 bg-[#fffaf0]/72 sm:grid-cols-2">
+            <button type="button" onClick={() => setPreviewState("before")} className={`engraving-state-copy ${previewState === "before" ? "engraving-state-copy-active" : ""}`}><span>Before engraving</span><strong>An object from Dharohar.</strong></button>
+            <button type="button" onClick={() => setPreviewState("engraved")} className={`engraving-state-copy border-t border-[#b78b3c]/18 sm:border-l sm:border-t-0 ${previewState === "engraved" ? "engraving-state-copy-active" : ""}`}><span>After engraving</span><strong>An object from your family.</strong></button>
+          </div>
+        </Reveal>
+
+        <Reveal delay={.12}>
+          <p className="heritage-label w-fit">Personalisation studio</p>
+          <h2 id="legacy-title" className="heritage-display mt-5 text-[clamp(3.35rem,5.4vw,5.9rem)] leading-[.86]">A name changes<br /><span className="italic text-[#9d6570]">the object.</span></h2>
+          <p className="mt-5 max-w-xl font-serif text-[clamp(1.4rem,2.2vw,2rem)] leading-[1.15] text-[#5d4632]">Until it carries your name, it belongs to the collection. After that, it belongs to your story.</p>
+          <p className="mt-4 max-w-xl text-sm leading-7 text-[#746756]">Create a live first impression. Final placement, scale and spelling remain subject to engraving approval.</p>
+
+          <div className="mt-7 flex flex-wrap gap-2" role="group" aria-label="Engraving type">
+            {(["family", "wedding", "message"] as const).map((item) => <button key={item} type="button" onClick={() => { setStyle(item); setEngraving(placeholders[item]); setPreviewState("engraved"); }} className={`engraving-mode-button ${style === item ? "engraving-mode-button-active" : ""}`}>{item === "family" ? "Family name" : item === "wedding" ? "Wedding date" : "Short message"}</button>)}
+          </div>
+
+          <label className="mt-5 block max-w-xl">
+            <span className="heritage-field-label">Your engraving preview</span>
+            <input value={engraving} maxLength={32} onChange={(event) => { setEngraving(event.target.value); setPreviewState("engraved"); }} className="heritage-input engraving-input" aria-label="Your engraving preview" />
+          </label>
+
+          <div className="mt-5 flex flex-wrap gap-3">
+            <StoreLink path="/collections/personalised-gifts" eventLabel="personalisation_continue" className="heritage-button heritage-button-filled">Begin personalisation <ArrowRight size={15} /></StoreLink>
+            <button type="button" onClick={copyInscription} className="heritage-button">{copyStatus}</button>
+            <a href="#consultation" className="heritage-button">Ask an engraving expert</a>
+          </div>
+
+          <div className="mt-7 flex flex-wrap gap-x-7 gap-y-3 text-xs text-[#725c41]">{["Product selection", "Engraving approval", "Presentation-ready packaging"].map((item) => <span key={item} className="flex items-center gap-2"><Check size={14} className="text-[#a4772d]" />{item}</span>)}</div>
+        </Reveal>
       </div>
     </section>
   );
@@ -720,7 +807,7 @@ export function BrandGateway() {
         <MaterialExplorer />
         <PersonalisationStudio />
         <TrustSequence />
-        <UtensilCarousel />
+        <DharoharTable />
         <LifetimeRestoration />
         <OccasionRoutes />
         <section id="consultation" className="rose-dark-surface rose-consultation consultation-reference consultation-salon relative isolate overflow-hidden px-5 text-[#fff8e9]" aria-labelledby="consultation-title"><div className="consultation-orb pointer-events-none absolute -left-[18%] top-[10%] -z-10 size-[48rem] rounded-full" /><div className="site-container grid gap-12 py-[clamp(5.5rem,8vw,8rem)] lg:grid-cols-[.9fr_1.1fr] lg:items-center"><Reveal><p className="text-[9px] font-bold uppercase tracking-[.24em] text-[#d7a56f]">The Dharohar private salon</p><p className="mt-6 text-[10px] font-bold uppercase tracking-[.24em] text-[#d77f90]">Gift concierge <span className="px-2 text-[#d7a56f]">•</span> Kitchen consultation</p><h2 id="consultation-title" className="mt-7 max-w-2xl font-serif text-[clamp(3.7rem,6vw,6.6rem)] leading-[.87]">A quieter way<br />to begin.</h2><span className="mt-7 block h-px w-10 bg-[#d7a56f]" /><p className="mt-6 max-w-xl text-sm leading-7 text-white/60 sm:text-base">Tell us about the rituals, gifting moment or design project you are considering. We’ll prepare a thoughtful curation into the collection.</p><div className="mt-8 flex flex-wrap gap-3">{booking ? <a href={booking} target="_blank" rel="noreferrer" onClick={() => track("booking_click", "consultation")} className="salon-primary-button"><CalendarDays size={16} /> Prepare in 30 minutes</a> : <a href={`mailto:${process.env.NEXT_PUBLIC_CONSULTATION_EMAIL ?? "hello@dharohar.in"}?subject=Dharohar%2030-minute%20consultation`} className="salon-primary-button"><CalendarDays size={16} /> Prepare in 30 minutes</a>}<a href={`mailto:${process.env.NEXT_PUBLIC_CONSULTATION_EMAIL ?? "hello@dharohar.in"}`} className="salon-secondary-button"><Mail size={16} /> Email directly</a></div><div className="mt-9 flex flex-wrap gap-6 text-[9px] font-bold uppercase tracking-[.14em] text-white/42"><span className="flex items-center gap-3"><Users size={17} className="text-[#ce7587]" /> Personal concierge care</span><span className="hidden h-5 w-px bg-white/12 sm:block" /><span className="flex items-center gap-3"><Gift size={17} className="text-[#ce7587]" /> Gifting and designing</span></div></Reveal><ConsultationGateway /></div></section>
