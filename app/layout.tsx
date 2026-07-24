@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { Manrope, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -9,10 +9,10 @@ const manrope = Manrope({
   weight: ["400", "500", "600", "700"],
 });
 
-const cormorant = Cormorant_Garamond({
+const playfair = Playfair_Display({
   variable: "--font-dharohar-serif",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800", "900"],
   style: ["normal", "italic"],
 });
 
@@ -62,7 +62,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-IN">
-      <body className={`${manrope.variable} ${cormorant.variable} antialiased`}>{children}</body>
+      <body className={`${manrope.variable} ${playfair.variable} antialiased`}>{children}</body>
     </html>
   );
 }

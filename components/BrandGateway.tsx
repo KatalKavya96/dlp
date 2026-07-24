@@ -26,6 +26,7 @@ import {
   Layers3,
   Linkedin,
   Mail,
+  MapPin,
   Menu,
   Palette,
   PartyPopper,
@@ -139,6 +140,22 @@ const clientPaths = [
   { id: "design", label: "Interior designers", eyebrow: "Trade & interiors", title: "Material character for a larger space.", copy: "Finish libraries, custom dimensions and specification support for residences, studios and considered hospitality interiors.", detail: "Samples · Finish approval · Project specifications", image: "/images/branding/commissions/interior-designers.webp", icon: Palette, service: "Interior design or trade project" },
   { id: "hospitality", label: "Restaurants & hotels", eyebrow: "Hospitality", title: "Made for service, night after night.", copy: "Cookware, tableware and replacement continuity designed around covers, cuisine and the pace of a professional service.", detail: "Covers · Service rhythm · Scheduled care", image: "/images/branding/commissions/restaurants-hotels.webp", icon: Hotel, service: "Restaurant or hospitality project" },
   { id: "corporate", label: "Corporate gifting", eyebrow: "Institutions", title: "A meaningful gesture, delivered at scale.", copy: "Brand-considered gifting with personal notes, selective co-branding and one coordinated route from approval to dispatch.", detail: "Recipient tiers · Presentation · Distributed fulfilment", image: "/images/branding/commissions/corporate-gifting.webp", icon: BriefcaseBusiness, service: "Corporate or institutional gifting" },
+] as const;
+
+const artisanProcessSteps = [
+  { number: "01", title: "Regions", copy: "Curated workshops across India, each rooted in a living metal tradition.", image: "/images/artisan-process/regions.png", icon: MapPin },
+  { number: "02", title: "Artisans", copy: "Generations of makers carrying skill through discipline, memory and hand.", image: "/images/artisan-process/artisans.png", icon: Users },
+  { number: "03", title: "Craft Traditions", copy: "Heritage techniques passed forward, keeping every detail authentic and alive.", image: "/images/artisan-process/traditions.png", icon: Hammer },
+  { number: "04", title: "Care Processes", copy: "Each piece moves through considered care stages for lasting beauty and use.", image: "/images/artisan-process/care.png", icon: Search },
+  { number: "05", title: "Quality Standard", copy: "One exacting standard ensures every object is worthy of your table.", image: "/images/artisan-process/quality.png", icon: BadgeCheck },
+  { number: "06", title: "Delivered to You", copy: "Thoughtfully presented and delivered, connecting your space to our story.", image: "/images/artisan-process/delivery.png", icon: Gift },
+] as const;
+
+const artisanProcessStats = [
+  { value: "8+", label: "Core regions", icon: MapPin },
+  { value: "200+", label: "Craft traditions", icon: Sparkles },
+  { value: "50+", label: "Care processes", icon: HeartHandshake },
+  { value: "1", label: "Unified standard", icon: ShieldCheck },
 ] as const;
 
 const commissionBriefs = [
@@ -359,7 +376,7 @@ function CinematicHero() {
       <div className="site-container parallax-hero-content flex min-h-screen items-start pb-[9.5rem] pt-[8.25rem] sm:pb-[10rem] sm:pt-[8.75rem]">
         <div className="max-w-[480px]">
           <motion.p initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, delay: .2 }} className="flex w-fit items-center gap-3 text-[10px] font-semibold uppercase tracking-[.24em] text-[#eec08d]"><span className="h-px w-7 bg-[#eec08d]/65" /> Rooted in tradition</motion.p>
-          <motion.h1 id="hero-title" initial={{ opacity: 0, y: 52 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.05, delay: .32, ease: [.16, 1, .3, 1] }} className="mt-5 font-serif text-[clamp(3.4rem,4.4vw,5.3rem)] leading-[.86] tracking-[-.035em] text-[#fff9ef]"><span className="whitespace-nowrap">More Than</span><br />Utensils.<br />It’s a Living<br />Heritage.</motion.h1>
+          <motion.h1 id="hero-title" initial={{ opacity: 0, y: 52 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.05, delay: .32, ease: [.16, 1, .3, 1] }} className="mt-5 font-serif font-semibold text-[clamp(3.4rem,4.4vw,5.3rem)] leading-[.88] tracking-[-.025em] text-[#fff9ef]"><span className="whitespace-nowrap">More Than</span><br />Utensils.<br />It’s a Living<br />Heritage.</motion.h1>
           <motion.p initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8, delay: .62 }} className="mt-6 max-w-[390px] text-sm leading-7 text-white/76 sm:text-base">Timeless Indian cookware, handcrafted by skilled artisans. Made to be used, loved, and passed down for generations.</motion.p>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8, delay: .78 }} className="mt-7 flex flex-wrap items-center gap-4"><StoreLink path="/collections/all" eventLabel="hero_shop_collection" className="hero-primary-cta">Explore the collection <ArrowRight size={16} /></StoreLink><a href="#legacy" className="hero-story-link"><span className="grid size-10 place-items-center rounded-full border border-white/35"><CirclePlay size={16} /></span> Our story</a></motion.div>
         </div>
@@ -784,77 +801,76 @@ function CommissioningHall() {
   }
 
   return (
-    <section id="commissions" className="commissioning-hall relative isolate overflow-hidden bg-[#f8efe9] px-5 py-[clamp(3rem,6vh,5rem)]" aria-labelledby="commissions-title">
-      <div className="commissioning-hall-glow pointer-events-none absolute inset-0 -z-10" />
-      <div className="site-container">
-        <Reveal className="commissioning-hall-intro grid gap-7 lg:grid-cols-[.9fr_1.1fr] lg:items-end">
-          <div>
-            <p className="heritage-label">The commissioning hall</p>
-            <h2 id="commissions-title" className="heritage-display mt-5 max-w-4xl text-[clamp(3rem,5vw,5.2rem)] leading-[.87]">One craft.<br /><span className="italic text-[#a26069]">Many kinds of tables.</span></h2>
-          </div>
-          <p className="max-w-xl text-sm leading-7 text-[#756269] sm:text-base lg:justify-self-end">From one family kitchen to a wedding of five hundred, every commission begins with how the objects will be lived with.</p>
-        </Reveal>
-
+    <section id="commissions" className="commissioning-hall commissioning-hall-immersive relative isolate overflow-hidden bg-[#160a0f] px-3 py-3 text-[#fff8ec] sm:px-5 sm:py-5" aria-labelledby="commissions-title">
+      <div className="site-container !max-w-[1540px]">
         <div
-          className="commission-cinema mt-7 overflow-hidden rounded-[1.8rem] border border-[#a26069]/22 bg-[#2a171c] shadow-[0_32px_100px_rgba(74,32,43,.18)]"
+          className="commission-cinema commission-cinema-immersive relative min-h-[clamp(720px,calc(100svh-7rem),900px)] overflow-hidden rounded-[2rem] border border-[#9e7434]/28 bg-[#241217] shadow-[0_40px_120px_rgba(14,4,8,.48)]"
           onMouseEnter={() => setPointerPaused(true)}
           onMouseLeave={() => setPointerPaused(false)}
         >
-          <div role="tablist" aria-label="Who Dharohar serves" className="commission-audience-tabs no-scrollbar grid grid-cols-2 gap-2 overflow-x-auto border-b border-white/10 p-3 md:grid-cols-3 lg:grid-cols-6">
-            {clientPaths.map((item, index) => {
-              const Icon = item.icon;
-              const selected = item.id === active.id;
-              return (
-                <button key={item.id} type="button" role="tab" aria-selected={selected} aria-controls="commission-audience-panel" onClick={() => setActiveId(item.id)} className={`commission-audience-tab ${selected ? "is-active" : ""}`}>
-                  <span className="text-[8px] font-semibold tracking-[.16em] text-white/28">0{index + 1}</span>
-                  <span className="grid size-9 shrink-0 place-items-center rounded-full border border-white/12"><Icon size={16} strokeWidth={1.4} /></span>
-                  <span className="whitespace-nowrap text-left text-[10px] font-bold uppercase tracking-[.12em]">{item.label}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          <div id="commission-audience-panel" role="tabpanel" className="relative min-h-[clamp(430px,58vh,600px)] overflow-hidden">
+          <div id="commission-audience-panel" role="tabpanel" className="absolute inset-0 overflow-hidden">
             <AnimatePresence mode="wait">
-              <motion.div key={active.id} className="absolute inset-0" initial={{ opacity: 0, scale: 1.025 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: .985 }} transition={{ duration: 1.05, ease: [.22, 1, .36, 1] }}>
+              <motion.div key={active.id} className="absolute inset-0" initial={{ opacity: 0, scale: 1.04 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: .985 }} transition={{ duration: 1.25, ease: [.22, 1, .36, 1] }}>
                 <DharoharImage src={active.image} alt="" fill unoptimized sizes="100vw" className="commission-cinema-backdrop object-cover" aria-hidden="true" />
-                <div className="absolute inset-0 bg-[#180c10]/44 backdrop-blur-xl" />
-                <div className="commission-cinema-portrait absolute inset-y-0 right-0 w-full lg:w-[62%]">
-                  <DharoharImage src={active.image} alt={`${active.label} commission by Dharohar`} fill unoptimized sizes="(max-width: 1024px) 100vw, 62vw" className="object-contain" />
+                <div className="absolute inset-0 bg-[#13070b]/48 backdrop-blur-2xl" />
+                <div className="commission-cinema-portrait absolute inset-y-5 right-0 w-full sm:inset-y-8 lg:w-[66%]">
+                  <DharoharImage src={active.image} alt={`${active.label} commission by Dharohar`} fill unoptimized sizes="(max-width: 1024px) 100vw, 66vw" className="object-contain object-right" />
                 </div>
                 <div className="commission-cinema-shade absolute inset-0" />
               </motion.div>
             </AnimatePresence>
 
+            <div className="commission-immersive-intro absolute inset-x-0 top-0 z-20 grid gap-5 p-6 sm:p-9 lg:grid-cols-[1fr_.8fr] lg:items-start lg:p-12">
+              <div>
+                <p className="text-[9px] font-extrabold uppercase tracking-[.24em] text-[#b9954d]">The commissioning hall</p>
+                <h2 id="commissions-title" className="mt-3 max-w-3xl font-serif text-[clamp(3.1rem,4.5vw,5.2rem)] font-semibold leading-[.82] tracking-[-.025em] text-[#fff4df]">One craft.<br /><span className="italic text-[#d28c9b]">Many kinds of tables.</span></h2>
+              </div>
+              <p className="max-w-lg text-sm font-medium leading-7 text-white/64 lg:justify-self-end lg:pt-2">From one family kitchen to a wedding of five hundred, every commission begins with how the objects will be lived with.</p>
+            </div>
+
             <AnimatePresence mode="wait">
-              <motion.div key={`${active.id}-copy`} initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 18 }} transition={{ duration: .62, delay: .12, ease: [.22, 1, .36, 1] }} className="commission-cinema-copy absolute inset-x-0 bottom-0 p-6 text-[#fff8ec] sm:p-9 lg:max-w-[54%] lg:p-12">
-                <span className="grid size-11 place-items-center rounded-full border border-[#e2c27d]/35 bg-black/20 text-[#ebc88a] backdrop-blur"><ActiveIcon size={19} strokeWidth={1.35} /></span>
-                <p className="mt-5 text-[8px] font-bold uppercase tracking-[.22em] text-[#e4bd79]">{active.eyebrow}</p>
-                <h3 className="mt-3 max-w-2xl font-serif text-[clamp(2.45rem,4vw,4.6rem)] leading-[.9]">{active.title}</h3>
-                <p className="mt-4 max-w-xl text-sm leading-7 text-white/66">{active.copy}</p>
-                <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+              <motion.div key={`${active.id}-copy`} initial={{ opacity: 0, x: -32 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 22 }} transition={{ duration: .72, delay: .18, ease: [.22, 1, .36, 1] }} className="commission-cinema-copy absolute bottom-28 left-0 z-20 p-6 sm:bottom-32 sm:p-9 lg:max-w-[49%] lg:p-12">
+                <span className="dharohar-metal-icon grid size-12 place-items-center rounded-full text-[#211208]"><ActiveIcon size={20} strokeWidth={1.55} /></span>
+                <p className="mt-5 text-[9px] font-extrabold uppercase tracking-[.24em] text-[#c5a25c]">{active.eyebrow}</p>
+                <h3 className="mt-3 max-w-2xl font-serif text-[clamp(2.6rem,3.9vw,4.4rem)] font-semibold leading-[.84] tracking-[-.02em]">{active.title}</h3>
+                <p className="mt-5 max-w-xl text-sm font-medium leading-7 text-white/70 sm:text-base">{active.copy}</p>
+                <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
                   <span className="text-[9px] font-bold uppercase tracking-[.14em] text-white/45">{active.detail}</span>
                   <a href="#consultation" onClick={prepareConsultation} className="commission-brief-cta">Build my commission <ArrowRight size={14} /></a>
                 </div>
               </motion.div>
             </AnimatePresence>
 
-            <div className="commission-cinema-controls absolute right-5 top-5 z-20 flex items-center gap-3 rounded-full border border-white/18 bg-[#170c10]/62 px-3 py-2 text-[#fff5e7] shadow-lg backdrop-blur-xl sm:right-7 sm:top-7">
+            <div className="commission-cinema-controls absolute right-6 top-[15rem] z-30 flex items-center gap-3 rounded-full border border-white/16 bg-[#170c10]/64 px-3 py-2 text-[#fff5e7] shadow-lg backdrop-blur-xl sm:right-9 lg:top-[13rem]">
               <button
                 type="button"
                 onClick={() => setPlaying((current) => !current)}
                 disabled={Boolean(reducedMotion)}
                 aria-label={`${playing ? "Pause" : "Play"} commission carousel`}
                 aria-pressed={!playing}
-                className="grid size-8 place-items-center rounded-full border border-white/15 text-[#e7c67f] transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-45"
+                className="grid size-8 place-items-center rounded-full border border-white/15 text-[#c5a25c] transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-45"
               >
                 {playing ? <CirclePause size={17} /> : <CirclePlay size={17} />}
               </button>
-              <span className="text-[9px] font-extrabold uppercase tracking-[.18em]"><strong className="text-[#e7c67f]">{String(activeIndex + 1).padStart(2, "0")}</strong> / {String(clientPaths.length).padStart(2, "0")}</span>
+              <span className="text-[9px] font-extrabold uppercase tracking-[.18em]"><strong className="text-[#c5a25c]">{String(activeIndex + 1).padStart(2, "0")}</strong> / {String(clientPaths.length).padStart(2, "0")}</span>
               <span className="commission-progress-track hidden w-20 overflow-hidden rounded-full bg-white/12 sm:block">
-                <span key={active.id} className={`commission-progress-fill block h-full origin-left bg-[#e7c67f] ${autoRunning ? "is-running" : ""}`} />
+                <span key={active.id} className={`commission-progress-fill block h-full origin-left bg-[#c5a25c] ${autoRunning ? "is-running" : ""}`} />
               </span>
             </div>
+          </div>
+
+          <div role="tablist" aria-label="Who Dharohar serves" className="commission-audience-tabs commission-immersive-tabs no-scrollbar absolute inset-x-3 bottom-3 z-30 flex gap-2 overflow-x-auto rounded-[1.35rem] border border-white/12 bg-[#170c10]/72 p-2 shadow-2xl backdrop-blur-2xl sm:inset-x-5 sm:bottom-5 lg:grid lg:grid-cols-6">
+            {clientPaths.map((item, index) => {
+              const Icon = item.icon;
+              const selected = item.id === active.id;
+              return (
+                <button key={item.id} type="button" role="tab" aria-selected={selected} aria-controls="commission-audience-panel" onClick={() => setActiveId(item.id)} className={`commission-audience-tab ${selected ? "is-active" : ""}`}>
+                  <span className="text-[8px] font-semibold tracking-[.16em] text-white/28">0{index + 1}</span>
+                  <span className="grid size-9 shrink-0 place-items-center rounded-full border border-white/12"><Icon size={16} strokeWidth={1.5} /></span>
+                  <span className="whitespace-nowrap text-left text-[10px] font-extrabold uppercase tracking-[.1em]">{item.label}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -863,19 +879,81 @@ function CommissioningHall() {
 }
 
 function ArtisanNetwork() {
+  const [activeStep, setActiveStep] = useState(0);
+  const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (reducedMotion) return;
+    const timer = window.setInterval(() => {
+      setActiveStep((current) => (current + 1) % artisanProcessSteps.length);
+    }, 3200);
+    return () => window.clearInterval(timer);
+  }, [reducedMotion]);
+
   return (
-    <section id="artisan-network" className="artisan-network-reference overflow-hidden bg-[#180a0f]" aria-labelledby="artisan-network-title">
-      <h2 id="artisan-network-title" className="sr-only">A country of hands behind every object.</h2>
-      <div className="mx-auto max-w-[1874px]">
-        <DharoharImage
-          src="/images/experience/dharohar-country-of-hands.webp"
-          alt="Dharohar’s journey from regional artisan workshops through craft traditions, care processes, quality standards and delivery"
-          width={1874}
-          height={839}
-          unoptimized
-          sizes="100vw"
-          className="block h-auto w-full"
-        />
+    <section id="artisan-network" className="artisan-process-section relative isolate overflow-hidden bg-[#180a0f] px-5 py-[clamp(4.5rem,7vw,7.5rem)] text-[#fff4df]" aria-labelledby="artisan-network-title">
+      <div className="artisan-process-aura pointer-events-none absolute inset-0 -z-10" />
+      <div className="site-container !max-w-[1540px]">
+        <Reveal className="artisan-process-intro grid gap-8 lg:grid-cols-[.78fr_1.22fr] lg:items-center">
+          <div>
+            <p className="text-[9px] font-extrabold uppercase tracking-[.25em] text-[#b9954d]">The hands of Dharohar</p>
+            <h2 id="artisan-network-title" className="mt-5 max-w-3xl font-serif text-[clamp(3.7rem,5.8vw,6.4rem)] font-semibold leading-[.8] tracking-[-.025em]">A country of hands<br /><span className="italic text-[#d28c9b]">behind every object.</span></h2>
+            <p className="mt-6 max-w-lg text-sm font-medium leading-7 text-white/62 sm:text-base">From living regional traditions to the final delivery, one connected standard carries every object with purpose and pride.</p>
+          </div>
+
+          <div className="artisan-process-stats grid grid-cols-2 overflow-hidden rounded-[1.4rem] border border-[#9e7434]/34 bg-[#241217]/74 backdrop-blur-xl sm:grid-cols-4">
+            {artisanProcessStats.map((stat) => {
+              const Icon = stat.icon;
+              return (
+                <motion.div key={stat.label} whileHover={reducedMotion ? undefined : { y: -5 }} className="group border-[#9e7434]/24 p-5 sm:border-l sm:first:border-l-0 lg:p-7">
+                  <div className="flex items-center gap-3 text-[#c5a25c]"><Icon size={25} strokeWidth={1.35} /><strong className="font-serif text-4xl font-semibold">{stat.value}</strong></div>
+                  <p className="mt-2 text-[10px] font-bold uppercase tracking-[.12em] text-white/46">{stat.label}</p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </Reveal>
+
+        <Reveal delay={.1} className="artisan-process-rail no-scrollbar relative mt-12 overflow-x-auto pb-4">
+          <motion.div className="artisan-process-line absolute left-[7%] right-[7%] top-[3.25rem] h-px origin-left bg-gradient-to-r from-[#8f6a31] via-[#c5a25c] to-[#8f6a31]" initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, amount: .3 }} transition={{ duration: 1.3, ease: [.22, 1, .36, 1] }} />
+          <div className="grid min-w-[1100px] grid-cols-6 gap-3">
+            {artisanProcessSteps.map((step, index) => {
+              const Icon = step.icon;
+              const selected = activeStep === index;
+              return (
+                <motion.button
+                  key={step.number}
+                  type="button"
+                  onClick={() => setActiveStep(index)}
+                  onMouseEnter={() => setActiveStep(index)}
+                  aria-pressed={selected}
+                  className={`artisan-process-step group relative flex min-h-[430px] flex-col items-center px-3 text-center ${selected ? "is-active" : ""}`}
+                  initial={{ opacity: 0, y: 35 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: .2 }}
+                  transition={{ duration: .65, delay: index * .08, ease: [.22, 1, .36, 1] }}
+                >
+                  <span className="artisan-process-node relative z-10 grid size-[6.5rem] place-items-center rounded-full border border-[#a47b39]/70 bg-[#231216] text-[#c5a25c] shadow-[0_0_0_10px_#180a0f] transition duration-500 group-hover:-translate-y-1">
+                    <Icon size={39} strokeWidth={1.25} />
+                    <span className="artisan-process-node-glow absolute inset-2 -z-10 rounded-full opacity-0 blur-xl transition duration-500" />
+                  </span>
+                  <span className="mt-6 font-serif text-3xl font-semibold text-[#d28c9b]">{step.number}</span>
+                  <h3 className="mt-1 font-serif text-[1.65rem] font-semibold leading-none text-[#fff1da]">{step.title}</h3>
+                  <p className="mt-3 min-h-[4.5rem] text-sm font-medium leading-6 text-white/52">{step.copy}</p>
+                  <span className="mt-4 h-px w-20 bg-gradient-to-r from-transparent via-[#a47b39] to-transparent" />
+                  <motion.div className="relative mt-2 h-48 w-full" animate={selected && !reducedMotion ? { y: [0, -7, 0], scale: [1, 1.035, 1] } : { y: 0, scale: 1 }} transition={{ duration: 3.2, repeat: selected ? Infinity : 0, ease: "easeInOut" }}>
+                    <DharoharImage src={step.image} alt="" fill unoptimized sizes="220px" className="object-contain drop-shadow-[0_18px_24px_rgba(0,0,0,.38)]" aria-hidden="true" />
+                  </motion.div>
+                </motion.button>
+              );
+            })}
+          </div>
+        </Reveal>
+
+        <Reveal delay={.18} className="artisan-process-promise mt-7 flex items-center justify-center gap-4 rounded-[1.3rem] border border-[#9e7434]/34 bg-[#221116]/74 px-5 py-5 text-center font-serif text-[clamp(1.1rem,1.6vw,1.55rem)] font-semibold text-[#ead7b5]">
+          <Feather size={19} className="shrink-0 text-[#b9954d]" />
+          <span>Different hands. Different stories. One promise <span className="px-2 text-[#b9954d]">—</span> to honour tradition in every piece we create.</span>
+        </Reveal>
       </div>
     </section>
   );

@@ -112,7 +112,7 @@ html[data-dharohar-loading] {
 .dharohar-loader-monogram {
   font-family: var(--font-dharohar-serif), "Didot", "Iowan Old Style", serif;
   font-size: clamp(3.4rem, 7vw, 5rem);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1;
   color: #efc5cb;
   text-shadow: 0 0 26px rgb(218 155 165 / 24%);
@@ -122,7 +122,7 @@ html[data-dharohar-loading] {
   margin-top: 1.6rem;
   font-family: var(--font-dharohar-serif), "Didot", "Iowan Old Style", serif;
   font-size: clamp(2.3rem, 6vw, 3.4rem);
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: .18em;
   line-height: 1;
   text-transform: uppercase;
@@ -335,8 +335,8 @@ main .site-container {
 .heritage-display {
   color: #4b361f;
   font-family: var(--font-dharohar-serif), "Didot", "Iowan Old Style", "Baskerville", serif;
-  font-weight: 500;
-  letter-spacing: -.035em;
+  font-weight: 600;
+  letter-spacing: -.025em;
   text-wrap: balance;
 }
 
@@ -3703,6 +3703,241 @@ h4 {
 
   .consultation-intro h2 {
     font-size: clamp(2.85rem, 4vw, 4.1rem) !important;
+  }
+}
+
+/* Immersive commissions and animated artisan process */
+.commissioning-hall-immersive {
+  padding-block: 1.25rem !important;
+}
+
+.commission-cinema-immersive #commission-audience-panel {
+  min-height: 0 !important;
+}
+
+.commission-cinema-immersive .commission-cinema-backdrop {
+  opacity: .58;
+  filter: blur(34px) saturate(.82) brightness(.68);
+  transform: scale(1.14);
+}
+
+.commission-cinema-immersive .commission-cinema-shade {
+  background:
+    linear-gradient(90deg, rgb(16 6 10 / 98%) 0%, rgb(19 8 12 / 88%) 31%, rgb(18 8 11 / 28%) 58%, rgb(10 4 7 / 16%) 100%),
+    linear-gradient(0deg, rgb(12 4 8 / 88%) 0%, transparent 30%, rgb(10 4 7 / 36%) 100%);
+}
+
+.commission-cinema-immersive .commission-cinema-copy {
+  background: transparent;
+  padding: 3rem !important;
+}
+
+.commission-cinema-immersive .commission-cinema-copy > p:nth-of-type(2),
+.commission-cinema-immersive .commission-cinema-copy > div > span {
+  display: block;
+}
+
+.commission-cinema-immersive .commission-cinema-copy h3 {
+  margin-top: .75rem;
+  font-size: clamp(2.6rem, 3.9vw, 4.4rem) !important;
+  line-height: .84;
+}
+
+.commission-cinema-immersive .commission-cinema-copy > p:nth-of-type(2) {
+  margin-top: 1.25rem;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.commission-cinema-immersive .commission-cinema-copy > div {
+  margin-top: 1.5rem;
+}
+
+.commission-cinema-immersive .commission-audience-tab {
+  min-width: max-content;
+  padding: .75rem .85rem;
+}
+
+.commission-cinema-immersive .commission-audience-tab.is-active > span:nth-child(2),
+.dharohar-metal-icon {
+  border: 1px solid rgb(237 209 135 / 54%);
+  background:
+    radial-gradient(circle at 34% 24%, #dfc47b 0%, #c5a25c 42%, #9e7434 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 245 201 / 62%),
+    inset 0 -5px 10px rgb(87 49 12 / 26%),
+    0 8px 24px rgb(169 124 48 / 25%);
+  color: #261509;
+}
+
+.commission-cinema-immersive .commission-cinema-controls {
+  right: 2.25rem;
+  top: 13rem;
+}
+
+.artisan-process-aura {
+  background:
+    radial-gradient(circle at 16% 18%, rgb(142 67 81 / 18%), transparent 30%),
+    radial-gradient(circle at 82% 74%, rgb(150 111 48 / 11%), transparent 30%),
+    linear-gradient(135deg, #16080d, #241016 54%, #13070b);
+}
+
+.artisan-process-section::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgb(197 162 92 / 3%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(197 162 92 / 3%) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(circle at 50% 50%, black, transparent 82%);
+  content: "";
+}
+
+.artisan-process-stats > div {
+  min-height: 8.6rem;
+}
+
+.artisan-process-step {
+  color: inherit;
+}
+
+.artisan-process-step::after {
+  position: absolute;
+  left: 50%;
+  top: 6.5rem;
+  width: 1px;
+  height: 1.2rem;
+  background: linear-gradient(#a47b39, transparent);
+  content: "";
+}
+
+.artisan-process-node {
+  transition:
+    border-color 500ms ease,
+    color 500ms ease,
+    transform 500ms cubic-bezier(.22, 1, .36, 1),
+    box-shadow 500ms ease;
+}
+
+.artisan-process-node-glow {
+  background: #b9954d;
+}
+
+.artisan-process-step.is-active .artisan-process-node {
+  border-color: rgb(222 190 112 / 90%);
+  background:
+    radial-gradient(circle at 34% 24%, #dec47c 0%, #c09b51 46%, #8f662e 100%);
+  color: #241309;
+  box-shadow:
+    0 0 0 10px #180a0f,
+    0 0 42px rgb(185 149 77 / 30%);
+}
+
+.artisan-process-step.is-active .artisan-process-node-glow {
+  opacity: .42;
+}
+
+.artisan-process-step h3,
+.artisan-process-step p,
+.artisan-process-step > span:nth-of-type(2) {
+  transition: color 450ms ease, opacity 450ms ease;
+}
+
+.artisan-process-step.is-active h3 {
+  color: #f5ddb0;
+}
+
+.artisan-process-step.is-active p {
+  color: rgb(255 245 227 / 74%);
+}
+
+.artisan-process-promise {
+  box-shadow: inset 0 1px rgb(255 255 255 / 4%), 0 22px 70px rgb(4 1 2 / 22%);
+}
+
+@media (max-width: 1023px) {
+  .commission-cinema-immersive {
+    min-height: 900px;
+  }
+
+  .commission-cinema-immersive .commission-immersive-intro {
+    background: linear-gradient(180deg, rgb(15 6 9 / 88%), transparent);
+  }
+
+  .commission-cinema-immersive .commission-cinema-portrait {
+    top: 13rem;
+    bottom: 8rem;
+    height: auto;
+  }
+
+  .commission-cinema-immersive .commission-cinema-copy {
+    bottom: 7rem;
+    max-width: 38rem;
+    padding: 2rem !important;
+    background: linear-gradient(0deg, rgb(15 6 9 / 96%), rgb(15 6 9 / 72%) 70%, transparent);
+  }
+
+  .commission-cinema-immersive .commission-cinema-controls {
+    right: 1.5rem;
+    top: 15.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .commission-cinema-immersive {
+    min-height: 980px;
+  }
+
+  .commission-cinema-immersive .commission-immersive-intro {
+    padding: 1.5rem;
+  }
+
+  .commission-cinema-immersive .commission-immersive-intro h2 {
+    font-size: clamp(3.3rem, 15vw, 4.7rem);
+  }
+
+  .commission-cinema-immersive .commission-cinema-portrait {
+    top: 17rem;
+    bottom: 15rem;
+  }
+
+  .commission-cinema-immersive .commission-cinema-copy {
+    bottom: 6rem;
+    padding: 1.5rem !important;
+  }
+
+  .commission-cinema-immersive .commission-cinema-copy > p:nth-of-type(2),
+  .commission-cinema-immersive .commission-cinema-copy > div > span {
+    display: none;
+  }
+
+  .commission-cinema-immersive .commission-cinema-controls {
+    top: 17.5rem;
+  }
+
+  .commission-immersive-tabs {
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .artisan-process-intro {
+    text-align: left;
+  }
+
+  .artisan-process-stats > div {
+    min-height: 7.5rem;
+    border-bottom: 1px solid rgb(158 116 52 / 24%);
+  }
+
+  .artisan-process-rail {
+    margin-inline: -1.25rem;
+    padding-inline: 1.25rem;
+  }
+
+  .artisan-process-promise {
+    align-items: flex-start;
+    text-align: left;
   }
 }
 

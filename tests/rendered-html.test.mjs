@@ -118,7 +118,7 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.match(gateway, /Re-tinning \/ Kalai/);
   assert.match(gateway, /function CommissioningHall/);
   assert.match(gateway, /Pause" : "Play"} commission carousel/);
-  assert.match(gateway, /commission-cinema-portrait[\s\S]*?className="object-contain"/);
+  assert.match(gateway, /commission-cinema-portrait[\s\S]*?className="object-contain object-right"/);
   assert.match(gateway, /setActiveId\(clientPaths\[\(activeIndex \+ 1\) % clientPaths\.length\]\.id\)/);
   assert.match(gateway, /function ArtisanNetwork/);
   assert.match(gateway, /function CommissionProof/);
@@ -149,7 +149,9 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.match(css, /\.commission-progress-fill\.is-running/);
   assert.match(css, /@keyframes commission-progress/);
   assert.match(css, /\.restoration-reference,[\s\S]*min-height:\s*100svh/);
-  assert.match(gateway, /dharohar-country-of-hands\.webp/);
+  assert.match(gateway, /const artisanProcessSteps = \[/);
+  assert.equal((gateway.match(/\/images\/artisan-process\//g) ?? []).length, 6);
+  assert.match(gateway, /setInterval\(\(\) => \{[\s\S]*?artisanProcessSteps\.length/);
   assert.match(css, /\.consultation-reference \.consult-persona-grid/);
   assert.match(css, /width:\s*clamp\(5\.8rem,\s*8vw,\s*7\.35rem\)/);
   assert.match(css, /Calmer desktop scale/);
@@ -186,7 +188,7 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.match(gateway, /useReducedMotion/);
   assert.doesNotMatch(gateway, /\.example/);
   assert.match(layout, /generateMetadata/);
-  assert.match(layout, /Cormorant_Garamond/);
+  assert.match(layout, /Playfair_Display/);
   assert.match(layout, /Manrope/);
   assert.match(layout, /x-forwarded-host/);
   assert.match(layout, /openGraph/);
@@ -217,7 +219,12 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   await access(new URL("../public/images/curated/copper-madurai-handi.webp", import.meta.url));
   await access(new URL("../public/images/experience/dharohar-table-v1.webp", import.meta.url));
   await access(new URL("../public/images/experience/dharohar-table-business-card-v3.webp", import.meta.url));
-  await access(new URL("../public/images/experience/dharohar-country-of-hands.webp", import.meta.url));
+  await access(new URL("../public/images/artisan-process/regions.png", import.meta.url));
+  await access(new URL("../public/images/artisan-process/artisans.png", import.meta.url));
+  await access(new URL("../public/images/artisan-process/traditions.png", import.meta.url));
+  await access(new URL("../public/images/artisan-process/care.png", import.meta.url));
+  await access(new URL("../public/images/artisan-process/quality.png", import.meta.url));
+  await access(new URL("../public/images/artisan-process/delivery.png", import.meta.url));
   await access(new URL("../public/images/curated/styled-copper-pair.webp", import.meta.url));
   await access(new URL("../public/images/curated/styled-copper-detail.webp", import.meta.url));
   await access(new URL("../public/images/curated/copper-bottle.jpg", import.meta.url));
