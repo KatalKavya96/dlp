@@ -79,6 +79,10 @@ test("server-renders the finished Dharohar brand gateway", async () => {
   assert.match(html, /Modern clarity\./);
   assert.match(html, /A quieter way/);
   assert.match(html, /to begin\./);
+  assert.match(html, /https:\/\/www\.instagram\.com\/dharohar91\//);
+  assert.match(html, /https:\/\/www\.linkedin\.com\/company\/dharohar91\/\?viewAsMember=true/);
+  assert.match(html, /https:\/\/x\.com\/Dharoharxt42/);
+  assert.match(html, /https:\/\/www\.facebook\.com\/profile\.php\?id=61592081474548/);
   assert.match(html, /<meta property="og:image" content="http:\/\/localhost:3000\/og\.png"/i);
   assert.match(html, /<link rel="icon" href="http:\/\/localhost:3000\/favicon\.png"/i);
   assert.match(html, /application\/ld\+json/);

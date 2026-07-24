@@ -14,6 +14,7 @@ import {
   Clock3,
   Crown,
   ExternalLink,
+  Facebook,
   Feather,
   Gift,
   Hammer,
@@ -21,7 +22,9 @@ import {
   History,
   Home,
   Hotel,
+  Instagram,
   Layers3,
+  Linkedin,
   Mail,
   MapPin,
   Menu,
@@ -1246,7 +1249,19 @@ export function BrandGateway() {
         <section id="consultation" className="rose-dark-surface rose-consultation consultation-reference consultation-salon relative isolate overflow-hidden px-5 text-[#fff8e9]" aria-labelledby="consultation-title"><div className="consultation-orb pointer-events-none absolute -left-[18%] top-[10%] -z-10 size-[48rem] rounded-full" /><div className="site-container grid gap-12 py-[clamp(5.5rem,8vw,8rem)] lg:grid-cols-[.8fr_1.2fr] lg:items-start"><Reveal className="consultation-intro lg:sticky lg:top-32"><p className="text-[9px] font-bold uppercase tracking-[.24em] text-[#d7a56f]">The Dharohar private salon</p><p className="mt-6 text-[10px] font-bold uppercase tracking-[.24em] text-[#d77f90]">Homes <span className="px-2 text-[#d7a56f]">•</span> Celebrations <span className="px-2 text-[#d7a56f]">•</span> Trade</p><h2 id="consultation-title" className="mt-7 max-w-2xl font-serif text-[clamp(3.7rem,6vw,6.6rem)] leading-[.87]">A quieter way<br />to begin.</h2><span className="mt-7 block h-px w-10 bg-[#d7a56f]" /><p className="mt-6 max-w-xl text-sm leading-7 text-white/60 sm:text-base">Choose who you are creating for and what you need. The brief will adapt—whether it is one home, a wedding, an interior or a restaurant in service.</p><div className="mt-8 flex flex-wrap gap-3">{booking ? <a href={booking} target="_blank" rel="noreferrer" onClick={() => track("booking_click", "consultation")} className="salon-primary-button"><CalendarDays size={16} /> Speak for 30 minutes</a> : <a href={`mailto:${process.env.NEXT_PUBLIC_CONSULTATION_EMAIL ?? "hello@dharohar.in"}?subject=Dharohar%2030-minute%20consultation`} className="salon-primary-button"><CalendarDays size={16} /> Speak for 30 minutes</a>}<a href={`mailto:${process.env.NEXT_PUBLIC_CONSULTATION_EMAIL ?? "hello@dharohar.in"}`} className="salon-secondary-button"><Mail size={16} /> Email directly</a></div><div className="mt-9 flex flex-wrap gap-6 text-[9px] font-bold uppercase tracking-[.14em] text-white/42"><span className="flex items-center gap-3"><Users size={17} className="text-[#ce7587]" /> Personal concierge</span><span className="hidden h-5 w-px bg-white/12 sm:block" /><span className="flex items-center gap-3"><Clock3 size={17} className="text-[#ce7587]" /> One working day response</span></div></Reveal><ConsultationGateway /></div></section>
       </main>
       <CareDock />
-      <footer className="rose-footer border-t border-white/10 bg-[#18110d] px-5 text-[#fff5df]"><div className="site-container flex flex-col gap-8 py-10 md:flex-row md:items-center md:justify-between"><a href="#top" aria-label="Dharohar home"><DharoharWordmark className="h-[5rem] w-[13.5rem]" /></a><nav className="flex flex-wrap gap-x-6 gap-y-3 text-[9px] font-bold uppercase tracking-[.15em] text-white/48" aria-label="Footer navigation"><a href="#collection" className="hover:text-white">Collections</a><a href="#commissions" className="hover:text-white">Commissions</a><a href="#artisan-network" className="hover:text-white">Artisans</a><a href="#rituals" className="hover:text-white">Objects</a><a href="#restoration" className="hover:text-white">Care plans</a><a href="#consultation" className="hover:text-white">Consultation</a><StoreLink path="/collections/all" eventLabel="footer_visit_store" className="inline-flex items-center gap-1 text-[#e2c27d]">Visit store <ArrowRight size={11} /></StoreLink></nav><p className="text-[9px] uppercase tracking-[.12em] text-white/32">© 2026 Dharohar</p></div></footer>
+      <footer className="rose-footer border-t border-white/10 bg-[#18110d] px-5 text-[#fff5df]">
+        <div className="site-container flex flex-col gap-8 py-10 lg:flex-row lg:items-center lg:justify-between">
+          <a href="#top" aria-label="Dharohar home"><DharoharWordmark className="h-[5rem] w-[13.5rem]" /></a>
+          <nav className="flex flex-wrap gap-x-6 gap-y-3 text-[9px] font-bold uppercase tracking-[.15em] text-white/48" aria-label="Footer navigation"><a href="#collection" className="hover:text-white">Collections</a><a href="#commissions" className="hover:text-white">Commissions</a><a href="#artisan-network" className="hover:text-white">Artisans</a><a href="#rituals" className="hover:text-white">Objects</a><a href="#restoration" className="hover:text-white">Care plans</a><a href="#consultation" className="hover:text-white">Consultation</a><StoreLink path="/collections/all" eventLabel="footer_visit_store" className="inline-flex items-center gap-1 text-[#e2c27d]">Visit store <ArrowRight size={11} /></StoreLink></nav>
+          <nav className="flex items-center gap-2" aria-label="Dharohar on social media">
+            <a href="https://www.instagram.com/dharohar91/" target="_blank" rel="noreferrer" aria-label="Dharohar on Instagram" className="grid size-9 place-items-center rounded-full border border-white/15 text-white/55 transition hover:border-[#e2c27d]/60 hover:text-[#e2c27d]"><Instagram size={15} /></a>
+            <a href="https://www.linkedin.com/company/dharohar91/?viewAsMember=true" target="_blank" rel="noreferrer" aria-label="Dharohar on LinkedIn" className="grid size-9 place-items-center rounded-full border border-white/15 text-white/55 transition hover:border-[#e2c27d]/60 hover:text-[#e2c27d]"><Linkedin size={15} /></a>
+            <a href="https://x.com/Dharoharxt42" target="_blank" rel="noreferrer" aria-label="Dharohar on X" className="grid size-9 place-items-center rounded-full border border-white/15 text-white/55 transition hover:border-[#e2c27d]/60 hover:text-[#e2c27d]"><span className="text-[13px] font-medium leading-none">𝕏</span></a>
+            <a href="https://www.facebook.com/profile.php?id=61592081474548" target="_blank" rel="noreferrer" aria-label="Dharohar on Facebook" className="grid size-9 place-items-center rounded-full border border-white/15 text-white/55 transition hover:border-[#e2c27d]/60 hover:text-[#e2c27d]"><Facebook size={15} /></a>
+          </nav>
+          <p className="text-[9px] uppercase tracking-[.12em] text-white/32">© 2026 Dharohar</p>
+        </div>
+      </footer>
       <AnimatePresence>{storeIntent ? <StoreHandoff intent={storeIntent} onClose={() => setStoreIntent(null)} /> : null}</AnimatePresence>
     </>
   );
