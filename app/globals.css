@@ -2261,6 +2261,37 @@ main .heritage-display {
   border-color: rgb(255 235 199 / 40%);
 }
 
+.branded-image-caption {
+  position: absolute;
+  left: 1.25rem;
+  top: 1.25rem;
+  z-index: 7;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  border: 1px solid rgb(239 211 158 / 32%);
+  border-radius: 999px;
+  background: rgb(28 14 16 / 62%);
+  padding: .52rem .78rem;
+  color: rgb(255 241 211 / 82%);
+  font-size: .45rem;
+  font-weight: 800;
+  letter-spacing: .18em;
+  line-height: 1;
+  text-transform: uppercase;
+  box-shadow: inset 0 1px rgb(255 255 255 / 8%), 0 10px 28px rgb(20 8 10 / 18%);
+  backdrop-filter: blur(10px);
+}
+
+.branded-image-caption::before {
+  width: .32rem;
+  height: .32rem;
+  border: 1px solid rgb(239 211 158 / 68%);
+  border-radius: 999px;
+  content: "";
+  box-shadow: 0 0 0 3px rgb(239 211 158 / 8%);
+}
+
 .heritage-display,
 .font-serif,
 h1,
@@ -2275,6 +2306,51 @@ h4 {
   background:
     radial-gradient(circle at 12% 10%, rgb(183 110 121 / 15%), transparent 26%),
     radial-gradient(circle at 88% 74%, rgb(193 145 73 / 12%), transparent 28%);
+}
+
+.commission-cinema {
+  background:
+    linear-gradient(135deg, rgb(49 26 32 / 98%), rgb(30 15 20 / 100%)),
+    #241217;
+}
+
+.commission-cinema-backdrop {
+  filter: blur(28px) saturate(.85);
+  opacity: .52;
+  transform: scale(1.12);
+}
+
+.commission-cinema-portrait {
+  filter: drop-shadow(0 28px 55px rgb(7 3 4 / 46%));
+}
+
+.commission-cinema-shade {
+  background:
+    linear-gradient(90deg, rgb(20 9 13 / 96%) 0%, rgb(22 10 14 / 80%) 34%, rgb(22 10 14 / 12%) 70%, rgb(13 6 8 / 18%) 100%),
+    linear-gradient(0deg, rgb(14 6 9 / 84%) 0%, transparent 48%);
+}
+
+.commission-cinema-copy {
+  z-index: 10;
+  text-shadow: 0 2px 24px rgb(0 0 0 / 45%);
+}
+
+.commission-progress-track {
+  height: 2px;
+}
+
+.commission-progress-fill {
+  width: 0;
+}
+
+.commission-progress-fill.is-running {
+  animation: commission-progress 7s linear forwards;
+}
+
+@keyframes commission-progress {
+  to {
+    width: 100%;
+  }
 }
 
 .commission-audience-tabs {
@@ -2293,6 +2369,26 @@ h4 {
   transition: color 240ms ease, border-color 240ms ease, background-color 240ms ease, transform 240ms cubic-bezier(.22, 1, .36, 1);
 }
 
+.commission-cinema .commission-audience-tab {
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .commission-cinema .commission-audience-tab {
+    gap: .55rem;
+    padding: .72rem .55rem;
+  }
+
+  .commission-cinema .commission-audience-tab > span:first-child {
+    display: none;
+  }
+
+  .commission-cinema .commission-audience-tab > span:last-child {
+    font-size: .48rem;
+    letter-spacing: .1em;
+  }
+}
+
 .commission-audience-tab:hover,
 .commission-audience-tab.is-active {
   border-color: rgb(224 183 115 / 24%);
@@ -2301,7 +2397,7 @@ h4 {
 }
 
 .commission-audience-tab.is-active {
-  transform: translateX(.2rem);
+  transform: translateY(-1px);
 }
 
 .commission-audience-tab.is-active > span:nth-child(2) {
@@ -2852,6 +2948,36 @@ h4 {
 }
 
 @media (max-width: 767px) {
+  .commission-cinema .commission-audience-tabs {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+  }
+
+  .commission-cinema .commission-audience-tab {
+    min-width: max-content;
+    scroll-snap-align: start;
+  }
+
+  #commission-audience-panel {
+    min-height: 780px;
+  }
+
+  .commission-cinema-portrait {
+    bottom: auto;
+    height: 62%;
+  }
+
+  .commission-cinema-shade {
+    background:
+      linear-gradient(0deg, rgb(17 7 11 / 98%) 0%, rgb(18 8 12 / 90%) 38%, transparent 70%),
+      linear-gradient(90deg, rgb(20 9 13 / 25%), transparent);
+  }
+
+  .commission-cinema-copy {
+    background: linear-gradient(0deg, rgb(17 7 11 / 98%), transparent);
+  }
+
   .ambient-dust {
     display: none;
   }
@@ -3280,20 +3406,38 @@ h4 {
   }
 
   .commissioning-hall .site-container > div:last-child {
-    margin-top: 2.5rem;
+    margin-top: 1rem;
+  }
+
+  .commissioning-hall {
+    padding-block: 2rem !important;
+  }
+
+  .commissioning-hall-intro {
+    gap: 2rem;
+  }
+
+  .commissioning-hall-intro h2 {
+    margin-top: .8rem;
+    font-size: clamp(2.75rem, 4.25vw, 3.85rem) !important;
+  }
+
+  .commissioning-hall-intro > p {
+    max-width: 31rem;
+    line-height: 1.55;
   }
 
   #commission-audience-panel {
-    min-height: 500px;
+    min-height: 240px;
   }
 
   .commission-audience-tabs {
-    padding: 1rem;
+    padding: .65rem;
   }
 
   .commission-audience-tab {
     gap: .7rem;
-    padding: .62rem .7rem;
+    padding: .5rem .65rem;
   }
 
   #commission-audience-panel h3 {
@@ -3303,6 +3447,43 @@ h4 {
 
   #commission-audience-panel p {
     max-width: 32rem;
+  }
+
+  .commission-cinema-copy {
+    padding: 1rem 1.5rem !important;
+  }
+
+  .commission-cinema-copy > span:first-child {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .commission-cinema-copy > p:first-of-type {
+    margin-top: .45rem;
+  }
+
+  .commission-cinema-copy h3 {
+    margin-top: .35rem;
+    font-size: clamp(2rem, 3vw, 2.5rem) !important;
+  }
+
+  .commission-cinema-copy > p:nth-of-type(2) {
+    margin-top: .5rem;
+    font-size: .72rem;
+    line-height: 1.45;
+  }
+
+  .commission-cinema-copy > div {
+    margin-top: .55rem;
+  }
+
+  .commission-cinema-copy > div > span {
+    display: none;
+  }
+
+  .commission-brief-cta {
+    min-height: 2.25rem;
+    padding: .5rem .85rem;
   }
 
   .artisan-network-intro,
@@ -3425,6 +3606,84 @@ h4 {
 
   .rose-footer .site-container {
     padding-block: 2rem;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 700px) {
+  .commissioning-hall {
+    padding-block: 1.25rem !important;
+  }
+
+  .commissioning-hall-intro h2 {
+    margin-top: .5rem;
+    font-size: clamp(2.4rem, 3.75vw, 3rem) !important;
+  }
+
+  .commissioning-hall-intro > p {
+    font-size: .78rem;
+    line-height: 1.4;
+  }
+
+  .commissioning-hall .site-container > div:last-child {
+    margin-top: .7rem;
+  }
+
+  .commission-cinema .commission-audience-tabs {
+    padding: .4rem;
+  }
+
+  .commission-cinema .commission-audience-tab {
+    gap: .45rem;
+    padding: .35rem .45rem;
+  }
+
+  .commission-cinema .commission-audience-tab > span:nth-child(2) {
+    width: 1.9rem;
+    height: 1.9rem;
+  }
+
+  #commission-audience-panel {
+    min-height: 190px;
+  }
+
+  .commission-cinema-copy {
+    padding: 1.15rem 1.5rem !important;
+  }
+
+  .commission-cinema-copy > span:first-child {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .commission-cinema-copy > p:first-of-type {
+    margin-top: .55rem;
+  }
+
+  .commission-cinema-copy h3 {
+    margin-top: .45rem;
+    font-size: clamp(2rem, 3vw, 2.7rem) !important;
+  }
+
+  .commission-cinema-copy > p:nth-of-type(2) {
+    display: none;
+  }
+
+  .commission-cinema-copy > div {
+    margin-top: .75rem;
+  }
+
+  .commission-cinema-copy > div > span {
+    display: none;
+  }
+
+  .commission-brief-cta {
+    min-height: 2.35rem;
+    padding: .55rem .9rem;
+  }
+
+  .commission-cinema-controls {
+    right: 1rem;
+    top: 1rem;
   }
 }
 

@@ -26,7 +26,6 @@ import {
   Layers3,
   Linkedin,
   Mail,
-  MapPin,
   Menu,
   Palette,
   PartyPopper,
@@ -74,6 +73,8 @@ const parallaxPlanes = [
   { x: 4, y: 2.4, scroll: 8, scale: 1 },
 ] as const;
 
+// Branded imagery is intentionally held to 11 of 27 primary photographic states (40.7%):
+// 5 collection scenes, 1 material, 1 table, 1 personalisation, 2 audiences and 1 case study.
 const materials = [
   {
     id: "copper",
@@ -86,6 +87,7 @@ const materials = [
     image: "/images/curated/copper-madurai-handi.webp",
     path: "/collections/copper-cookware",
     tone: "#a85d35",
+    brandTreatment: "foil-seal",
   },
   {
     id: "brass",
@@ -98,6 +100,7 @@ const materials = [
     image: "/images/curated/brass-kadhai-set.webp",
     path: "/collections/brass-cookware",
     tone: "#b78b3c",
+    brandTreatment: null,
   },
   {
     id: "kansa",
@@ -110,46 +113,36 @@ const materials = [
     image: "/images/materials/bronze/kansa-kadai-main.png",
     path: "/collections/kansa",
     tone: "#8f7a46",
+    brandTreatment: null,
   },
 ] as const;
 
 const categoryCollections = [
-  { name: "Cookware", detail: "Kadhais, patilas, tawas and lagans made for the everyday flame.", image: "/images/dharohar-categories/cookware.webp", path: "/collections/cookware" },
-  { name: "Kitchen Utensils", detail: "Purposeful forms for stirring, turning, simmering and serving.", image: "/images/dharohar-categories/kitchen-utensils.webp", path: "/collections/kitchen-utensils" },
-  { name: "Kitchen Accessories", detail: "The smaller objects that make a thoughtful rasoi feel complete.", image: "/images/dharohar-categories/kitchen-accessories-clean.webp", path: "/collections/kitchen-accessories" },
-  { name: "Drinkware", detail: "Bottles, glasses, tumblers and dispensers for a considered water ritual.", image: "/images/dharohar-categories/drinkware-clean.webp", path: "/collections/drinkware" },
-  { name: "Tableware", detail: "Handcrafted pieces that bring warmth and ceremony to every setting.", image: "/images/dharohar-categories/tableware-clean.webp", path: "/collections/tableware" },
-  { name: "Dinnerware", detail: "Complete thaalis and dining sets for tables made to gather around.", image: "/images/dharohar-categories/dinnerware.webp", path: "/collections/dinnerware" },
-  { name: "Sets & Combos", detail: "Useful pairings assembled for new kitchens, gifting and everyday ease.", image: "/images/dharohar-categories/sets.webp", path: "/collections/combos-and-sets" },
-  { name: "Copper for Water", detail: "Tamba vessels shaped around storing, pouring and sharing water.", image: "/images/dharohar-categories/copper-water.webp", path: "/collections/copper-tamba-utensils-and-vessels" },
-  { name: "Brass for Cooking & Eating", detail: "The golden character of peetal, from the stove to the family table.", image: "/images/dharohar-categories/brass.webp", path: "/collections/brass-pital-utensils-and-vessels" },
-  { name: "Kansa for Eating", detail: "Bronze dining forms with a grounded weight and unmistakable resonance.", image: "/images/dharohar-categories/kansa-clean.webp", path: "/collections/kansa-bronze-utensils-and-vessels" },
-  { name: "Home Décor", detail: "Metal accents and quiet statements for the spaces around the table.", image: "/images/dharohar-categories/home-decor.webp", path: "/collections/home-decor-1" },
-  { name: "Pooja & Ritual", detail: "Handcrafted diya forms made for prayer, celebration and daily devotion.", image: "/images/dharohar-categories/pooja-clean.webp", path: "/collections/pooja-items" },
+  { name: "Cookware", detail: "Kadhais, patilas, tawas and lagans made for the everyday flame.", image: "/images/dharohar-categories/cookware.webp", path: "/collections/cookware", brandTreatment: null },
+  { name: "Kitchen Utensils", detail: "Purposeful forms for stirring, turning, simmering and serving.", image: "/images/dharohar-categories/kitchen-utensils.webp", path: "/collections/kitchen-utensils", brandTreatment: null },
+  { name: "Tableware", detail: "Handcrafted pieces that bring warmth and ceremony to every setting.", image: "/images/branding/dharohar-thali-gift-box.webp", path: "/collections/tableware", brandTreatment: "in-scene" },
+  { name: "Kitchen Accessories", detail: "The smaller objects that make a thoughtful rasoi feel complete.", image: "/images/dharohar-categories/kitchen-accessories-clean.webp", path: "/collections/kitchen-accessories", brandTreatment: null },
+  { name: "Drinkware", detail: "Bottles, glasses, tumblers and dispensers for a considered water ritual.", image: "/images/dharohar-categories/drinkware-clean.webp", path: "/collections/drinkware", brandTreatment: null },
+  { name: "Dinnerware", detail: "Complete thaalis and dining sets for tables made to gather around.", image: "/images/branding/dharohar-wedding-gifting.webp", path: "/collections/dinnerware", brandTreatment: "in-scene" },
+  { name: "Brass for Cooking & Eating", detail: "The golden character of peetal, from the stove to the family table.", image: "/images/dharohar-categories/brass.webp", path: "/collections/brass-pital-utensils-and-vessels", brandTreatment: null },
+  { name: "Kansa for Eating", detail: "Bronze dining forms with a grounded weight and unmistakable resonance.", image: "/images/dharohar-categories/kansa-clean.webp", path: "/collections/kansa-bronze-utensils-and-vessels", brandTreatment: null },
+  { name: "Sets & Combos", detail: "Useful pairings assembled for new kitchens, gifting and everyday ease.", image: "/images/branding/dharohar-heirloom-box.webp", path: "/collections/combos-and-sets", brandTreatment: "in-scene" },
+  { name: "Home Décor", detail: "Metal accents and quiet statements for the spaces around the table.", image: "/images/dharohar-categories/home-decor.webp", path: "/collections/home-decor-1", brandTreatment: null },
+  { name: "Pooja & Ritual", detail: "Handcrafted diya forms made for prayer, celebration and daily devotion.", image: "/images/branding/dharohar-pooja-ritual-engraved.webp", path: "/collections/pooja-items", brandTreatment: "engraved" },
+  { name: "Copper for Water", detail: "Tamba vessels shaped around storing, pouring and sharing water.", image: "/images/branding/dharohar-corporate-gifting.webp", path: "/collections/copper-tamba-utensils-and-vessels", brandTreatment: "in-scene" },
 ] as const;
 
 const clientPaths = [
-  { id: "home", label: "Homes & collectors", eyebrow: "Private homes", title: "A kitchen shaped around your rituals.", copy: "Complete kitchen curation, material guidance and personal objects selected for the way your family cooks and gathers.", detail: "Family rhythm · Metal curation · Heirloom engraving", image: "/images/heritage-kitchen.jpg", icon: Home, service: "Complete heritage kitchen" },
-  { id: "wedding", label: "Weddings & gifting", eyebrow: "Celebrations", title: "A gift that enters another family’s story.", copy: "Engraved objects, presentation-ready packaging and thoughtful fulfilment for intimate ceremonies or large guest lists.", detail: "Quantity planning · Engraving · Multi-city delivery", image: "/images/curated/brass-davara-clean.jpg", icon: Crown, service: "Wedding or celebration gifting" },
-  { id: "events", label: "Event planners", eyebrow: "Event commissions", title: "A tablescape that arrives ready.", copy: "Coordinated serveware and gifting programmes shaped around the venue, guest count and a fixed production calendar.", detail: "Guest count · Venue schedule · Fulfilment window", image: "/images/indian-table.jpg", icon: PartyPopper, service: "Event planning and tablescape" },
-  { id: "design", label: "Interior designers", eyebrow: "Trade & interiors", title: "Material character for a larger space.", copy: "Finish libraries, custom dimensions and specification support for residences, studios and considered hospitality interiors.", detail: "Samples · Finish approval · Project specifications", image: "/images/hero-kitchen.jpg", icon: Palette, service: "Interior design or trade project" },
-  { id: "hospitality", label: "Restaurants & hotels", eyebrow: "Hospitality", title: "Made for service, night after night.", copy: "Cookware, tableware and replacement continuity designed around covers, cuisine and the pace of a professional service.", detail: "Covers · Service rhythm · Scheduled care", image: "/images/brass-collection.jpg", icon: Hotel, service: "Restaurant or hospitality project" },
-  { id: "corporate", label: "Corporate gifting", eyebrow: "Institutions", title: "A meaningful gesture, delivered at scale.", copy: "Brand-considered gifting with personal notes, selective co-branding and one coordinated route from approval to dispatch.", detail: "Recipient tiers · Presentation · Distributed fulfilment", image: "/images/product-heritage-set-v3.png", icon: BriefcaseBusiness, service: "Corporate or institutional gifting" },
-] as const;
-
-const artisanRegions = [
-  { id: "jandiala", town: "Jandiala Guru", state: "Punjab", craft: "Thathera hand-hammering", objects: "Copper and brass pots, plates, bowls and community vessels.", status: "Core network", x: 35, y: 15 },
-  { id: "jagadhri", town: "Jagadhri", state: "Haryana", craft: "Utensil forming & finishing", objects: "Brass, copper and steel kitchen forms shaped for dependable production.", status: "Core network", x: 39, y: 23 },
-  { id: "moradabad", town: "Moradabad", state: "Uttar Pradesh", craft: "Casting, chasing & engraving", objects: "Detailed brassware, bowls, serveware and sculptural metal objects.", status: "Core network", x: 48, y: 28 },
-  { id: "lucknow", town: "Lucknow", state: "Uttar Pradesh", craft: "Sheet-metal repoussé", objects: "Parat, deg, sini, patili, paandaan and water vessels.", status: "Core network", x: 56, y: 36 },
-  { id: "varanasi", town: "Varanasi", state: "Uttar Pradesh", craft: "Repoussé & relief work", objects: "Decorative utensils and hand-worked copper and brass surfaces.", status: "Craft atlas", x: 62, y: 42 },
-  { id: "kumaon", town: "Kumaon", state: "Uttarakhand", craft: "Tamta copper work", objects: "Hand-beaten copper kitchen vessels, kalash and water forms.", status: "Craft atlas", x: 48, y: 18 },
-  { id: "sarthebari", town: "Sarthebari", state: "Assam", craft: "Bell-metal forming", objects: "Kahi dishes, bati bowls, lota, sarai and ceremonial vessels.", status: "Craft atlas", x: 84, y: 38 },
-  { id: "mannar", town: "Mannar", state: "Kerala", craft: "Bronze casting", objects: "Urulis, ladles and enduring ritual and household metalware.", status: "Craft atlas", x: 42, y: 83 },
+  { id: "home", label: "Homes & collectors", eyebrow: "Private homes", title: "A kitchen shaped around your rituals.", copy: "Complete kitchen curation, material guidance and personal objects selected for the way your family cooks and gathers.", detail: "Family rhythm · Metal curation · Heirloom engraving", image: "/images/branding/commissions/homes-collectors.webp", icon: Home, service: "Complete heritage kitchen" },
+  { id: "wedding", label: "Weddings & gifting", eyebrow: "Celebrations", title: "A gift that enters another family’s story.", copy: "Engraved objects, presentation-ready packaging and thoughtful fulfilment for intimate ceremonies or large guest lists.", detail: "Quantity planning · Engraving · Multi-city delivery", image: "/images/branding/commissions/weddings-gifting.webp", icon: Crown, service: "Wedding or celebration gifting" },
+  { id: "events", label: "Event planners", eyebrow: "Event commissions", title: "A tablescape that arrives ready.", copy: "Coordinated serveware and gifting programmes shaped around the venue, guest count and a fixed production calendar.", detail: "Guest count · Venue schedule · Fulfilment window", image: "/images/branding/commissions/event-planners.webp", icon: PartyPopper, service: "Event planning and tablescape" },
+  { id: "design", label: "Interior designers", eyebrow: "Trade & interiors", title: "Material character for a larger space.", copy: "Finish libraries, custom dimensions and specification support for residences, studios and considered hospitality interiors.", detail: "Samples · Finish approval · Project specifications", image: "/images/branding/commissions/interior-designers.webp", icon: Palette, service: "Interior design or trade project" },
+  { id: "hospitality", label: "Restaurants & hotels", eyebrow: "Hospitality", title: "Made for service, night after night.", copy: "Cookware, tableware and replacement continuity designed around covers, cuisine and the pace of a professional service.", detail: "Covers · Service rhythm · Scheduled care", image: "/images/branding/commissions/restaurants-hotels.webp", icon: Hotel, service: "Restaurant or hospitality project" },
+  { id: "corporate", label: "Corporate gifting", eyebrow: "Institutions", title: "A meaningful gesture, delivered at scale.", copy: "Brand-considered gifting with personal notes, selective co-branding and one coordinated route from approval to dispatch.", detail: "Recipient tiers · Presentation · Distributed fulfilment", image: "/images/branding/commissions/corporate-gifting.webp", icon: BriefcaseBusiness, service: "Corporate or institutional gifting" },
 ] as const;
 
 const commissionBriefs = [
-  { number: "01", audience: "Wedding atelier", title: "A family mark, repeated with care.", copy: "Object selection, engraving approval, presentation and distributed delivery organised as one commission.", meta: ["50–500+ gifts", "Personal engraving", "Presentation boxes"], image: "/images/product-heritage-set-v3.png" },
+  { number: "01", audience: "Wedding atelier", title: "A family mark, repeated with care.", copy: "Object selection, engraving approval, presentation and distributed delivery organised as one commission.", meta: ["50–500+ gifts", "Personal engraving", "Presentation boxes"], image: "/images/branding/dharohar-wedding-gifting.webp" },
   { number: "02", audience: "Hospitality table", title: "A material language built for service.", copy: "A coordinated collection for the kitchen and dining room, supported by replacement continuity and scheduled care.", meta: ["Cook & serve", "Sample approval", "Care rotation"], image: "/images/indian-table.jpg" },
   { number: "03", audience: "Private kitchen", title: "The complete rasoi, considered together.", copy: "A household brief translated into cookware, tableware, water objects and future heirlooms.", meta: ["Family consultation", "Metal curation", "Object passport"], image: "/images/heritage-kitchen.jpg" },
 ] as const;
@@ -398,7 +391,7 @@ function MaterialExplorer() {
           <StoreLink path={active.path} eventLabel={`material_visual_${active.id}`} aria-label={`View all ${active.name} pieces`} className="rose-image-well group relative order-1 min-h-[360px] overflow-hidden bg-[#e4d4c1] lg:order-2 lg:min-h-[520px]">
             <AnimatePresence mode="wait"><motion.div key={active.image} className="absolute inset-0" initial={{ opacity: 0, scale: 1.06 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: .98 }} transition={{ duration: .8 }}><DharoharImage src={active.image} alt={`${active.name} heritage cookware`} fill unoptimized sizes="(max-width: 1024px) 100vw, 55vw" className="object-cover" /><div className="product-glint absolute -inset-y-[20%] left-[-25%] w-[18%] rotate-12 bg-gradient-to-r from-transparent via-white/40 to-transparent blur-sm" /></motion.div></AnimatePresence>
             <div className="absolute inset-0 bg-gradient-to-t from-black/38 via-transparent to-white/10" />
-            <DharoharImageSignature className="left-5 top-5 sm:left-7 sm:top-7" />
+            {active.brandTreatment === "foil-seal" ? <DharoharImageSignature className="left-5 top-5 sm:left-7 sm:top-7" /> : null}
             <div className="absolute bottom-6 right-6 inline-flex items-center gap-2 rounded-full border border-white/35 bg-black/25 px-4 py-2 text-[9px] font-bold uppercase tracking-[.18em] text-white backdrop-blur transition duration-300 group-hover:-translate-y-1 group-hover:bg-black/45">View all {active.name} <ArrowRight size={13} /></div>
           </StoreLink>
         </div>
@@ -506,7 +499,7 @@ function CategoryCarousel() {
             <div className="relative aspect-[4/5] sm:aspect-[16/10]">
               <DharoharImage src={category.image} alt={`${category.name} from Dharohar`} fill unoptimized sizes="(max-width: 639px) 86vw, (max-width: 1023px) 72vw, 58vw" className="category-slide-image object-cover" />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(35,19,16,.06)_15%,rgba(35,19,16,.18)_48%,rgba(35,19,16,.88)_100%)]" />
-              <DharoharImageSignature className="left-5 top-5 sm:left-7 sm:top-7" />
+              {category.brandTreatment === "in-scene" ? <span className="branded-image-caption">Dharohar presentation</span> : null}
               <span className="absolute right-5 top-5 z-[7] font-serif text-2xl italic text-white/75 sm:right-7 sm:top-7">{String(index + 1).padStart(2, "0")}</span>
               <div className="absolute inset-x-0 bottom-0 p-5 sm:p-8">
                 <p className="text-[8px] font-extrabold uppercase tracking-[.24em] text-[#f3c8b6]">Explore by purpose</p>
@@ -553,10 +546,9 @@ function DharoharTable() {
 
       <Reveal className="dharohar-table-stage mx-auto mt-10 max-w-[1500px]">
         <div className="dharohar-table-image-frame relative isolate overflow-hidden rounded-[1.7rem] border border-white/14 bg-[#29171a] shadow-[0_42px_120px_rgba(0,0,0,.4)]">
-          <Image src="/images/experience/dharohar-table-v1.webp" alt="A composed Dharohar table with copper, brass and kansa objects at blue hour" fill unoptimized sizes="(max-width: 767px) 100vw, 1500px" className="object-cover" />
+          <Image src="/images/experience/dharohar-table-business-card-v3.webp" alt="A composed Dharohar table with copper, brass and kansa objects, plus a discreet Dharohar card at blue hour" fill unoptimized sizes="(max-width: 767px) 100vw, 1500px" className="object-cover" />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(18,9,11,.46),transparent_42%),linear-gradient(180deg,transparent_54%,rgba(16,8,10,.34))]" />
           <div className="table-vignette pointer-events-none absolute inset-0" />
-          <DharoharImageSignature className="right-5 top-5 sm:right-7 sm:top-7" />
           <p className="absolute left-5 top-5 rounded-full border border-white/18 bg-[#251316]/58 px-4 py-2 text-[8px] font-bold uppercase tracking-[.2em] text-white/68 backdrop-blur-md sm:left-7 sm:top-7">Select a glowing marker</p>
 
           {tableObjects.map((item) => (
@@ -720,9 +712,8 @@ function PersonalisationStudio() {
           </div>
 
           <div className="relative aspect-[4/5] sm:aspect-[5/4]">
-            <Image src="/images/curated/copper-madurai-handi.webp" alt="Copper handi with a live personalised engraving preview" fill unoptimized sizes="(max-width: 1024px) 100vw, 56vw" className="engraving-object-image object-cover" />
+            <Image src="/images/branding/dharohar-provenance-engraving.webp" alt="Dharohar-engraved copper handi with its leather object passport and sealed care card" fill unoptimized sizes="(max-width: 1024px) 100vw, 56vw" className="engraving-object-image object-cover" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_53%_66%,transparent_24%,rgba(83,42,25,.1)_70%,rgba(83,42,25,.24)_100%)]" />
-            <DharoharImageSignature className="bottom-5 right-5 sm:bottom-7 sm:right-7" />
             <AnimatePresence>
               {previewState === "engraved" ? (
                 <motion.div key={`${style}-${engraving}`} initial={{ opacity: 0, scale: .94, x: "-50%", y: "-50%", filter: "blur(5px)" }} animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%", filter: "blur(0px)" }} exit={{ opacity: 0, scale: .96, x: "-50%", y: "-50%", filter: "blur(4px)" }} transition={{ duration: .5 }} className="engraving-mark">
@@ -771,8 +762,21 @@ function PersonalisationStudio() {
 
 function CommissioningHall() {
   const [activeId, setActiveId] = useState<(typeof clientPaths)[number]["id"]>("home");
+  const [playing, setPlaying] = useState(true);
+  const [pointerPaused, setPointerPaused] = useState(false);
+  const reducedMotion = useReducedMotion();
   const active = clientPaths.find((item) => item.id === activeId) ?? clientPaths[0];
+  const activeIndex = clientPaths.findIndex((item) => item.id === active.id);
   const ActiveIcon = active.icon;
+  const autoRunning = playing && !pointerPaused && !reducedMotion;
+
+  useEffect(() => {
+    if (!autoRunning) return;
+    const timer = window.setTimeout(() => {
+      setActiveId(clientPaths[(activeIndex + 1) % clientPaths.length].id);
+    }, 7000);
+    return () => window.clearTimeout(timer);
+  }, [activeIndex, autoRunning]);
 
   function prepareConsultation() {
     window.dispatchEvent(new CustomEvent("dharohar:consultation-persona", { detail: { persona: active.label, service: active.service } }));
@@ -780,19 +784,23 @@ function CommissioningHall() {
   }
 
   return (
-    <section id="commissions" className="commissioning-hall relative isolate overflow-hidden bg-[#f8efe9] px-5 py-[clamp(4.5rem,7vw,7rem)]" aria-labelledby="commissions-title">
+    <section id="commissions" className="commissioning-hall relative isolate overflow-hidden bg-[#f8efe9] px-5 py-[clamp(3rem,6vh,5rem)]" aria-labelledby="commissions-title">
       <div className="commissioning-hall-glow pointer-events-none absolute inset-0 -z-10" />
       <div className="site-container">
-        <Reveal className="grid gap-7 lg:grid-cols-[.9fr_1.1fr] lg:items-end">
+        <Reveal className="commissioning-hall-intro grid gap-7 lg:grid-cols-[.9fr_1.1fr] lg:items-end">
           <div>
             <p className="heritage-label">The commissioning hall</p>
-            <h2 id="commissions-title" className="heritage-display mt-5 max-w-4xl text-[clamp(3.2rem,5.5vw,5.9rem)] leading-[.87]">One craft.<br /><span className="italic text-[#a26069]">Many kinds of tables.</span></h2>
+            <h2 id="commissions-title" className="heritage-display mt-5 max-w-4xl text-[clamp(3rem,5vw,5.2rem)] leading-[.87]">One craft.<br /><span className="italic text-[#a26069]">Many kinds of tables.</span></h2>
           </div>
           <p className="max-w-xl text-sm leading-7 text-[#756269] sm:text-base lg:justify-self-end">From one family kitchen to a wedding of five hundred, every commission begins with how the objects will be lived with.</p>
         </Reveal>
 
-        <div className="mt-10 grid overflow-hidden rounded-[1.8rem] border border-[#a26069]/22 bg-[#2a171c] shadow-[0_32px_100px_rgba(74,32,43,.18)] lg:grid-cols-[.37fr_.63fr]">
-          <div role="tablist" aria-label="Who Dharohar serves" className="commission-audience-tabs no-scrollbar flex gap-2 overflow-x-auto border-b border-white/10 p-3 lg:flex-col lg:overflow-visible lg:border-b-0 lg:border-r lg:p-5">
+        <div
+          className="commission-cinema mt-7 overflow-hidden rounded-[1.8rem] border border-[#a26069]/22 bg-[#2a171c] shadow-[0_32px_100px_rgba(74,32,43,.18)]"
+          onMouseEnter={() => setPointerPaused(true)}
+          onMouseLeave={() => setPointerPaused(false)}
+        >
+          <div role="tablist" aria-label="Who Dharohar serves" className="commission-audience-tabs no-scrollbar grid grid-cols-2 gap-2 overflow-x-auto border-b border-white/10 p-3 md:grid-cols-3 lg:grid-cols-6">
             {clientPaths.map((item, index) => {
               const Icon = item.icon;
               const selected = item.id === active.id;
@@ -806,17 +814,20 @@ function CommissioningHall() {
             })}
           </div>
 
-          <div id="commission-audience-panel" role="tabpanel" className="relative min-h-[560px] overflow-hidden">
+          <div id="commission-audience-panel" role="tabpanel" className="relative min-h-[clamp(430px,58vh,600px)] overflow-hidden">
             <AnimatePresence mode="wait">
-              <motion.div key={active.id} className="absolute inset-0" initial={{ opacity: 0, scale: 1.035 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: .985 }} transition={{ duration: .7, ease: [.22, 1, .36, 1] }}>
-                <DharoharImage src={active.image} alt={`${active.label} commission by Dharohar`} fill unoptimized sizes="(max-width: 1024px) 100vw, 64vw" className="object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#160b10] via-[#1a0d12]/34 to-black/4" />
-                <DharoharImageSignature className="right-5 top-5 sm:right-7 sm:top-7" />
+              <motion.div key={active.id} className="absolute inset-0" initial={{ opacity: 0, scale: 1.025 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: .985 }} transition={{ duration: 1.05, ease: [.22, 1, .36, 1] }}>
+                <DharoharImage src={active.image} alt="" fill unoptimized sizes="100vw" className="commission-cinema-backdrop object-cover" aria-hidden="true" />
+                <div className="absolute inset-0 bg-[#180c10]/44 backdrop-blur-xl" />
+                <div className="commission-cinema-portrait absolute inset-y-0 right-0 w-full lg:w-[62%]">
+                  <DharoharImage src={active.image} alt={`${active.label} commission by Dharohar`} fill unoptimized sizes="(max-width: 1024px) 100vw, 62vw" className="object-contain" />
+                </div>
+                <div className="commission-cinema-shade absolute inset-0" />
               </motion.div>
             </AnimatePresence>
 
             <AnimatePresence mode="wait">
-              <motion.div key={`${active.id}-copy`} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }} transition={{ duration: .48 }} className="absolute inset-x-0 bottom-0 p-6 text-[#fff8ec] sm:p-9">
+              <motion.div key={`${active.id}-copy`} initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 18 }} transition={{ duration: .62, delay: .12, ease: [.22, 1, .36, 1] }} className="commission-cinema-copy absolute inset-x-0 bottom-0 p-6 text-[#fff8ec] sm:p-9 lg:max-w-[54%] lg:p-12">
                 <span className="grid size-11 place-items-center rounded-full border border-[#e2c27d]/35 bg-black/20 text-[#ebc88a] backdrop-blur"><ActiveIcon size={19} strokeWidth={1.35} /></span>
                 <p className="mt-5 text-[8px] font-bold uppercase tracking-[.22em] text-[#e4bd79]">{active.eyebrow}</p>
                 <h3 className="mt-3 max-w-2xl font-serif text-[clamp(2.45rem,4vw,4.6rem)] leading-[.9]">{active.title}</h3>
@@ -827,6 +838,23 @@ function CommissioningHall() {
                 </div>
               </motion.div>
             </AnimatePresence>
+
+            <div className="commission-cinema-controls absolute right-5 top-5 z-20 flex items-center gap-3 rounded-full border border-white/18 bg-[#170c10]/62 px-3 py-2 text-[#fff5e7] shadow-lg backdrop-blur-xl sm:right-7 sm:top-7">
+              <button
+                type="button"
+                onClick={() => setPlaying((current) => !current)}
+                disabled={Boolean(reducedMotion)}
+                aria-label={`${playing ? "Pause" : "Play"} commission carousel`}
+                aria-pressed={!playing}
+                className="grid size-8 place-items-center rounded-full border border-white/15 text-[#e7c67f] transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-45"
+              >
+                {playing ? <CirclePause size={17} /> : <CirclePlay size={17} />}
+              </button>
+              <span className="text-[9px] font-extrabold uppercase tracking-[.18em]"><strong className="text-[#e7c67f]">{String(activeIndex + 1).padStart(2, "0")}</strong> / {String(clientPaths.length).padStart(2, "0")}</span>
+              <span className="commission-progress-track hidden w-20 overflow-hidden rounded-full bg-white/12 sm:block">
+                <span key={active.id} className={`commission-progress-fill block h-full origin-left bg-[#e7c67f] ${autoRunning ? "is-running" : ""}`} />
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -835,52 +863,19 @@ function CommissioningHall() {
 }
 
 function ArtisanNetwork() {
-  const [activeId, setActiveId] = useState<(typeof artisanRegions)[number]["id"]>("jandiala");
-  const active = artisanRegions.find((item) => item.id === activeId) ?? artisanRegions[0];
-
   return (
-    <section id="artisan-network" className="artisan-network relative isolate overflow-hidden bg-[#1a1012] px-5 py-[clamp(4.5rem,7vw,7rem)] text-[#fff5e5]" aria-labelledby="artisan-network-title">
-      <div className="artisan-network-aura pointer-events-none absolute inset-0 -z-10" />
-      <div className="site-container">
-        <Reveal className="artisan-network-intro grid gap-7 lg:grid-cols-[1fr_.8fr] lg:items-end">
-          <div><p className="inline-flex items-center gap-3 text-[9px] font-bold uppercase tracking-[.24em] text-[#d8b86b]"><MapPin size={13} /> The hands of Dharohar</p><h2 id="artisan-network-title" className="mt-5 max-w-5xl font-serif text-[clamp(3.4rem,5.8vw,6.3rem)] leading-[.86]">A country of hands<br /><span className="italic text-[#d89aa6]">behind every object.</span></h2></div>
-          <p className="max-w-xl text-sm leading-7 text-white/55 sm:text-base lg:justify-self-end">A reliable network across North India, connected to a wider atlas of living metal traditions and matched to the process each commission needs.</p>
-        </Reveal>
-
-        <div className="artisan-network-grid mt-10 grid gap-5 lg:grid-cols-[1.12fr_.88fr]">
-          <Reveal className="artisan-map-shell relative min-h-[520px] overflow-hidden rounded-[1.8rem] border border-[#d8b86b]/18 bg-[#241416] p-6 sm:p-9">
-            <div className="artisan-map-grid pointer-events-none absolute inset-0" />
-            <div className="artisan-map-silhouette absolute left-[9%] top-[7%] h-[84%] w-[70%]" aria-hidden="true" />
-            <div className="absolute left-6 top-6 z-20 rounded-full border border-[#d8b86b]/24 bg-[#170c0f]/72 px-4 py-2 text-[8px] font-bold uppercase tracking-[.18em] text-[#e5c684] backdrop-blur sm:left-9 sm:top-9">Select a workshop region</div>
-            {artisanRegions.map((region) => (
-              <button key={region.id} type="button" onClick={() => setActiveId(region.id)} aria-label={`Explore ${region.town}, ${region.state}`} aria-pressed={active.id === region.id} className={`artisan-map-pin ${active.id === region.id ? "is-active" : ""}`} style={{ left: `${region.x}%`, top: `${region.y}%` }}>
-                <span />
-                <small>{region.town}</small>
-              </button>
-            ))}
-            <AnimatePresence mode="wait">
-              <motion.div key={active.id} className="artisan-map-story absolute inset-x-6 bottom-6 z-20 rounded-[1.3rem] border border-white/12 bg-[#1b0d12]/88 p-5 backdrop-blur-xl sm:inset-x-auto sm:bottom-9 sm:left-9 sm:w-[24rem] sm:p-6" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
-                <div className="flex items-center justify-between gap-4"><p className="text-[8px] font-bold uppercase tracking-[.2em] text-[#d8b86b]">{active.status}</p><span className="text-[8px] uppercase tracking-[.15em] text-white/32">{active.state}</span></div>
-                <h3 className="mt-3 font-serif text-4xl">{active.town}</h3>
-                <p className="mt-2 text-sm font-semibold text-[#e8b5be]">{active.craft}</p>
-                <p className="mt-3 text-sm leading-6 text-white/52">{active.objects}</p>
-              </motion.div>
-            </AnimatePresence>
-          </Reveal>
-
-          <Reveal className="artisan-ledger rounded-[1.8rem] border border-white/10 bg-white/[.035] p-6 sm:p-8">
-            <p className="text-[8px] font-bold uppercase tracking-[.22em] text-[#d8b86b]">Network ledger</p>
-            <h3 className="mt-4 max-w-xl font-serif text-[clamp(2.5rem,4vw,4.2rem)] leading-[.9]">The right hand for every process.</h3>
-            <div className="mt-7 grid grid-cols-2 gap-px overflow-hidden rounded-[1.2rem] border border-white/10 bg-white/10">
-              {[["04", "Core regions"], ["08", "Craft traditions"], ["06", "Care processes"], ["01", "Quality standard"]].map(([value, label]) => <div key={label} className="bg-[#211216] p-5"><strong className="font-serif text-4xl font-medium text-[#efd59e]">{value}</strong><span className="mt-1 block text-[8px] font-bold uppercase tracking-[.14em] text-white/38">{label}</span></div>)}
-            </div>
-            <div className="mt-7 space-y-3">
-              {["Workshop matched to process", "Samples approved before scale", "Quality checks recorded", "Repair route retained after delivery"].map((item) => <div key={item} className="flex items-center gap-3 border-b border-white/8 pb-3 text-sm text-white/58"><BadgeCheck size={16} className="shrink-0 text-[#d8b86b]" />{item}</div>)}
-            </div>
-            <p className="mt-6 text-xs leading-6 text-white/34">Core network identifies active Dharohar workshop relationships. Craft atlas locations recognise important regional traditions and should be presented as partners only after formal onboarding.</p>
-            <a href="#consultation" onClick={() => window.dispatchEvent(new CustomEvent("dharohar:consultation-persona", { detail: { persona: "Interior designers", service: "Custom product development" } }))} className="restoration-request mt-7">Discuss a custom commission <ArrowRight size={14} /></a>
-          </Reveal>
-        </div>
+    <section id="artisan-network" className="artisan-network-reference overflow-hidden bg-[#180a0f]" aria-labelledby="artisan-network-title">
+      <h2 id="artisan-network-title" className="sr-only">A country of hands behind every object.</h2>
+      <div className="mx-auto max-w-[1874px]">
+        <DharoharImage
+          src="/images/experience/dharohar-country-of-hands.webp"
+          alt="Dharohar’s journey from regional artisan workshops through craft traditions, care processes, quality standards and delivery"
+          width={1874}
+          height={839}
+          unoptimized
+          sizes="100vw"
+          className="block h-auto w-full"
+        />
       </div>
     </section>
   );
@@ -910,7 +905,6 @@ function CommissionProof() {
             <motion.article key={brief.number} whileHover={{ y: -5 }} className={`commission-case group relative min-h-[430px] overflow-hidden rounded-[1.55rem] text-white ${index === 0 ? "lg:col-span-5" : index === 1 ? "lg:col-span-4" : "lg:col-span-3"}`}>
               <DharoharImage src={brief.image} alt={`${brief.audience} commission direction`} fill unoptimized sizes="(max-width: 1024px) 100vw, 42vw" className="object-cover transition duration-[1200ms] group-hover:scale-[1.045]" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#160d10]/98 via-[#241318]/28 to-black/6" />
-              <DharoharImageSignature className="right-5 top-5" />
               <div className="absolute inset-x-0 bottom-0 p-6">
                 <div className="flex items-center justify-between"><p className="text-[8px] font-bold uppercase tracking-[.2em] text-[#e2c27d]">{brief.audience}</p><span className="text-[8px] tracking-[.16em] text-white/42">{brief.number}</span></div>
                 <h3 className="mt-3 font-serif text-[2.25rem] leading-[.9]">{brief.title}</h3>
