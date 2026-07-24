@@ -72,8 +72,8 @@ test("server-renders the finished Dharohar brand gateway", async () => {
   assert.match(html, /behind every object\./);
   assert.match(html, /Care memberships/);
   assert.match(html, /Hospitality care/);
-  assert.match(html, /Briefs designed/);
-  assert.match(html, /to become heirlooms\./);
+  assert.doesNotMatch(html, /Briefs designed/);
+  assert.doesNotMatch(html, /to become heirlooms\./);
   assert.match(html, /Who are we creating for\?/);
   assert.match(html, /Material wisdom\./);
   assert.match(html, /Modern clarity\./);
@@ -108,7 +108,9 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.match(gateway, /dharohar:conversion/);
   assert.match(gateway, /NEXT_PUBLIC_CONSULTATION_EMAIL/);
   assert.match(gateway, /NEXT_PUBLIC_CONSULTATION_ENDPOINT/);
-  assert.match(gateway, /Prepare consultation request/);
+  assert.match(gateway, /Next · your details/);
+  assert.match(gateway, /How may we reach you\?/);
+  assert.match(gateway, /Prepare request/);
   assert.match(gateway, /Pause cinematic motion/);
   assert.match(gateway, /header_visit_store"[^>]*className="hero-nav-icon grid"/);
   assert.doesNotMatch(gateway, /cinematic-pointer-light/);
@@ -121,7 +123,7 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.match(gateway, /commission-cinema-portrait[\s\S]*?className="object-contain object-right"/);
   assert.match(gateway, /setActiveId\(clientPaths\[\(activeIndex \+ 1\) % clientPaths\.length\]\.id\)/);
   assert.match(gateway, /function ArtisanNetwork/);
-  assert.match(gateway, /function CommissionProof/);
+  assert.doesNotMatch(gateway, /function CommissionProof/);
   assert.match(gateway, /dharohar:consultation-persona/);
   assert.match(gateway, /Annual care membership/);
   assert.match(gateway, /Ghar Care/);
@@ -173,7 +175,6 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.ok(gateway.indexOf("<TrustSequence />") < gateway.indexOf("<DharoharTable />"));
   assert.ok(gateway.indexOf("<CommissioningHall />") < gateway.indexOf("<MaterialExplorer />"));
   assert.ok(gateway.indexOf("<ArtisanNetwork />") < gateway.indexOf("<TrustSequence />"));
-  assert.ok(gateway.indexOf("<LifetimeRestoration />") < gateway.indexOf("<CommissionProof />"));
   assert.doesNotMatch(gateway.match(/<main>([\s\S]*?)<\/main>/)?.[1] ?? "", /<RitualUniverse \/>|<PassportExperience \/>/);
   assert.doesNotMatch(gateway, /function GuidedFinder/);
   assert.doesNotMatch(gateway, /href="#finder"/);

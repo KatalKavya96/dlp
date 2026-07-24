@@ -3,7 +3,6 @@
 import {
   ArrowRight,
   BadgeCheck,
-  BookOpen,
   BriefcaseBusiness,
   CalendarDays,
   Check,
@@ -23,7 +22,6 @@ import {
   Home,
   Hotel,
   Instagram,
-  Layers3,
   Linkedin,
   Mail,
   MapPin,
@@ -156,12 +154,6 @@ const artisanProcessStats = [
   { value: "200+", label: "Craft traditions", icon: Sparkles },
   { value: "50+", label: "Care processes", icon: HeartHandshake },
   { value: "1", label: "Unified standard", icon: ShieldCheck },
-] as const;
-
-const commissionBriefs = [
-  { number: "01", audience: "Wedding atelier", title: "A family mark, repeated with care.", copy: "Object selection, engraving approval, presentation and distributed delivery organised as one commission.", meta: ["50–500+ gifts", "Personal engraving", "Presentation boxes"], image: "/images/branding/dharohar-wedding-gifting.webp" },
-  { number: "02", audience: "Hospitality table", title: "A material language built for service.", copy: "A coordinated collection for the kitchen and dining room, supported by replacement continuity and scheduled care.", meta: ["Cook & serve", "Sample approval", "Care rotation"], image: "/images/indian-table.jpg" },
-  { number: "03", audience: "Private kitchen", title: "The complete rasoi, considered together.", copy: "A household brief translated into cookware, tableware, water objects and future heirlooms.", meta: ["Family consultation", "Metal curation", "Object passport"], image: "/images/heritage-kitchen.jpg" },
 ] as const;
 
 const tableObjects = [
@@ -959,68 +951,6 @@ function ArtisanNetwork() {
   );
 }
 
-function CommissionProof() {
-  const tools = [
-    { icon: Layers3, label: "Trade material library", title: "Specify before you commission.", copy: "Review finish directions, care requirements, dimensions and sample routes for an interior or hospitality brief.", persona: "Interior designers", service: "Interior design or trade project" },
-    { icon: Gift, label: "Wedding gift atelier", title: "Build the gift around the moment.", copy: "Shape quantity, object, engraving, presentation and delivery into one approval-ready gifting brief.", persona: "Weddings & gifting", service: "Wedding or celebration gifting" },
-    { icon: BookOpen, label: "Object passport", title: "Keep the story with the object.", copy: "Record material, workshop region, engraving, care guidance and future restoration events.", persona: "Homes & collectors", service: "Object passport and provenance" },
-  ] as const;
-
-  function routeToConsultation(persona: string, service: string) {
-    window.dispatchEvent(new CustomEvent("dharohar:consultation-persona", { detail: { persona, service } }));
-  }
-
-  return (
-    <section id="commission-archive" className="commission-proof overflow-hidden bg-[#fffaf4] px-5 py-[clamp(4.5rem,7vw,7rem)]" aria-labelledby="commission-proof-title">
-      <div className="site-container">
-        <Reveal className="grid gap-7 lg:grid-cols-[1fr_.72fr] lg:items-end">
-          <div><p className="heritage-label">The commission room</p><h2 id="commission-proof-title" className="heritage-display mt-5 max-w-5xl text-[clamp(3.25rem,5.5vw,5.9rem)] leading-[.87]">Briefs designed<br /><span className="italic text-[#a26069]">to become heirlooms.</span></h2></div>
-          <p className="max-w-lg text-sm leading-7 text-[#756269] sm:text-base lg:justify-self-end">Three ways Dharohar can turn scale, specification and personal meaning into one composed collection.</p>
-        </Reveal>
-
-        <div className="mt-10 grid gap-4 lg:grid-cols-12">
-          {commissionBriefs.map((brief, index) => (
-            <motion.article key={brief.number} whileHover={{ y: -5 }} className={`commission-case group relative min-h-[430px] overflow-hidden rounded-[1.55rem] text-white ${index === 0 ? "lg:col-span-5" : index === 1 ? "lg:col-span-4" : "lg:col-span-3"}`}>
-              <DharoharImage src={brief.image} alt={`${brief.audience} commission direction`} fill unoptimized sizes="(max-width: 1024px) 100vw, 42vw" className="object-cover transition duration-[1200ms] group-hover:scale-[1.045]" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#160d10]/98 via-[#241318]/28 to-black/6" />
-              <div className="absolute inset-x-0 bottom-0 p-6">
-                <div className="flex items-center justify-between"><p className="text-[8px] font-bold uppercase tracking-[.2em] text-[#e2c27d]">{brief.audience}</p><span className="text-[8px] tracking-[.16em] text-white/42">{brief.number}</span></div>
-                <h3 className="mt-3 font-serif text-[2.25rem] leading-[.9]">{brief.title}</h3>
-                <p className="mt-4 text-sm leading-6 text-white/58">{brief.copy}</p>
-                <div className="mt-5 flex flex-wrap gap-2">{brief.meta.map((item) => <span key={item} className="rounded-full border border-white/14 bg-black/14 px-3 py-1.5 text-[7px] font-bold uppercase tracking-[.12em] text-white/58 backdrop-blur">{item}</span>)}</div>
-              </div>
-            </motion.article>
-          ))}
-        </div>
-
-        <Reveal className="commission-journey mt-5 rounded-[1.55rem] border border-[#a26069]/20 bg-[#f7eae7] p-6 sm:p-8">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <div><p className="text-[8px] font-bold uppercase tracking-[.2em] text-[#9d5864]">From brief to heirloom</p><h3 className="mt-2 font-serif text-3xl text-[#4c2e35]">A production journey you can see.</h3></div>
-            <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1">
-              {["Consultation", "Curation", "Sample", "Approval", "Production", "Quality", "Delivery", "Lifetime care"].map((step, index) => <div key={step} className="commission-step"><span>{String(index + 1).padStart(2, "0")}</span><strong>{step}</strong>{index < 7 ? <ArrowRight size={12} /> : null}</div>)}
-            </div>
-          </div>
-        </Reveal>
-
-        <div className="mt-5 grid gap-4 lg:grid-cols-3">
-          {tools.map((tool) => {
-            const Icon = tool.icon;
-            return (
-              <Reveal key={tool.label} className="commission-tool rounded-[1.55rem] border border-[#a26069]/20 bg-white p-6 shadow-[0_18px_48px_rgba(83,35,47,.06)] sm:p-8">
-                <span className="grid size-12 place-items-center rounded-full border border-[#a26069]/24 text-[#9d5864]"><Icon size={20} strokeWidth={1.35} /></span>
-                <p className="mt-6 text-[8px] font-bold uppercase tracking-[.2em] text-[#9d5864]">{tool.label}</p>
-                <h3 className="mt-3 font-serif text-3xl leading-none text-[#4c2e35]">{tool.title}</h3>
-                <p className="mt-4 text-sm leading-6 text-[#756269]">{tool.copy}</p>
-                <a href="#consultation" onClick={() => routeToConsultation(tool.persona, tool.service)} className="mt-6 inline-flex items-center gap-2 text-[8px] font-black uppercase tracking-[.17em] text-[#8d4653]">Prepare this brief <ArrowRight size={13} /></a>
-              </Reveal>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function TrustSequence() {
   const principles = [
     { icon: ShieldCheck, title: "Material clarity", copy: "Know the metal, lining, intended use and the care boundaries that matter." },
@@ -1158,12 +1088,36 @@ function ConsultationGateway() {
   const [persona, setPersona] = useState("Homes & collectors");
   const [service, setService] = useState("Complete heritage kitchen");
   const [submitting, setSubmitting] = useState(false);
+  const [step, setStep] = useState<0 | 1>(0);
+  const [briefValues, setBriefValues] = useState<Record<string, string>>({});
+  const [contactValues, setContactValues] = useState({ name: "", email: "", message: "", timing: "Weekday morning" });
+  const formRef = useRef<HTMLFormElement>(null);
+
+  function choosePersona(nextPersona: string) {
+    setPersona(nextPersona);
+    setBriefValues({});
+  }
+
+  function rememberBriefValue(name: string, value: string) {
+    setBriefValues((current) => ({ ...current, [name]: value }));
+  }
+
+  function showStep(nextStep: 0 | 1) {
+    setStep(nextStep);
+    window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+      formRef.current?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "center",
+      });
+    }));
+  }
 
   useEffect(() => {
     const selectPersona = (event: Event) => {
       const detail = (event as CustomEvent<{ persona?: string; service?: string }>).detail;
-      if (detail.persona) setPersona(detail.persona);
+      if (detail.persona) choosePersona(detail.persona);
       if (detail.service) setService(detail.service);
+      setStep(0);
     };
     window.addEventListener("dharohar:consultation-persona", selectPersona);
     return () => window.removeEventListener("dharohar:consultation-persona", selectPersona);
@@ -1193,6 +1147,9 @@ function ConsultationGateway() {
         track("consultation_submitted", `${persona}:${service}`);
         setStatus("Thank you. Your considered brief is with the Dharohar team.");
         formElement.reset();
+        setBriefValues({});
+        setContactValues({ name: "", email: "", message: "", timing: "Weekday morning" });
+        setStep(0);
       } catch {
         setStatus("We could not send this request. Please use ‘Email directly’ and we’ll help personally.");
       } finally {
@@ -1208,57 +1165,84 @@ function ConsultationGateway() {
   const dynamicFields = fieldsByAudience[persona] ?? fieldsByAudience["Homes & collectors"];
 
   return (
-    <form onSubmit={submit} className="consultation-card consultation-card-dark rounded-[1.6rem] border p-5 shadow-[0_28px_80px_rgba(0,0,0,.28)] backdrop-blur sm:p-8">
-      <div className="mb-6 flex items-end justify-between gap-5 border-b border-white/10 pb-5">
-        <div><p className="text-[8px] font-bold uppercase tracking-[.2em] text-[#d77f90]">Request consultation</p><p className="mt-2 font-serif text-[2rem] leading-none text-[#fff5e7]">A brief that understands you</p></div>
-        <span className="hidden text-[8px] font-bold uppercase tracking-[.16em] text-white/28 sm:block">About 60 seconds</span>
-      </div>
+    <form ref={formRef} onSubmit={submit} className="consultation-card consultation-card-dark consultation-step-form rounded-[1.6rem] border p-5 shadow-[0_28px_80px_rgba(0,0,0,.28)] backdrop-blur sm:p-7">
+      <input type="hidden" name="persona" value={persona} />
+      <input type="hidden" name="service" value={service} />
+      {step === 1 ? Object.entries(briefValues).map(([name, value]) => <input key={name} type="hidden" name={name} value={value} />) : null}
 
-      <fieldset>
-        <legend className="consult-label">01 · Who are we creating for?</legend>
-        <div className="consult-persona-grid">
-          {audiences.map((audience) => {
-            const Icon = audience.icon;
-            return <button key={audience.label} type="button" aria-pressed={persona === audience.label} onClick={() => setPersona(audience.label)} className={`consult-persona ${persona === audience.label ? "is-active" : ""}`}><Icon size={15} /><span>{audience.label}</span></button>;
-          })}
+      <div className="mb-5 border-b border-white/10 pb-4">
+        <div className="flex items-end justify-between gap-5">
+          <div><p className="text-[8px] font-bold uppercase tracking-[.2em] text-[#d77f90]">Request consultation</p><p className="mt-2 font-serif text-[1.75rem] leading-none text-[#fff5e7]">{step === 0 ? "Shape your brief" : "How may we reach you?"}</p></div>
+          <span aria-live="polite" className="text-[8px] font-bold uppercase tracking-[.16em] text-white/38">0{step + 1} / 02</span>
         </div>
-        <input type="hidden" name="persona" value={persona} />
-      </fieldset>
-
-      <label className="mt-6 block">
-        <span className="consult-label">02 · What would you like help with?</span>
-        <select name="service" className="consult-input" value={service} onChange={(event) => setService(event.target.value)}>
-          {services.map((option) => <option key={option}>{option}</option>)}
-        </select>
-      </label>
-
-      <fieldset className="mt-6">
-        <legend className="consult-label">03 · The useful details</legend>
-        <AnimatePresence mode="wait">
-          <motion.div key={persona} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {dynamicFields.map((field) => (
-              <label key={field.name}>
-                <span className="consult-label">{field.label}</span>
-                {field.options ? (
-                  <select name={field.name} className="consult-input" defaultValue={field.options[0]}>{field.options.map((option) => <option key={option}>{option}</option>)}</select>
-                ) : (
-                  <input name={field.name} type={field.type ?? "text"} className="consult-input" placeholder={field.placeholder} />
-                )}
-              </label>
-            ))}
-          </motion.div>
-        </AnimatePresence>
-      </fieldset>
-
-      <div className="mt-6 grid gap-4 sm:grid-cols-2">
-        <label><span className="consult-label">Your name</span><input required name="name" autoComplete="name" className="consult-input" placeholder="Name" /></label>
-        <label><span className="consult-label">Email</span><input required name="email" type="email" autoComplete="email" className="consult-input" placeholder="you@example.com" /></label>
+        <div className="mt-4 grid grid-cols-2 gap-2" aria-hidden="true">
+          <span className="h-1 rounded-full bg-[#d8b86b]" />
+          <span className={`h-1 rounded-full transition-colors duration-500 ${step === 1 ? "bg-[#d8b86b]" : "bg-white/10"}`} />
+        </div>
       </div>
-      <label className="mt-4 block"><span className="consult-label">Anything we should understand?</span><textarea name="message" rows={3} className="consult-input h-auto resize-none py-3" placeholder="The occasion, design intention, preferred metals, care needs or anything that matters…" /></label>
-      <label className="mt-4 block"><span className="consult-label">Preferred conversation</span><select name="timing" className="consult-input" defaultValue="Weekday morning"><option>Weekday morning</option><option>Weekday afternoon</option><option>Weekday evening</option><option>Weekend</option></select></label>
-      <button type="submit" disabled={submitting} className="consult-submit mt-5 inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-lg px-6 text-[10px] font-bold uppercase tracking-[.18em] transition disabled:cursor-wait disabled:opacity-60">{submitting ? "Sending request" : "Prepare consultation request"} <ArrowRight size={15} /></button>
-      <p aria-live="polite" className="mt-4 min-h-5 text-center text-xs text-white/58"><ShieldCheck size={14} className="mr-2 inline text-[#ce7587]" />{status}</p>
-      <p className="mt-1 text-center text-[9px] leading-4 text-white/38">Your details are handled privately and used only to prepare this consultation.</p>
+
+      <div className="overflow-hidden">
+        <AnimatePresence initial={false} mode="wait">
+          {step === 0 ? (
+            <motion.div key="brief" initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }} transition={{ duration: .32, ease: [.22, 1, .36, 1] }}>
+              <fieldset>
+                <legend className="consult-label">Who are we creating for?</legend>
+                <div className="consult-persona-grid">
+                  {audiences.map((audience) => {
+                    const Icon = audience.icon;
+                    return <button key={audience.label} type="button" aria-pressed={persona === audience.label} onClick={() => choosePersona(audience.label)} className={`consult-persona ${persona === audience.label ? "is-active" : ""}`}><Icon size={15} /><span>{audience.label}</span></button>;
+                  })}
+                </div>
+              </fieldset>
+
+              <label className="mt-4 block">
+                <span className="consult-label">What would you like help with?</span>
+                <select className="consult-input" value={service} onChange={(event) => setService(event.target.value)}>
+                  {services.map((option) => <option key={option}>{option}</option>)}
+                </select>
+              </label>
+
+              <fieldset className="mt-4">
+                <legend className="consult-label">Useful project details</legend>
+                <AnimatePresence mode="wait">
+                  <motion.div key={persona} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="grid gap-3 sm:grid-cols-2">
+                    {dynamicFields.map((field) => (
+                      <label key={field.name}>
+                        <span className="consult-label">{field.label}</span>
+                        {field.options ? (
+                          <select className="consult-input" value={briefValues[field.name] ?? field.options[0]} onChange={(event) => rememberBriefValue(field.name, event.target.value)}>{field.options.map((option) => <option key={option}>{option}</option>)}</select>
+                        ) : (
+                          <input type={field.type ?? "text"} className="consult-input" placeholder={field.placeholder} value={briefValues[field.name] ?? ""} onChange={(event) => rememberBriefValue(field.name, event.target.value)} />
+                        )}
+                      </label>
+                    ))}
+                  </motion.div>
+                </AnimatePresence>
+              </fieldset>
+
+              <button type="button" onClick={() => {
+                setBriefValues((current) => Object.fromEntries(dynamicFields.map((field) => [field.name, current[field.name] ?? field.options?.[0] ?? ""])));
+                showStep(1);
+              }} className="consult-submit mt-5 inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-lg px-6 text-[9px] font-bold uppercase tracking-[.18em] transition">Next · your details <ArrowRight size={15} /></button>
+            </motion.div>
+          ) : (
+            <motion.div key="contact" initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 24 }} transition={{ duration: .32, ease: [.22, 1, .36, 1] }}>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <label><span className="consult-label">Your name</span><input required name="name" autoComplete="name" className="consult-input" placeholder="Name" value={contactValues.name} onChange={(event) => setContactValues((current) => ({ ...current, name: event.target.value }))} /></label>
+                <label><span className="consult-label">Email</span><input required name="email" type="email" autoComplete="email" className="consult-input" placeholder="you@example.com" value={contactValues.email} onChange={(event) => setContactValues((current) => ({ ...current, email: event.target.value }))} /></label>
+              </div>
+              <label className="mt-3 block"><span className="consult-label">Anything we should understand?</span><textarea name="message" rows={3} className="consult-input h-auto resize-none py-3" placeholder="The occasion, design intention, preferred metals or anything that matters…" value={contactValues.message} onChange={(event) => setContactValues((current) => ({ ...current, message: event.target.value }))} /></label>
+              <label className="mt-3 block"><span className="consult-label">Preferred conversation</span><select name="timing" className="consult-input" value={contactValues.timing} onChange={(event) => setContactValues((current) => ({ ...current, timing: event.target.value }))}><option>Weekday morning</option><option>Weekday afternoon</option><option>Weekday evening</option><option>Weekend</option></select></label>
+              <div className="mt-5 grid grid-cols-[auto_1fr] gap-2">
+                <button type="button" onClick={() => showStep(0)} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-white/14 px-4 text-[9px] font-bold uppercase tracking-[.14em] text-white/62 transition hover:border-white/30 hover:text-white"><ChevronLeft size={14} /> Back</button>
+                <button type="submit" disabled={submitting} className="consult-submit inline-flex min-h-12 items-center justify-center gap-3 rounded-lg px-5 text-[9px] font-bold uppercase tracking-[.16em] transition disabled:cursor-wait disabled:opacity-60">{submitting ? "Sending request" : "Prepare request"} <ArrowRight size={15} /></button>
+              </div>
+              <p aria-live="polite" className="mt-3 min-h-5 text-center text-xs text-white/58"><ShieldCheck size={14} className="mr-2 inline text-[#ce7587]" />{status}</p>
+              <p className="mt-1 text-center text-[9px] leading-4 text-white/38">Your details are handled privately and only used for this consultation.</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </form>
   );
 }
@@ -1317,7 +1301,6 @@ export function BrandGateway() {
         <TrustSequence />
         <DharoharTable />
         <LifetimeRestoration />
-        <CommissionProof />
         <section id="consultation" className="rose-dark-surface rose-consultation consultation-reference consultation-salon relative isolate overflow-hidden px-5 text-[#fff8e9]" aria-labelledby="consultation-title"><div className="consultation-orb pointer-events-none absolute -left-[18%] top-[10%] -z-10 size-[48rem] rounded-full" /><div className="site-container grid gap-12 py-[clamp(5.5rem,8vw,8rem)] lg:grid-cols-[.8fr_1.2fr] lg:items-start"><Reveal className="consultation-intro lg:sticky lg:top-32"><p className="text-[9px] font-bold uppercase tracking-[.24em] text-[#d7a56f]">The Dharohar private salon</p><p className="mt-6 text-[10px] font-bold uppercase tracking-[.24em] text-[#d77f90]">Homes <span className="px-2 text-[#d7a56f]">•</span> Celebrations <span className="px-2 text-[#d7a56f]">•</span> Trade</p><h2 id="consultation-title" className="mt-7 max-w-2xl font-serif text-[clamp(3.7rem,6vw,6.6rem)] leading-[.87]">A quieter way<br />to begin.</h2><span className="mt-7 block h-px w-10 bg-[#d7a56f]" /><p className="mt-6 max-w-xl text-sm leading-7 text-white/60 sm:text-base">Choose who you are creating for and what you need. The brief will adapt—whether it is one home, a wedding, an interior or a restaurant in service.</p><div className="mt-8 flex flex-wrap gap-3">{booking ? <a href={booking} target="_blank" rel="noreferrer" onClick={() => track("booking_click", "consultation")} className="salon-primary-button"><CalendarDays size={16} /> Speak for 30 minutes</a> : <a href={`mailto:${process.env.NEXT_PUBLIC_CONSULTATION_EMAIL ?? "hello@dharohar.in"}?subject=Dharohar%2030-minute%20consultation`} className="salon-primary-button"><CalendarDays size={16} /> Speak for 30 minutes</a>}<a href={`mailto:${process.env.NEXT_PUBLIC_CONSULTATION_EMAIL ?? "hello@dharohar.in"}`} className="salon-secondary-button"><Mail size={16} /> Email directly</a></div><div className="mt-9 flex flex-wrap gap-6 text-[9px] font-bold uppercase tracking-[.14em] text-white/42"><span className="flex items-center gap-3"><Users size={17} className="text-[#ce7587]" /> Personal concierge</span><span className="hidden h-5 w-px bg-white/12 sm:block" /><span className="flex items-center gap-3"><Clock3 size={17} className="text-[#ce7587]" /> One working day response</span></div></Reveal><ConsultationGateway /></div></section>
       </main>
       <CareDock />
