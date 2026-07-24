@@ -840,6 +840,29 @@ main section[id] {
   text-shadow: 0 2px 16px rgb(0 0 0 / 38%);
 }
 
+.gateway-header {
+  transform: translateY(0);
+  opacity: 1;
+  transition:
+    transform 420ms cubic-bezier(.22, 1, .36, 1),
+    opacity 260ms ease,
+    background-color 420ms ease,
+    border-color 420ms ease,
+    box-shadow 420ms ease;
+  will-change: transform;
+}
+
+.gateway-header-hidden {
+  transform: translateY(calc(-100% - 2px));
+  opacity: 0;
+  pointer-events: none;
+}
+
+.gateway-header-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 .gateway-header-scrolled {
   border-bottom: 1px solid rgb(225 174 182 / 24%);
   background: rgb(55 29 36 / 92%);
@@ -2427,6 +2450,31 @@ h4 {
   gap: .95rem;
   background: #d8b86b;
   color: #2b181b;
+}
+
+.care-atelier-aura {
+  background:
+    radial-gradient(circle at 50% 10%, rgb(124 51 65 / 20%), transparent 30%),
+    radial-gradient(circle at 10% 76%, rgb(111 67 29 / 11%), transparent 28%),
+    radial-gradient(circle at 92% 68%, rgb(91 45 67 / 12%), transparent 30%),
+    linear-gradient(135deg, #10070c, #190a11 50%, #0d080d);
+}
+
+.care-atelier-process::before {
+  position: absolute;
+  left: 4rem;
+  right: 4rem;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #a77f38 8%, #d5ae5a 50%, #a77f38 92%, transparent);
+  content: "";
+  opacity: .58;
+}
+
+@media (max-width: 1023px) {
+  .care-atelier-process::before {
+    display: none;
+  }
 }
 
 .artisan-network-aura {

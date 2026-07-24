@@ -246,11 +246,29 @@ function GatewayHeader() {
   const [open, setOpen] = useState(false);
   const [activeHref, setActiveHref] = useState("#top");
   const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const lastScrollY = useRef(0);
+  const headerFrame = useRef<number | null>(null);
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 110, damping: 26, mass: .25 });
 
   useEffect(() => {
-    const updateHeader = () => setScrolled(window.scrollY > 44);
+    lastScrollY.current = window.scrollY;
+    const updateHeader = () => {
+      if (headerFrame.current !== null) return;
+      headerFrame.current = window.requestAnimationFrame(() => {
+        const nextScrollY = window.scrollY;
+        const movement = nextScrollY - lastScrollY.current;
+
+        setScrolled(nextScrollY > 44);
+        if (nextScrollY < 80) setVisible(true);
+        else if (movement > 6) setVisible(false);
+        else if (movement < -4) setVisible(true);
+
+        lastScrollY.current = nextScrollY;
+        headerFrame.current = null;
+      });
+    };
     updateHeader();
     window.addEventListener("scroll", updateHeader, { passive: true });
     const sections = ["top", ...gatewayLinks.map(([, href]) => href.slice(1))].map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
@@ -261,12 +279,20 @@ function GatewayHeader() {
     sections.forEach((section) => observer.observe(section));
     return () => {
       window.removeEventListener("scroll", updateHeader);
+      if (headerFrame.current !== null) window.cancelAnimationFrame(headerFrame.current);
       observer.disconnect();
     };
   }, []);
 
+  useEffect(() => {
+    if (open) setVisible(true);
+  }, [open]);
+
   return (
-    <header className={`gateway-header fixed inset-x-0 top-0 z-50 text-[#fff9ed] transition duration-500 ${scrolled || open ? "gateway-header-scrolled" : "gateway-header-top"}`}>
+    <header
+      className={`gateway-header fixed inset-x-0 top-0 z-50 text-[#fff9ed] ${scrolled || open ? "gateway-header-scrolled" : "gateway-header-top"} ${visible || open ? "gateway-header-visible" : "gateway-header-hidden"}`}
+      onFocusCapture={() => setVisible(true)}
+    >
       <motion.div className="absolute inset-x-0 bottom-0 h-px origin-left bg-[#e4c789]" style={{ scaleX: progress }} />
       <div className="site-container flex h-[88px] items-center justify-between gap-4 sm:h-[100px]">
         <a href="#top" aria-label="Dharohar home" className="min-w-0 shrink-0">
@@ -606,84 +632,172 @@ function DharoharTable() {
 }
 
 function LifetimeRestoration() {
-  const [careMode, setCareMode] = useState<"restore" | "membership" | "hospitality">("restore");
+  const [comparison, setComparison] = useState(50);
+  const [activeService, setActiveService] = useState(0);
+  const comparisonDirection = useRef(1);
+  const comparisonResumeAt = useRef(0);
+  const reducedMotion = useReducedMotion();
   const services = [
-    { icon: RotateCcw, title: "Re-tinning / Kalai", copy: "Renew food-contact lining after an object-specific assessment." },
-    { icon: Sparkles, title: "Polishing & patina", copy: "Restore brightness or preserve a naturally earned patina." },
-    { icon: Hammer, title: "Dent & form repair", copy: "Correct dents while respecting the vessel’s handmade character." },
-    { icon: ShieldCheck, title: "Fittings inspection", copy: "Review handles, lids, joints and everyday working points." },
-    { icon: PenLine, title: "Engraving updates", copy: "Refresh a mark or add the next name and date." },
-    { icon: HeartHandshake, title: "Care guidance", copy: "Receive lifelong, object-specific maintenance support." },
+    { icon: RotateCcw, title: "Re-tinning / Kalai", copy: "Renew the food-contact lining with traditional kalai, ensuring purity, safety and heirloom longevity.", bullets: ["Material-specific inspection", "Food-contact lining renewal", "Final finish & safety check"] },
+    { icon: Sparkles, title: "Polishing & patina", copy: "Recover the metal’s natural warmth while preserving the marks that belong to its history.", bullets: ["Surface and patina assessment", "Hand-polished restoration", "Protective finishing guidance"] },
+    { icon: Hammer, title: "Dent & form repair", copy: "Return the vessel to working form without erasing the character left by years of use.", bullets: ["Form and balance inspection", "Hand-corrected dents", "Handle and rim alignment"] },
+    { icon: ShieldCheck, title: "Fittings inspection", copy: "Review handles, lids and joins so every moving point remains safe, balanced and dependable.", bullets: ["Handle security review", "Lid and joint adjustment", "Final working inspection"] },
+    { icon: PenLine, title: "Engraving renewal", copy: "Refresh a fading family mark or carefully add the next name and date to the object’s story.", bullets: ["Existing-mark assessment", "Engraving placement approval", "Finish protection"] },
+    { icon: HeartHandshake, title: "Care consultation", copy: "Receive practical, object-specific guidance for daily use, storage and future restoration.", bullets: ["Personal care plan", "Material-use guidance", "Future service record"] },
   ] as const;
-  const memberships = [
-    { name: "Ghar Care", price: "₹4,900", cadence: "per year", credits: "4 care credits", features: ["Annual condition review", "One pickup and return cycle", "10% off additional care"], recommended: false },
-    { name: "Heirloom Circle", price: "₹9,900", cadence: "per year", credits: "10 care credits", features: ["Two logistics cycles", "Priority artisan queue", "Engraving refresh credit", "Digital care ledger"], recommended: true },
-    { name: "Collector’s Reserve", price: "₹18,000", cadence: "per year", credits: "20 care credits", features: ["Twice-yearly review", "Dedicated care advisor", "Priority restoration", "Provenance record"], recommended: false },
+  const careJourney = [
+    { number: "01", title: "Assessment", copy: "We examine your piece with care and expertise.", image: "/images/restoration/care-vessel-before.png" },
+    { number: "02", title: "Restore", copy: "Skilled artisans revive form, finish and function.", image: "/images/artisan.jpg" },
+    { number: "03", title: "Preserve", copy: "We protect with the right treatments and guidance.", image: "/images/restoration/care-vessel-after.png" },
+    { number: "04", title: "Return", copy: "Your piece returns, ready to be cherished.", image: "/images/branding/dharohar-heirloom-box.webp" },
   ] as const;
+  const selectedService = services[activeService];
+  const SelectedServiceIcon = selectedService.icon;
   const mail = process.env.NEXT_PUBLIC_CONSULTATION_EMAIL ?? "hello@dharohar.in";
 
+  useEffect(() => {
+    if (reducedMotion) return;
+    const movement = window.setInterval(() => {
+      if (Date.now() < comparisonResumeAt.current) return;
+      setComparison((current) => {
+        const next = current + comparisonDirection.current * .34;
+        if (next >= 92) {
+          comparisonDirection.current = -1;
+          return 92;
+        }
+        if (next <= 8) {
+          comparisonDirection.current = 1;
+          return 8;
+        }
+        return next;
+      });
+    }, 40);
+    return () => window.clearInterval(movement);
+  }, [reducedMotion]);
+
+  const holdAutomaticComparison = () => {
+    comparisonResumeAt.current = Date.now() + 3200;
+  };
+
   return (
-    <section id="restoration" className="rose-dark-surface rose-restoration restoration-reference compact-restoration relative overflow-hidden border-y border-[#d8b86b]/18 px-5 py-[clamp(5.5rem,8vw,8.5rem)] text-[#fff4dc]" aria-labelledby="restoration-title">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_83%_16%,rgba(192,104,120,.14),transparent_34%),radial-gradient(circle_at_15%_82%,rgba(168,104,69,.1),transparent_30%)]" />
-      <div className="site-container">
-        <Reveal className="restoration-intro relative mx-auto max-w-5xl text-center">
-          <p className="inline-flex items-center gap-3 text-[9px] font-bold uppercase tracking-[.24em] text-[#d8b86b]"><Wrench size={13} /> Lifetime restoration</p>
-          <h2 id="restoration-title" className="mt-6 font-serif text-[clamp(3.4rem,5.4vw,5.8rem)] leading-[.9]">Care for a lifetime.<br /><span className="italic">Not only at purchase.</span></h2>
-          <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-white/58 sm:text-base">Every Dharohar piece retains a clear route to skilled restoration<br className="hidden sm:block" /> and practical maintenance guidance throughout ownership.</p>
+    <section id="restoration" className="care-atelier restoration-reference relative isolate overflow-hidden border-y border-[#9e7434]/24 bg-[#10070c] px-4 py-[clamp(4rem,6vw,6.5rem)] text-[#fff4dc]" aria-labelledby="restoration-title">
+      <div className="care-atelier-aura pointer-events-none absolute inset-0 -z-10" />
+      <div className="site-container !max-w-[1540px]">
+        <Reveal className="mx-auto max-w-5xl text-center">
+          <div className="mx-auto flex max-w-xs items-center gap-3"><span className="h-px flex-1 bg-gradient-to-r from-transparent to-[#b9954d]/70" /><Sparkles size={13} className="text-[#d5ae5a]" /><span className="h-px flex-1 bg-gradient-to-l from-transparent to-[#b9954d]/70" /></div>
+          <p className="mt-3 text-[9px] font-extrabold uppercase tracking-[.3em] text-[#d5ae5a]">The Dharohar Care Atelier</p>
+          <h2 id="restoration-title" className="mt-4 font-serif text-[clamp(3rem,5vw,5.7rem)] font-semibold leading-[.9]">Care that continues beyond the purchase.</h2>
+          <p className="mt-3 font-serif text-[clamp(1.85rem,3.2vw,3.5rem)] italic leading-none text-[#d28c9b]">Restore the shine. Preserve the story.</p>
+          <p className="mx-auto mt-5 max-w-3xl text-sm font-medium leading-7 text-white/56 sm:text-base">Every Dharohar piece is made to live for generations. Our lifelong care ensures it is restored with expertise, maintained with intention and passed on with pride.</p>
         </Reveal>
 
-        <div className="care-mode-tabs relative mx-auto mt-9 flex max-w-3xl rounded-full border border-white/12 bg-black/15 p-1" role="tablist" aria-label="Dharohar care programmes">
-          {[
-            ["restore", "One-time restoration"],
-            ["membership", "Care memberships"],
-            ["hospitality", "Hospitality care"],
-          ].map(([id, label]) => <button key={id} type="button" role="tab" aria-selected={careMode === id} onClick={() => setCareMode(id as typeof careMode)} className={`care-mode-tab ${careMode === id ? "is-active" : ""}`}>{label}</button>)}
-        </div>
+        <Reveal delay={.08} className="relative mt-7 overflow-hidden rounded-[1.5rem] border border-[#9e7434]/45 bg-[#160a10] shadow-[0_32px_90px_rgba(0,0,0,.35)]">
+          <div className="grid min-h-[clamp(19rem,31vw,30rem)] md:grid-cols-[.18fr_.64fr_.18fr]">
+            <aside className="relative z-20 hidden flex-col justify-center px-8 md:flex">
+              <p className="text-[9px] font-extrabold uppercase tracking-[.38em] text-[#e0bd70]">Before</p>
+              <p className="mt-3 text-sm leading-6 text-white/55">Time-worn.<br />Full of stories.</p>
+            </aside>
 
-        <AnimatePresence mode="wait">
-          {careMode === "restore" ? (
-            <motion.div key="restore" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} className="relative mt-9 grid gap-px overflow-hidden rounded-[1.45rem] border border-white/12 bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
-              {services.map((service, index) => { const Icon = service.icon; return <article key={service.title} className="group min-h-[180px] bg-[#321f16] p-6 transition hover:bg-[#3a251a] sm:p-7"><div className="grid grid-cols-[2.5rem_1fr] items-start gap-5"><span className="pt-2 text-[#d8a2aa] transition group-hover:-translate-y-1 group-hover:text-[#f0c5ca]"><Icon size={24} strokeWidth={1.25} /></span><div><p className="text-[7px] font-bold uppercase tracking-[.2em] text-[#d8b86b]">Care 0{index + 1}</p><h3 className="mt-3 font-serif text-[1.65rem] leading-none">{service.title}</h3><p className="mt-3 max-w-[18rem] text-sm leading-6 text-white/48">{service.copy}</p></div></div></article>; })}
-            </motion.div>
-          ) : null}
-
-          {careMode === "membership" ? (
-            <motion.div key="membership" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} className="mt-9 grid gap-4 lg:grid-cols-3">
-              {memberships.map((plan) => (
-                <article key={plan.name} className={`care-plan-card relative rounded-[1.45rem] border p-6 sm:p-8 ${plan.recommended ? "is-recommended" : ""}`}>
-                  {plan.recommended ? <span className="absolute right-5 top-5 rounded-full bg-[#d8b86b] px-3 py-1 text-[7px] font-black uppercase tracking-[.14em] text-[#2b151a]">Most considered</span> : null}
-                  <p className="text-[8px] font-bold uppercase tracking-[.2em] text-[#d8b86b]">{plan.credits}</p>
-                  <h3 className="mt-4 font-serif text-4xl">{plan.name}</h3>
-                  <div className="mt-5 flex items-end gap-2"><strong className="font-serif text-5xl font-medium text-[#fff4dc]">{plan.price}</strong><span className="pb-2 text-xs text-white/36">{plan.cadence}</span></div>
-                  <div className="mt-6 space-y-3 border-t border-white/10 pt-5">{plan.features.map((feature) => <p key={feature} className="flex items-center gap-3 text-sm text-white/55"><Check size={14} className="text-[#d8b86b]" />{feature}</p>)}</div>
-                  <a href={`mailto:${mail}?subject=${encodeURIComponent(`Dharohar ${plan.name} membership`)}`} className="restoration-request mt-7 w-full">Choose {plan.name} <ArrowRight size={14} /></a>
-                </article>
-              ))}
-              <p className="col-span-full mt-2 text-center text-[10px] leading-5 text-white/34">Indicative launch pricing. Final inclusions and logistics are confirmed against object size, condition and serviceable location.</p>
-            </motion.div>
-          ) : null}
-
-          {careMode === "hospitality" ? (
-            <motion.div key="hospitality" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} className="hospitality-care-panel mt-9 overflow-hidden rounded-[1.45rem] border border-white/12 bg-[#241018]/76">
-              <div className="grid lg:grid-cols-[.92fr_1.08fr]">
-                <div className="p-7 sm:p-10">
-                  <p className="text-[8px] font-bold uppercase tracking-[.22em] text-[#d8b86b]">Capacity held for your service</p>
-                  <h3 className="mt-4 max-w-xl font-serif text-[clamp(2.8rem,4.7vw,5rem)] leading-[.88]">Care that moves in batches, not emergencies.</h3>
-                  <p className="mt-5 max-w-xl text-sm leading-7 text-white/52">A scheduled restoration route for restaurants, hotels and event collections—so part of the service is cared for while the rest remains in use.</p>
-                  <div className="mt-7 flex items-end gap-3"><strong className="font-serif text-5xl font-medium text-[#efd49a]">₹25,000</strong><span className="pb-2 text-xs text-white/38">from / quarter</span></div>
-                  <a href={`mailto:${mail}?subject=Dharohar%20hospitality%20care`} className="restoration-request mt-7">Build a care rotation <ArrowRight size={14} /></a>
-                </div>
-                <div className="grid gap-px bg-white/10 sm:grid-cols-2">
-                  {[["01", "Condition audit", "Review the working collection and identify priority objects."], ["02", "Rolling batches", "Keep service running while selected pieces return to care."], ["03", "Priority turnaround", "Reserve artisan capacity around the operating calendar."], ["04", "Continuity ledger", "Record work, replacements and future service dates."]].map(([number, title, copy]) => <article key={number} className="bg-[#2b141d] p-6 sm:p-8"><span className="text-[8px] font-bold tracking-[.18em] text-[#d8b86b]">{number}</span><h4 className="mt-4 font-serif text-3xl">{title}</h4><p className="mt-3 text-sm leading-6 text-white/45">{copy}</p></article>)}
-                </div>
+            <div className="relative min-h-[19rem] overflow-hidden">
+              <DharoharImage src="/images/restoration/care-vessel-before.png" alt="A deeply oxidised and time-worn Dharohar vessel before restoration" fill unoptimized sizes="70vw" className="object-contain" />
+              <div className="absolute inset-0" style={{ clipPath: `inset(0 0 0 ${comparison}%)` }}>
+                <DharoharImage src="/images/restoration/care-vessel-after.png" alt="The same Dharohar vessel after complete polishing and restoration" fill unoptimized sizes="70vw" className="object-contain" />
               </div>
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
+              <input
+                type="range"
+                min="5"
+                max="95"
+                step=".1"
+                value={comparison}
+                onChange={(event) => {
+                  holdAutomaticComparison();
+                  setComparison(Number(event.target.value));
+                }}
+                onPointerDown={holdAutomaticComparison}
+                onKeyDown={holdAutomaticComparison}
+                aria-label="Compare the vessel before and after restoration"
+                aria-valuetext={`${Math.round(comparison)}% restored`}
+                className="peer absolute inset-0 z-30 h-full w-full cursor-ew-resize opacity-0"
+              />
+              <div className="pointer-events-none absolute inset-y-0 z-20 w-px bg-[#e2bb68] shadow-[0_0_24px_rgba(226,187,104,.35)]" style={{ left: `${comparison}%` }}>
+                <span className="absolute left-1/2 top-1/2 flex size-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#f4d58b]/70 bg-[#d5a94f] text-[#231208] shadow-xl transition peer-focus-visible:ring-4 peer-focus-visible:ring-[#d5a94f]/25"><ChevronLeft size={14} /><ChevronRight size={14} /></span>
+              </div>
+              <div className="absolute left-4 top-4 z-20 md:hidden"><p className="text-[8px] font-extrabold uppercase tracking-[.25em] text-[#e0bd70]">Before</p></div>
+              <div className="absolute right-4 top-4 z-20 text-right md:hidden"><p className="text-[8px] font-extrabold uppercase tracking-[.25em] text-[#e0bd70]">After</p></div>
+            </div>
 
-        <Reveal className="restoration-promise relative mt-8 flex flex-col gap-7 rounded-[1.25rem] border border-white/12 bg-[#1e120d]/35 p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between">
-          <div className="min-w-0 flex-1"><div className="flex items-center gap-5"><p className="shrink-0 text-[8px] font-bold uppercase tracking-[.22em] text-[#d8b86b]">The lifelong promise</p><span className="h-px flex-1 bg-gradient-to-r from-[#d8b86b]/25 to-transparent" /></div><div className="mt-5 flex flex-wrap gap-x-8 gap-y-3 text-xs text-white/58">{["Care remains recorded", "Repair before replacement", "Guidance throughout ownership"].map((item) => <span key={item} className="flex items-center gap-2"><Check size={13} className="text-[#d8b86b]" />{item}</span>)}</div></div>
-          <a href={`mailto:${mail}?subject=Dharohar%20lifetime%20care%20request`} className="restoration-request shrink-0">Request restoration <ArrowRight size={15} /></a>
+            <aside className="relative z-20 hidden flex-col justify-center px-8 md:flex">
+              <p className="text-[9px] font-extrabold uppercase tracking-[.38em] text-[#e0bd70]">After</p>
+              <p className="mt-3 text-sm leading-6 text-white/55">Restored with care.<br />Ready for more.</p>
+            </aside>
+          </div>
+        </Reveal>
+
+        <Reveal delay={.12} className="care-atelier-process relative grid gap-4 border-b border-[#9e7434]/25 py-5 sm:grid-cols-2 lg:grid-cols-4">
+          {careJourney.map((stage) => (
+            <article key={stage.number} className="relative z-10 grid grid-cols-[3.6rem_1fr] items-center gap-4 bg-[#10070c] px-2">
+              <div className="relative size-14 overflow-hidden rounded-full border border-[#d5ae5a]/60 bg-[#241017]">
+                <DharoharImage src={stage.image} alt="" fill unoptimized sizes="56px" className="object-cover" aria-hidden="true" />
+              </div>
+              <div>
+                <p className="flex items-center gap-2 text-[8px] font-extrabold uppercase tracking-[.14em]"><span className="font-serif text-xl text-[#d5ae5a]">{stage.number}</span>{stage.title}</p>
+                <p className="mt-1 text-xs leading-5 text-white/48">{stage.copy}</p>
+              </div>
+            </article>
+          ))}
+        </Reveal>
+
+        <Reveal delay={.16} className="mt-5 grid gap-4 lg:grid-cols-[.24fr_.53fr_.23fr]">
+          <div className="overflow-hidden rounded-[1.35rem] border border-[#9e7434]/38 bg-[#1a0c12]/90 p-3" role="tablist" aria-label="Restoration services">
+            {services.map((service, index) => {
+              const Icon = service.icon;
+              const selected = activeService === index;
+              return (
+                <button key={service.title} type="button" role="tab" aria-selected={selected} onClick={() => setActiveService(index)} className={`flex min-h-12 w-full items-center gap-4 border-b border-white/8 px-3 text-left text-sm transition last:border-b-0 ${selected ? "border-l-2 !border-l-[#d5ae5a] bg-[#d5ae5a]/8 text-[#e7c97d]" : "text-white/52 hover:bg-white/4 hover:text-white/80"}`}>
+                  <Icon size={18} strokeWidth={1.45} className={selected ? "text-[#e7c97d]" : "text-white/38"} />
+                  <span className="flex-1">{service.title}</span>
+                  <ChevronRight size={14} className={selected ? "opacity-100" : "opacity-20"} />
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="overflow-hidden rounded-[1.35rem] border border-[#9e7434]/38 bg-[#160a10]/92">
+            <AnimatePresence mode="wait">
+              <motion.div key={selectedService.title} initial={{ opacity: 0, x: 18 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -14 }} transition={{ duration: .36 }} className="grid min-h-full md:grid-cols-[.48fr_.52fr]">
+                <div className="relative min-h-[18rem]">
+                  <DharoharImage src="/images/artisan.jpg" alt="A Dharohar artisan restoring the form and finish of a heritage vessel" fill unoptimized sizes="(max-width: 768px) 100vw, 32vw" className="object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#160a10]/30" />
+                </div>
+                <div className="flex flex-col justify-center p-6 sm:p-8">
+                  <SelectedServiceIcon size={24} strokeWidth={1.35} className="text-[#d5ae5a]" />
+                  <h3 className="mt-4 font-serif text-[clamp(2.2rem,3.5vw,3.7rem)] leading-none">{selectedService.title}</h3>
+                  <span className="mt-4 h-px w-20 bg-gradient-to-r from-[#d5ae5a] to-transparent" />
+                  <p className="mt-5 text-sm leading-7 text-white/55">{selectedService.copy}</p>
+                  <div className="mt-5 space-y-3">{selectedService.bullets.map((bullet) => <p key={bullet} className="flex items-center gap-3 text-sm text-white/64"><span className="grid size-5 place-items-center rounded-full border border-[#d5ae5a]/70 text-[#d5ae5a]"><Check size={11} /></span>{bullet}</p>)}</div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          <aside className="rounded-[1.35rem] border border-[#9e7434]/38 bg-[#160a10]/92 p-5 text-center">
+            <p className="text-[9px] font-extrabold uppercase tracking-[.3em] text-[#d5ae5a]">Care Passport</p>
+            <div className="relative mt-4 aspect-[4/3] overflow-hidden rounded-xl border border-white/10 bg-[#0d0809]">
+              <DharoharImage src="/images/restoration/care-vessel-after.png" alt="" fill unoptimized sizes="24vw" className="object-cover opacity-[.68]" aria-hidden="true" />
+              <div className="absolute bottom-4 left-5 w-[46%] -rotate-6 rounded-sm border border-[#d5ae5a]/45 bg-[#171319] px-3 py-5 shadow-2xl">
+                <DharoharWordmark className="mx-auto h-auto w-full" />
+                <span className="mt-3 block text-[6px] font-extrabold uppercase tracking-[.2em] text-[#d5ae5a]">Care Passport</span>
+              </div>
+            </div>
+            <p className="mx-auto mt-4 max-w-xs text-sm leading-6 text-white/48">A record of your piece’s craft, restorations and care guidance—kept for generations.</p>
+          </aside>
+        </Reveal>
+
+        <Reveal delay={.2} className="mt-5 flex flex-col gap-4 border-t border-[#9e7434]/24 pt-5 lg:flex-row lg:items-center lg:justify-center">
+          <a href={`mailto:${mail}?subject=Dharohar%20lifetime%20care%20request`} className="restoration-request min-w-[17rem] justify-center">Request restoration <ArrowRight size={15} /></a>
+          <a href="#care-guide" className="inline-flex min-h-12 items-center justify-center gap-3 px-5 text-[9px] font-extrabold uppercase tracking-[.17em] text-[#e0bd70]">Explore lifelong care <ArrowRight size={14} /></a>
+          <span className="hidden h-12 w-px bg-[#9e7434]/32 lg:block" />
+          <p className="flex items-center justify-center gap-4 font-serif text-xl text-[#ead7b5]"><ShieldCheck size={34} className="text-[#d5ae5a]" /><span>Repair before replacement.<br /><em className="text-[#d28c9b]">Preserve before polishing away.</em></span></p>
         </Reveal>
       </div>
     </section>

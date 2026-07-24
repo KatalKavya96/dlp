@@ -56,11 +56,11 @@ test("server-renders the finished Dharohar brand gateway", async () => {
   assert.doesNotMatch(html, /The Everyday Kadhai/);
   assert.doesNotMatch(html, /P[•·.\-]?TAL/i);
   assert.doesNotMatch(html, /Find your first Dharohar piece\./);
-  assert.match(html, /Care remains recorded/);
+  assert.match(html, /Repair before replacement/);
   assert.doesNotMatch(html, /The story stays with the object\./);
   assert.doesNotMatch(html, /So does its care\./);
-  assert.match(html, /Care for a lifetime\./);
-  assert.match(html, /Not only at purchase\./);
+  assert.match(html, /Care that continues beyond the purchase\./);
+  assert.match(html, /Restore the shine\. Preserve the story\./);
   assert.match(html, /A name changes/);
   assert.match(html, /the object\./);
   assert.match(html, /An object from your family\./);
@@ -70,8 +70,8 @@ test("server-renders the finished Dharohar brand gateway", async () => {
   assert.match(html, /Weddings &amp; gifting/);
   assert.match(html, /A country of hands/);
   assert.match(html, /behind every object\./);
-  assert.match(html, /Care memberships/);
-  assert.match(html, /Hospitality care/);
+  assert.match(html, /Care Passport/);
+  assert.match(html, /Compare the vessel before and after restoration/);
   assert.doesNotMatch(html, /Briefs designed/);
   assert.doesNotMatch(html, /to become heirlooms\./);
   assert.match(html, /Who are we creating for\?/);
@@ -113,6 +113,9 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.match(gateway, /Prepare request/);
   assert.match(gateway, /Pause cinematic motion/);
   assert.match(gateway, /header_visit_store"[^>]*className="hero-nav-icon grid"/);
+  assert.match(gateway, /movement > 6[\s\S]*?setVisible\(false\)/);
+  assert.match(gateway, /movement < -4[\s\S]*?setVisible\(true\)/);
+  assert.match(css, /\.gateway-header-hidden[\s\S]*?translateY\(calc\(-100% - 2px\)\)/);
   assert.doesNotMatch(gateway, /cinematic-pointer-light/);
   assert.match(gateway, /Select a glowing marker/);
   assert.doesNotMatch(gateway, /hero-craft-card|Legacy of Craft|Our evidence standard|Move beyond similar vessels/);
@@ -125,9 +128,9 @@ test("keeps the production shell, SEO, and accessibility safeguards in source", 
   assert.match(gateway, /function ArtisanNetwork/);
   assert.doesNotMatch(gateway, /function CommissionProof/);
   assert.match(gateway, /dharohar:consultation-persona/);
-  assert.match(gateway, /Annual care membership/);
-  assert.match(gateway, /Ghar Care/);
-  assert.match(gateway, /Heirloom Circle/);
+  assert.match(gateway, /Compare the vessel before and after restoration/);
+  assert.match(gateway, /care-vessel-before\.png/);
+  assert.match(gateway, /care-vessel-after\.png/);
   assert.match(gateway, /dharohar-wordmark\.png/);
   assert.match(loading, /dharohar-wordmark\.png/);
   assert.match(gateway, /function DharoharImageSignature/);
